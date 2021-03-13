@@ -1,0 +1,1128 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"as",
+				"async"
+			],
+			[
+				"re",
+				"removing_list"
+			],
+			[
+				"remo",
+				"removing_list"
+			],
+			[
+				"te",
+				"text_input_height"
+			],
+			[
+				"tex",
+				"text_input_width"
+			],
+			[
+				"OB",
+				"OBJECT_MULTIPLYER_HEIGHT"
+			],
+			[
+				"en",
+				"enter_in_text_input"
+			],
+			[
+				"def",
+				"def\tFunction"
+			],
+			[
+				"se",
+				"settings_window"
+			],
+			[
+				"SE",
+				"SETTINGS_WINDOW_IMAGE"
+			],
+			[
+				"DEFA",
+				"DEFAULT_SETTINGS_WINDOW_SIZE"
+			],
+			[
+				"DE",
+				"DEFAULT_SETTINGS_WINDOW_SIZE"
+			],
+			[
+				"get",
+				"get_settings_button"
+			],
+			[
+				"MON",
+				"MONSTER_IMAGE"
+			],
+			[
+				"w",
+				"wave"
+			],
+			[
+				"in",
+				"in_battle"
+			],
+			[
+				"ata",
+				"attack_timer"
+			],
+			[
+				"atat",
+				"attack_speed"
+			],
+			[
+				"atta",
+				"attack_timer"
+			],
+			[
+				"de",
+				"defs\tMethod"
+			],
+			[
+				"ma",
+				"manabar_place"
+			],
+			[
+				"o",
+				"OBJECT_MULTIPLYER_WIDTH"
+			],
+			[
+				"ty",
+				"type_damage"
+			],
+			[
+				"Ma",
+				"MANABAR_IMAGE"
+			],
+			[
+				"Hp",
+				"HPBAR_IMAGE"
+			],
+			[
+				"manabae",
+				"manabar_size"
+			],
+			[
+				"bli",
+				"blit_hitpoints"
+			],
+			[
+				"ini",
+				"init_mana"
+			],
+			[
+				"init",
+				"init_hitpoints"
+			],
+			[
+				"hp",
+				"hpbar_place"
+			],
+			[
+				"Ob",
+				"OBJECT_MULTIPLYER_WIDTH"
+			],
+			[
+				"OBJ",
+				"OBJECT_MULTIPLYER_WIDTH"
+			],
+			[
+				"mana",
+				"manabar_place"
+			],
+			[
+				"tot",
+				"total_mana"
+			],
+			[
+				"man",
+				"manabar_place"
+			],
+			[
+				"tota",
+				"total_mana"
+			],
+			[
+				"spl",
+				"split"
+			],
+			[
+				"for",
+				"format"
+			],
+			[
+				"roa",
+				"road_rect"
+			],
+			[
+				"he",
+				"HEIGHT"
+			],
+			[
+				"wid",
+				"WIDTH"
+			],
+			[
+				"s",
+				"size"
+			],
+			[
+				"ca",
+				"castle_rect"
+			],
+			[
+				"sc",
+				"sc2"
+			],
+			[
+				"ove",
+				"overlordsSendlocation"
+			],
+			[
+				"RE",
+				"RESEARCH_ZERGGROUNDARMORLEVEL1"
+			],
+			[
+				"E",
+				"EVOLUTIONCHAMBER"
+			],
+			[
+				"bui",
+				"build"
+			],
+			[
+				"ta",
+				"target"
+			],
+			[
+				"hea",
+				"health"
+			],
+			[
+				"bu",
+				"build_offence_units"
+			],
+			[
+				"PLA",
+				"PLAYER_HEIGHT"
+			],
+			[
+				"PL",
+				"PLAYER_WIDTH"
+			],
+			[
+				"pla",
+				"player_height"
+			],
+			[
+				"rig",
+				"right_move_images"
+			],
+			[
+				"ski",
+				"skin"
+			],
+			[
+				"sk",
+				"skin"
+			],
+			[
+				"right",
+				"right_move_images"
+			],
+			[
+				"lef",
+				"left_move_images"
+			],
+			[
+				"le",
+				"left_move_images"
+			],
+			[
+				"on",
+				"onGround"
+			],
+			[
+				"sta",
+				"stay_images"
+			],
+			[
+				"cur",
+				"cur_left_move_image"
+			],
+			[
+				"lev",
+				"left_move_images"
+			],
+			[
+				"ri",
+				"right_move_images"
+			],
+			[
+				"up",
+				"update_level_side"
+			],
+			[
+				"W",
+				"WIN_W"
+			],
+			[
+				"key",
+				"key_update"
+			],
+			[
+				"I",
+				"Img"
+			],
+			[
+				"move",
+				"move_timer"
+			],
+			[
+				"win",
+				"win_size"
+			],
+			[
+				"blo",
+				"block_coord"
+			],
+			[
+				"ap",
+				"apples"
+			],
+			[
+				"tie",
+				"timer"
+			],
+			[
+				"__",
+				"__init__"
+			],
+			[
+				"ene",
+				"enemyes"
+			],
+			[
+				"eme",
+				"enemyes"
+			],
+			[
+				"co",
+				"cost_2"
+			],
+			[
+				"a",
+				"alphabet"
+			],
+			[
+				"tra",
+				"training_output"
+			],
+			[
+				"sy",
+				"synaptic_weights"
+			],
+			[
+				"Mic",
+				"Microsoft_operating_system"
+			],
+			[
+				"pa",
+				"payload"
+			],
+			[
+				"bat",
+				"battle_3"
+			],
+			[
+				"ba",
+				"battle_3"
+			],
+			[
+				"go",
+				"go_to_forest_nvm"
+			],
+			[
+				"ol",
+				"old_weap"
+			],
+			[
+				"return_",
+				"return_weap"
+			],
+			[
+				"pr",
+				"price"
+			],
+			[
+				"_",
+				"__name__"
+			],
+			[
+				"lowe",
+				"lower"
+			],
+			[
+				"ch",
+				"ch_item"
+			],
+			[
+				"q",
+				"Quests"
+			],
+			[
+				"u",
+				"UPDATE_LOG"
+			],
+			[
+				"пира",
+				"пиратов"
+			],
+			[
+				"play",
+				"play_menu"
+			],
+			[
+				"fish",
+				"fish_1_2"
+			],
+			[
+				"ge",
+				"get_updates_json"
+			],
+			[
+				"resu",
+				"results"
+			],
+			[
+				"merge",
+				"merge"
+			],
+			[
+				"mer",
+				"merge_sort"
+			],
+			[
+				"d",
+				"def\tFunction"
+			],
+			[
+				"p",
+				"prefix"
+			],
+			[
+				"f",
+				"fractal_rectangle"
+			],
+			[
+				"c",
+				"c"
+			],
+			[
+				"k",
+				"k"
+			],
+			[
+				"A",
+				"A"
+			],
+			[
+				"tes",
+				"test_invert_array"
+			],
+			[
+				"ra",
+				"randoms"
+			],
+			[
+				"it",
+				"iterations"
+			],
+			[
+				"за",
+				"завеса"
+			],
+			[
+				"abi",
+				"ability_active"
+			],
+			[
+				"abil",
+				"ability"
+			],
+			[
+				"save",
+				"save_turn"
+			],
+			[
+				"use",
+				"use_ability"
+			],
+			[
+				"l",
+				"l_char"
+			],
+			[
+				"st",
+				"student_ord_2"
+			],
+			[
+				"bto",
+				"bot_cards"
+			],
+			[
+				"bot",
+				"bot_cards"
+			],
+			[
+				"low",
+				"lower_bot"
+			],
+			[
+				"lo",
+				"lower_player"
+			],
+			[
+				"player",
+				"player_ask_selection"
+			],
+			[
+				"tal",
+				"talk_with_kontr"
+			],
+			[
+				"под",
+				"подпола"
+			],
+			[
+				"home",
+				"home_enter"
+			],
+			[
+				"pri",
+				"price"
+			],
+			[
+				"pl",
+				"play_menu"
+			],
+			[
+				"ab",
+				"ability_active"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main.py",
+			"settings":
+			{
+				"buffer_size": 6460,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/GameFunctions.py",
+			"settings":
+			{
+				"buffer_size": 4080,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/Unit.py",
+			"settings":
+			{
+				"buffer_size": 2531,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/castle.py",
+			"settings":
+			{
+				"buffer_size": 1024,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "images.py",
+			"settings":
+			{
+				"buffer_size": 3237,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/objects.py",
+			"settings":
+			{
+				"buffer_size": 966,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "constants.py",
+			"settings":
+			{
+				"buffer_size": 2189,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				"Syntax Check"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 171.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/Programming/python/GrowWorld",
+		"/D/Programming/python/GrowWorld/scripts"
+	],
+	"file_history":
+	[
+		"/D/Programming/python/GrowWorld/scripts/objects.py",
+		"/F/Programming/python/Pygame_test/main.py",
+		"/F/Programming/python/main.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/СДШ/info_10.03.py",
+		"/E/programms/python3-pjsip/setup.py",
+		"/F/Programming/python/Sc2_bot/burny-bots-python-sc2/CreepyBot/run.py",
+		"/C/Users/Yegorka/AppData/Roaming/Python/Python39/site-packages/sc2/bot_ai.py",
+		"/F/Programming/python/Starcraft_AI/examples/distributed_workers.py",
+		"/F/Programming/python/Platformer/levels.py",
+		"/F/Programming/python/Platformer/blocks.py",
+		"/F/Programming/python/Platformer/player.py",
+		"/F/Programming/python/Platformer/main.py",
+		"/F/Programming/python/Alien_offence/Sprites.py",
+		"/F/Programming/python/Snake/Block.py",
+		"/F/Programming/python/Snake/main.py",
+		"/F/Programming/python/LightsOut.py",
+		"/F/Programming/python/Alien_offence/Enemy.py",
+		"/F/Programming/python/Alien_offence/GameFunctions.py",
+		"/F/DailyTasks.md",
+		"/F/self/pr_feb_14.txt",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/dos_list.txt",
+		"/F/Programming/python/prep_to_olimp/mun_sverd_9-11_2018/first.py",
+		"/F/Programming/python/prep_to_olimp/mun_sverd_9-11_2018/second.py",
+		"/F/Programming/python/prep_to_olimp/mun_sverd_9-11_2018/third.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Hack_/virus.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/neiro_js/index.html",
+		"/C/Users/Yegorka/Documents/python.txt",
+		"/C/Users/Yegorka/Documents/lu.txt",
+		"/E/Personal/NY/README.md",
+		"/F/self/README.md",
+		"/F/Programming/MITMf/CHANGELOG.md",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Tasks.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/neiro.py",
+		"/C/Quest/test.sql",
+		"/C/Quest/Files/Test.py",
+		"/C/Quest/Files/ElixirItem.py",
+		"/C/Quest/Files/quests_files/fisher_and_pirates.py",
+		"/C/Quest/Files/data_4.py",
+		"/C/Quest/Files/scripts/underground_club.py",
+		"/C/Quest/Files/scripts/UndergroundClub.py",
+		"/C/Quest/Files/Shop.py",
+		"/E/games/Quest/Files/data_5.py",
+		"/E/games/Quest/Files/Training_camp.py",
+		"/E/games/Quest/Files/Quests.py",
+		"/E/games/Quest/Files/ElixirItem.py",
+		"/E/games/Quest/Files/Home.py",
+		"/E/games/Quest/Files/Researching_city.py",
+		"/E/games/Quest/Files/GameFunctions.py",
+		"/E/games/Quest/Files/Enemy.py",
+		"/E/games/Quest/Files/character.py",
+		"/E/games/Quest/Files/Start.py",
+		"/E/games/Quest/Files/data_4.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/BetaStar.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/BetaStart.py",
+		"/E/games/Quest/Files/scripts/words.txt",
+		"/E/games/Quest/Files/data_1.py",
+		"/E/games/Quest/Files/data_6.py",
+		"/E/games/Quest/Files/a.cpp",
+		"/E/games/Quest/Files/Beer.py",
+		"/E/games/Quest/Files/Shop.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Birthday/main.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/WOS/Main.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Lection_9/Cannon.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Lection_10/gun.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Lection_10/hit_check.py",
+		"/E/games/extrimhack_free_16.07.2020_.exe",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Class_work.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Second_lesson_Principi/2.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Second_lesson_Principi/my_balls.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Second_lesson_Principi/my_balls_Work_version.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Second_lesson_SolidPrincip/2.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/Second_lesson/2.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Summer_learning/Work_with_files/main.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/python/Learning/Timofey/First_Lesson/1.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/WOS/Notes.txt",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/mjpeg-master/_example/example.go",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/mjpeg-master/mjpeg.go",
+		"/E/photos/create_mpeg.py",
+		"/E/Yansex_drive/Sinhron/YandexDisk/Programming/WOS/mine.py",
+		"/E/games/Aliens/Alien_invasion.py",
+		"/E/games/Aliens/ship.py",
+		"/E/games/Aliens/game_functions.py",
+		"/E/games/Aliens/settings.py",
+		"/E/Пак юного питунодерга_Информатика/Calculator/Calculator.py",
+		"/E/Файлы на пайтоне/C_save.py",
+		"/E/Файлы на пайтоне/Play_with_color.py",
+		"/C/Users/Yegorka/Desktop/dudos.py",
+		"/E/Файлы на пайтоне/c_file.c",
+		"/D/school/site_01/index.html",
+		"/E/Пак юного питунодерга_Информатика/Notepad/Notepad_clear.py",
+		"/E/Пак юного питунодерга_Информатика/Notepad/Notepad.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/pointsV2.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/groupBy.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/Olimpiada.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/Subway.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/challange_35.py",
+		"/E/Пак юного питунодерга_Информатика/Bot/BOT.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/points.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/books.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/r_w_test.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/date.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/leksikoGraf.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/Dirihle.py",
+		"/D/school/Олимпиады/Информатика/MySolusions/2017_short/Task_D.py"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 113.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"blit_settings",
+			"mana_text",
+			"text_input_height",
+			"text_input_width",
+			"75",
+			"50",
+			"append",
+			"window",
+			"50",
+			"WIDTH",
+			"settings_window",
+			"SETTINGS_WINDOW_SIZE",
+			"window",
+			"gear",
+			"check_end_battle",
+			"heroes_amount",
+			"wawe",
+			"Unit",
+			"dps",
+			"Mellee",
+			"type_surface",
+			"level",
+			"mana",
+			"hp",
+			"300",
+			"INFO_FONT_SIZE",
+			"mana",
+			"Mana",
+			"Счёт",
+			"hpbar_rect",
+			"total_hp",
+			"DEFAULT_HPBAR_HEIGHT",
+			"update_hp",
+			"new_level",
+			"castle_rect",
+			"800",
+			"circle",
+			"DEFAULT_HEIGHT",
+			"40",
+			"width",
+			"280",
+			"100",
+			"width",
+			"WIDTH",
+			"OBJECT_MULTIPLYER",
+			"castle_rect",
+			"castle_image",
+			"castle_rect",
+			"size",
+			"500",
+			"1000",
+			"default",
+			"window_resolution"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 6,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6460,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1181,
+								1181
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scripts/GameFunctions.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4080,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4080,
+								4080
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1692.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "scripts/Unit.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2531,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								35,
+								35
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "scripts/castle.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1024,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								27,
+								27
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "images.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3237,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								491,
+								491
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "scripts/objects.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 966,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								701,
+								701
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 378.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "constants.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2189,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								221,
+								221
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 41.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 31.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 138.0
+	},
+	"pinned_build_system": "",
+	"project": "subl_prj.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 197.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
