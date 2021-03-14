@@ -19,6 +19,7 @@ class GameFunctions:
 
 		self.enter_in_text_input = False
 		self.text_input_obj = None
+		self.text_input_index = None
 
 		self.info_font = pygame.font.SysFont('Comic Sans MS', INFO_FONT_SIZE)
 
@@ -96,10 +97,12 @@ class GameFunctions:
 		if not self.in_battle and not objects.Button('settings_button', images.get_settings_button(), (5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT)) in self.additional_objects:
 			self.additional_objects.insert(0, objects.Button('settings_button', images.get_settings_button(), (5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT)))
 
+		await self.update_settings_window()
+
 	async def open_settings_window(self):
 		window = objects.Window('settings_window', images.get_settings_window(), (WIDTH-SETTINGS_WINDOW_SIZE[0]-5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT))
-		text_input_width = objects.TextInput('text_input_width', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT), text=str(WIDTH))
-		text_input_height = objects.TextInput('text_input_height', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 100*OBJECT_MULTIPLYER_HEIGHT), text=str(HEIGHT))
+		text_input_width = objects.TextInput('text_input_width', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT), text=objects.Text('width_text', self.info_font.render(str(WIDTH), False, (0, 0, 0)), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT), str(WIDTH)))
+		text_input_height = objects.TextInput('text_input_height', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 100*OBJECT_MULTIPLYER_HEIGHT), text=objects.Text('height_text', self.info_font.render(str(HEIGHT), False, (0, 0, 0)), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 100*OBJECT_MULTIPLYER_HEIGHT), str(HEIGHT)))
 
 		flag = False
 		removing_list = []
@@ -117,4 +120,11 @@ class GameFunctions:
 			self.additional_objects.append(text_input_height)
 
 	async def update_settings_window(self):
-		pass
+		if self.in_battle:
+			removing_list = []
+			for obj in self.additional_objects:
+				if obj.name == 'settings_window' or obj.name == 'text_input_width' or obj.name == 'text_input_height':
+					obj.mode = False
+					removing_list.append(obj)
+			for obj in removing_list:
+				self.additional_objects.remove(obj)

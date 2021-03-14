@@ -43,5 +43,16 @@ class TextInput:
 		self.text = text
 
 	async def action(self, gf):
-		gf.text_input_obj = self
-		gf.enter_in_text_input = True
+		pass
+
+	async def find_index(self, gf):
+		for obj in range(len(gf.additional_objects)):
+			if gf.additional_objects[obj].name == gf.text_input_obj.name:
+				return obj
+
+class Text:
+	def __init__(self, name, image, position, text):
+		self.name = name
+		self.image = image
+		self.rect = position
+		self.text = text

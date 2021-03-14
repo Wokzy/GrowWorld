@@ -1,6 +1,7 @@
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
 from constants import *
 from datetime import datetime
+from scripts import objects
 
 
 pygame.init()
@@ -105,6 +106,8 @@ class GrowWord:
 
 		for obj in gf.additional_objects:
 			self.screen.blit(obj.image, obj.rect)
+			if obj.__class__.__name__ == 'TextInput':
+				self.screen.blit(obj.text.image, obj.text.rect)
 
 	def init_hitpoints(self):
 		self.hpbar_image = images.get_hp_bar()
@@ -162,7 +165,17 @@ class GrowWord:
 				pygame.quit()
 				sys.exit()
 			elif event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_1 and self.castle.hp - 100 >= 0:
+				if gf.enter_in_text_input:
+					if event.key == pygame.K_BACKSPACE and gf.text_input_obj.text.text != '':
+						gf.text_input_obj.text.text = gf.text_input_obj.text.text[::-1][1::][::-1]
+					elif event.key == pygame.K_SPACE:
+						gf.text_input_obj.text.text = gf.text_input_obj.text.text + ' '
+					else:
+						gf.text_input_obj.text.text += event.unicode
+					gf.text_input_obj.text.image = gf.info_font.render(gf.text_input_obj.text.text, False, (0, 0, 0))
+					gf.additional_objects[await gf.text_input_obj.find_index(gf)].text = gf.text_input_obj.text
+
+				elif event.key == pygame.K_1 and self.castle.hp - 100 >= 0:
 					self.castle.hp -= 100
 				elif event.key == pygame.K_2 and self.castle.mana - 100 >= 0:
 					self.castle.mana -= 100
@@ -172,10 +185,16 @@ class GrowWord:
 					gf.battle_heroes[random.randint(0, len(gf.battle_heroes)-1)].bite(5)
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				mos_pos = pygame.mouse.get_pos()
-				for obj in gf.additional_objects:
-					if obj.rect.collidepoint(mos_pos):
-						await obj.action(gf)
-						break
+				for obj in gf.additional_objects[::-1]:
+					try:
+						if obj.rect.collidepoint(mos_pos):
+							await obj.action(gf)
+							if obj.__class__.__name__ == 'TextInput':
+								gf.text_input_obj = obj
+								gf.text_input_index = gf.additional_objects.index(obj)
+								gf.enter_in_text_input = True
+							break
+					except Exception as e: print(e)
 				if gf.enter_in_text_input and not gf.text_input_obj.rect.collidepoint(mos_pos):
 					gf.text_input_obj = None
 					gf.enter_in_text_input = False
