@@ -11,8 +11,8 @@ class GameFunctions:
 		self.battle_heroes = []
 		self.battle_duration_left = None
 		self.enemyes_amount = None
-		self.enemy_line_time = random.randint(5, 10) / 10
-		self.enemy_line_timer = None
+		self.enemy_line_time = FPS * random.randint(5, 10) / 10
+		self.enemy_line_iteraion = 0
 		self.wave = None
 
 		self.additional_objects = []
@@ -37,7 +37,7 @@ class GameFunctions:
 					row += 1
 				elif row == 6:
 					row = 1
-			self.enemy_line_timer = datetime.now()
+			self.enemy_line_iteraion = 0
 			self.enemyes_amount -= 6
 
 	async def update_battle(self, castle):
@@ -58,10 +58,11 @@ class GameFunctions:
 				self.battle_heroes.remove(enemy)
 
 		await self.add_line_with_enemyes()
+		self.enemy_line_iteraion += 1
 
 	async def add_line_with_enemyes(self):
 		row = 1
-		if self.enemyes_amount >= 6 and (datetime.now() - self.enemy_line_timer).total_seconds() >= self.enemy_line_time:
+		if self.enemyes_amount >= 6 and self.enemy_line_iteraion >= self.enemy_line_time:
 			for i in range(6):
 				self.battle_heroes.append(unit.monster(self.wave, row))
 				if row != 6:
@@ -69,9 +70,9 @@ class GameFunctions:
 				elif row == 6:
 					row = 1
 			self.enemyes_amount -= 6
-			self.enemy_line_timer = datetime.now()
-			self.enemy_line_time = random.randint(5, 9) / 10
-		elif self.enemyes_amount < 6  and (datetime.now() - self.enemy_line_timer).total_seconds() >= self.enemy_line_time:
+			self.enemy_line_iteraion = 0
+			self.enemy_line_time = FPS * random.randint(5, 9) / 10
+		elif self.enemyes_amount < 6  and self.enemy_line_iteraion >= self.enemy_line_time:
 			for i in range(self.enemyes_amount):
 				self.battle_heroes.append(unit.monster(self.wave, row))
 				if row != 6:
@@ -79,8 +80,8 @@ class GameFunctions:
 				elif row == 6:
 					row = 1
 			self.enemyes_amount -= 6
-			self.enemy_line_timer = datetime.now()
-			self.enemy_line_time = random.randint(5, 9) / 10
+			self.enemy_line_iteraion = 0
+			self.enemy_line_time = FPS * random.randint(5, 9) / 10
 
 
 	async def victory(self):

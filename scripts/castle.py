@@ -15,8 +15,8 @@ class Castle:
 		self.hp = self.total_hp
 		self.mana = self.total_mana
 
-		self.mana_add_timer = datetime.now()
-		self.mana_add_timer_slide = datetime.now()
+		self.mana_add_iterations = 0
+		self.mana_add_iterations_slide = 0
 
 	async def new_level(self):
 		self.level += 1

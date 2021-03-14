@@ -10,7 +10,7 @@ class Enemy:
 		self.total_hp = hp
 		self.speed = speed # Speed of unit in pixels
 		self.damage = damage # Damage in points
-		self.attack_speed = attack_speed # Attack speed in seconds
+		self.attack_speed = attack_speed # Attack speed in iterations
 		self.image = image
 		self.rect = self.image.get_rect()
 		self.size = size
@@ -30,11 +30,12 @@ class Enemy:
 		self.rect.x = WIDTH
 		self.rect.y = HEIGHT - self.size[1] - 120 * AVERAGE_MULTIPLYER + (row_position * 8 * AVERAGE_MULTIPLYER)
 		self.alive = True
-		self.attack_timer = datetime.now()
 
 		self.attacking_me_shooters = 0
+		self.attack_iteration = 0
 
 	def update(self, castle):
+		self.attack_iteration += 1
 		if self.hp <= 0:
 			self.alive = False
 			return None
@@ -54,9 +55,10 @@ class Enemy:
 		self.hp_bar_size = (math.ceil(self.size[0] - (self.total_hp - self.hp)*(self.size[0]/self.total_hp)), self.hp_bar_size[1])
 		self.hp_bar_image = pygame.transform.scale(self.hp_bar_image, self.hp_bar_size)
 
+
 	def attack(self):
-		if (datetime.now() - self.attack_timer).total_seconds() >= self.attack_speed:
-			self.attack_timer = datetime.now()
+		if self.attack_iteration >= self.attack_speed:
+			self.attack_iteration = 0
 			return ['Attack', self.damage]
 		else:
 			return ['Stay']
@@ -67,4 +69,4 @@ class Enemy:
 
 
 def monster(wave, row_position):
-	return Enemy('Ground', 'Melee', wave*100, random.randint(2, 4), 15, 0.4, images.get_monster(), MONSTER_SIZE, row_position)
+	return Enemy('Ground', 'Melee', wave*100, random.randint(2, 4), 15, FPS*0.4, images.get_monster(), MONSTER_SIZE, row_position)

@@ -22,10 +22,11 @@ class TownShooter:
 		self.action = 'stay' # stay or attack
 		self.target = None
 
-		self.shoot_timer = datetime.now()
-		self.animation_timer = datetime.now()
+		self.shoot_iterations = 0
+		self.animation_iterations = 0
 
-		self.attack_speed = 0.4
+		self.attack_speed = FPS * 0.4 # in Iterations
+		self.animation_speed = FPS * 0.1
 
 	def update(self, battle_units):
 		if self.target != None:
@@ -43,17 +44,21 @@ class TownShooter:
 		elif self.action == 'attack':
 			if self.image == self.stay_image:
 				self.image = self.shoot_images[0]
-			if (datetime.now() - self.animation_timer).total_seconds() >= 0.1:
+			if self.animation_iterations >= self.animation_speed:
 				if self.shoot_images.index(self.image) +1 < len(self.shoot_images):
 					self.image = self.shoot_images[self.shoot_images.index(self.image) + 1]
 				else:
 					self.image = self.shoot_images[0]
+				self.animation_iterations = 0
 
-		if self.action == 'attack' and (datetime.now() - self.shoot_timer).total_seconds() < self.attack_speed:
+
+		if self.action == 'attack' and self.shoot_iterations < self.attack_speed:
 			self.action = 'stay'
-		elif self.action == 'attack' and (datetime.now() - self.shoot_timer).total_seconds() >= self.attack_speed:
-			self.shoot_timer = datetime.now()
+		elif self.action == 'attack' and self.shoot_iterations >= self.attack_speed:
+			self.shoot_iterations = 0
 
+		self.animation_iterations += 1
+		self.shoot_iterations += 1
 		return self.action
 
 	def find_target(self, battle_units):

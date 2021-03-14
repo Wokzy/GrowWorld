@@ -26,6 +26,7 @@ class GrowWord:
 		self.info_font = pygame.font.SysFont('Comic Sans MS', INFO_FONT_SIZE)
 
 		self.clock = pygame.time.Clock()
+		self.iteration = 0 # 60 Iterations - 1 second
 
 	async def main(self, gf):
 		self.castle.castle_rect.x = 100*OBJECT_MULTIPLYER_WIDTH
@@ -47,6 +48,7 @@ class GrowWord:
 			await self.blit_objects()
 
 			self.clock.tick(FPS) #pygame.time.delay(8)
+			self.iteration += 1
 			pygame.display.update()
 			pygame.event.pump()
 
@@ -67,11 +69,14 @@ class GrowWord:
 		self.manabar_rect = self.manabar_image.get_rect()
 		self.manabar_rect = self.manabar_place
 
-		if self.castle.mana + self.castle.total_mana // 125 <= self.castle.total_mana and (datetime.now() - self.castle.mana_add_timer).total_seconds() >= MANA_ADD_TIMER:
-			if (datetime.now() - self.castle.mana_add_timer_slide).total_seconds() >= MANA_ADD_TIMER / (self.castle.total_mana // 125):
+
+		self.castle.mana_add_iterations += 1
+		self.castle.mana_add_iterations_slide += 1
+		if self.castle.mana + self.castle.total_mana // 125 <= self.castle.total_mana and self.castle.mana_add_iterations >= MANA_ADD_TIMER:
+			if self.castle.mana_add_iterations_slide>= MANA_ADD_TIMER / (self.castle.total_mana // 125):
 				self.castle.mana += 1
-				self.mana_add_timer_slide = datetime.now()
-			self.castle.mana_add_timer = datetime.now()
+				self.mana_add_iterations_slide = 0
+			self.castle.mana_add_iterations = 0
 		elif self.castle.mana + self.castle.total_mana // 125 > self.castle.total_mana:
 			self.castle.mana = self.castle.total_mana
 		'''
@@ -89,6 +94,9 @@ class GrowWord:
 
 		if gf.in_battle:
 			await self.update_townshooters()
+
+		if self.iteration == 60:
+			self.iteration = 0
 
 	async def blit_objects(self):
 		self.screen.blit(self.road_image, self.road_rect)
