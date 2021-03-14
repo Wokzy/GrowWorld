@@ -14,6 +14,8 @@ class Button:
 	async def action(self, gf):
 		if self.name == 'settings_button':
 			await gf.open_settings_window()
+		elif self.name == 'apply_settings_button':
+			await gf.apply_settings()
 
 
 class Window:
@@ -31,7 +33,7 @@ class Window:
 		pass
 
 class TextInput:
-	def __init__(self, name, size, position, text=''):
+	def __init__(self, name, size, position, text='', type_='default'):
 		self.name = name
 		self.image = images.get_text_input(size)
 
@@ -41,6 +43,8 @@ class TextInput:
 
 		self.mode = False
 		self.text = text
+
+		self.type_ = type_ # Type - only numbers/default
 
 	async def action(self, gf):
 		pass

@@ -1,4 +1,4 @@
-import pygame, images, random
+import pygame, images, random, sys, set_config
 from constants import *
 from datetime import datetime
 from scripts import Unit as unit
@@ -21,7 +21,7 @@ class GameFunctions:
 		self.text_input_obj = None
 		self.text_input_index = None
 
-		self.info_font = pygame.font.SysFont('Comic Sans MS', INFO_FONT_SIZE)
+		self.info_font = pygame.font.SysFont('Comic Sans MS', 15*AVERAGE_MULTIPLYER)
 
 	async def start_battle(self, wave):
 		self.enemyes_amount = wave * 30
@@ -101,13 +101,14 @@ class GameFunctions:
 
 	async def open_settings_window(self):
 		window = objects.Window('settings_window', images.get_settings_window(), (WIDTH-SETTINGS_WINDOW_SIZE[0]-5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT))
-		text_input_width = objects.TextInput('text_input_width', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT), text=objects.Text('width_text', self.info_font.render(str(WIDTH), False, (0, 0, 0)), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT), str(WIDTH)))
-		text_input_height = objects.TextInput('text_input_height', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 100*OBJECT_MULTIPLYER_HEIGHT), text=objects.Text('height_text', self.info_font.render(str(HEIGHT), False, (0, 0, 0)), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 100*OBJECT_MULTIPLYER_HEIGHT), str(HEIGHT)))
+		text_input_width = objects.TextInput('text_input_width', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT), text=objects.Text('width_text', self.info_font.render(str(WIDTH), False, (0, 0, 0)), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT), str(WIDTH)), type_='only_numbers')
+		text_input_height = objects.TextInput('text_input_height', (100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 100*OBJECT_MULTIPLYER_HEIGHT), text=objects.Text('height_text', self.info_font.render(str(HEIGHT), False, (0, 0, 0)), (window.rect.x + 50*OBJECT_MULTIPLYER_WIDTH, window.rect.y + 100*OBJECT_MULTIPLYER_HEIGHT), str(HEIGHT)), type_='only_numbers')
+		apply_settings_button = objects.Button('apply_settings_button', images.get_apply_settings_button(), (text_input_height.rect[0] - (12 * OBJECT_MULTIPLYER_WIDTH), text_input_height.rect[1] + APPLY_SETTIGS_BUTTON_SIZE[1] - (10 * OBJECT_MULTIPLYER_HEIGHT)))
 
 		flag = False
 		removing_list = []
 		for obj in self.additional_objects:
-			if obj.name == 'settings_window' or obj.name == 'text_input_width' or obj.name == 'text_input_height':
+			if obj.name == 'settings_window' or obj.name == 'text_input_width' or obj.name == 'text_input_height' or obj.name == 'apply_settings_button':
 				obj.mode = False
 				removing_list.append(obj)
 				flag = True
@@ -118,13 +119,43 @@ class GameFunctions:
 			self.additional_objects.append(window)
 			self.additional_objects.append(text_input_width)
 			self.additional_objects.append(text_input_height)
+			self.additional_objects.append(apply_settings_button)
 
 	async def update_settings_window(self):
 		if self.in_battle:
 			removing_list = []
 			for obj in self.additional_objects:
-				if obj.name == 'settings_window' or obj.name == 'text_input_width' or obj.name == 'text_input_height':
+				if obj.name == 'settings_window' or obj.name == 'text_input_width' or obj.name == 'text_input_height' or obj.name == 'apply_settings_button':
 					obj.mode = False
 					removing_list.append(obj)
 			for obj in removing_list:
 				self.additional_objects.remove(obj)
+
+	async def entering_in_text_input(self, event):
+		if event.key == pygame.K_BACKSPACE and self.text_input_obj.text.text != '':
+			self.text_input_obj.text.text = self.text_input_obj.text.text[::-1][1::][::-1]
+		elif event.key == pygame.K_SPACE:
+			self.text_input_obj.text.text = self.text_input_obj.text.text + ' '
+		elif event.key != pygame.K_BACKSPACE:
+			if self.text_input_obj.type_ == 'only_numbers':
+				if event.key in NUMBERS_KEYS:
+					self.text_input_obj.text.text += event.unicode
+			else:
+				self.text_input_obj.text.text += event.unicode
+		self.text_input_obj.text.image = self.info_font.render(self.text_input_obj.text.text, False, (0, 0, 0))
+		self.additional_objects[await self.text_input_obj.find_index(self)].text = self.text_input_obj.text
+
+	async def apply_settings(self):
+		width = None
+		height = None
+		for obj in self.additional_objects:
+			if obj.name == 'text_input_width':
+				width = int(obj.text.text)
+			elif obj.name == 'text_input_height':
+				height = int(obj.text.text)
+			if width != None and height != None:
+				break
+
+		set_config.set_config(width=width, height=height)
+		pygame.quit()
+		sys.exit()

@@ -134,7 +134,7 @@ class GrowWord:
 
 	async def update_townshooters(self):
 		for shooter in self.town_shooters:
-			action = await shooter.update(gf.battle_heroes)
+			action = shooter.update(gf.battle_heroes)
 			if action == 'attack':
 				gf.battle_heroes[gf.battle_heroes.index(shooter.target)].hp -= shooter.damage
 				#gf.battle_heroes[gf.battle_heroes.index(shooter.target)].attacking_me_shooters += 1
@@ -166,15 +166,7 @@ class GrowWord:
 				sys.exit()
 			elif event.type == pygame.KEYDOWN:
 				if gf.enter_in_text_input:
-					if event.key == pygame.K_BACKSPACE and gf.text_input_obj.text.text != '':
-						gf.text_input_obj.text.text = gf.text_input_obj.text.text[::-1][1::][::-1]
-					elif event.key == pygame.K_SPACE:
-						gf.text_input_obj.text.text = gf.text_input_obj.text.text + ' '
-					else:
-						gf.text_input_obj.text.text += event.unicode
-					gf.text_input_obj.text.image = gf.info_font.render(gf.text_input_obj.text.text, False, (0, 0, 0))
-					gf.additional_objects[await gf.text_input_obj.find_index(gf)].text = gf.text_input_obj.text
-
+					await gf.entering_in_text_input(event)
 				elif event.key == pygame.K_1 and self.castle.hp - 100 >= 0:
 					self.castle.hp -= 100
 				elif event.key == pygame.K_2 and self.castle.mana - 100 >= 0:

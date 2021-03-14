@@ -1,5 +1,7 @@
 import pickle
 
-with open('config.bin', 'wb') as f:
-	data = {'width': 640, 'height': 360}
-	pickle.dump(data, f)
+
+def set_config(width, height):
+	with open('config.bin', 'wb') as f:
+		data = {'width': width, 'height': height}
+		pickle.dump(data, f)

@@ -27,7 +27,7 @@ class TownShooter:
 
 		self.attack_speed = 0.4
 
-	async def update(self, battle_units):
+	def update(self, battle_units):
 		if self.target != None:
 			if self.target not in battle_units or self.target.hp <= 0:
 				self.target = None
@@ -37,7 +37,7 @@ class TownShooter:
 		if self.target == None:
 			if self.action != 'stay':
 				self.action = 'stay'
-			await self.find_target(battle_units)
+			self.find_target(battle_units)
 		if self.action == 'stay' and self.image != self.stay_image:
 			self.image = self.stay_image
 		elif self.action == 'attack':
@@ -56,7 +56,7 @@ class TownShooter:
 
 		return self.action
 
-	async def find_target(self, battle_units):
+	def find_target(self, battle_units):
 		target = None
 		distance = WIDTH
 
