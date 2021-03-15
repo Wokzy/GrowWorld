@@ -16,6 +16,8 @@ class Button:
 			await gf.open_settings_window()
 		elif self.name == 'apply_settings_button':
 			await gf.apply_settings()
+		elif self.name == 'attack_button':
+			await gf.start_battle()
 
 
 class Window:

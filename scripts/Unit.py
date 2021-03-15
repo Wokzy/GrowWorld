@@ -69,4 +69,4 @@ class Enemy:
 
 
 def monster(wave, row_position):
-	return Enemy('Ground', 'Melee', wave*100, random.randint(2, 4), 15, FPS*0.4, images.get_monster(), MONSTER_SIZE, row_position)
+	return Enemy('Ground', 'Melee', wave*100, random.randint(2, 4)*AVERAGE_MULTIPLYER, 15, FPS*0.4, images.get_monster(), MONSTER_SIZE, row_position)

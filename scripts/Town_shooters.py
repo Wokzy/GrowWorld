@@ -30,7 +30,7 @@ class TownShooter:
 
 	def update(self, battle_units):
 		if self.target != None:
-			if self.target not in battle_units or self.target.hp <= 0:
+			if self.target not in battle_units or self.target.alive == False:
 				self.target = None
 			else:
 				if self.action != 'attack':
@@ -68,10 +68,10 @@ class TownShooter:
 		for enemy in battle_units:
 			cur_distance = enemy.rect.x - self.rect.x
 			if cur_distance < distance:
-				if len(battle_units) <= 7:
+				if len(battle_units) <= 4:
 					target = enemy
 					distance = cur_distance
-				elif len(battle_units) > 7 and enemy.attacking_me_shooters < 5:
+				elif len(battle_units) > 4 and enemy.attacking_me_shooters <= enemy.total_hp // self.damage:
 					target = enemy
 					distance = cur_distance
 

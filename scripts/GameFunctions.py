@@ -16,23 +16,24 @@ class GameFunctions:
 		self.wave = None
 
 		self.additional_objects = []
+		self.heroes = []
 
 		self.enter_in_text_input = False
 		self.text_input_obj = None
 		self.text_input_index = None
 
 		self.info_font = pygame.font.SysFont('Comic Sans MS', 15*AVERAGE_MULTIPLYER)
+		self.wave = 1
 
-	async def start_battle(self, wave):
-		self.enemyes_amount = wave * 30
-		wave_speed = 30 + (wave // 100)
+	async def start_battle(self):
+		self.enemyes_amount = self.wave * 30
+		wave_speed = 30 + (self.wave // 100)
 		self.in_battle = True
-		self.wave = wave
 		row = 1
 
 		if self.enemyes_amount > 6:
 			for i in range(6):
-				self.battle_heroes.append(unit.monster(wave, row))
+				self.battle_heroes.append(unit.monster(self.wave, row))
 				if row != 6:
 					row += 1
 				elif row == 6:
@@ -95,10 +96,38 @@ class GameFunctions:
 		self.battle_heroes = []
 
 	async def find_blitting_object(self):
-		if not self.in_battle and not objects.Button('settings_button', images.get_settings_button(), (5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT)) in self.additional_objects:
-			self.additional_objects.insert(0, objects.Button('settings_button', images.get_settings_button(), (5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT)))
+		await self.update_settings_button()
+		await self.update_attack_button()
 
 		await self.update_settings_window()
+
+	async def update_attack_button(self):
+		flag = False
+		obj_ = None
+		for obj in self.additional_objects:
+			if obj.name == 'attack_button':
+				flag = True
+				obj_ = obj
+				break
+
+		if not self.in_battle and not flag:
+			self.additional_objects.insert(1, objects.Button('attack_button', images.get_fight_button(), (WIDTH - FIGHT_BUTTON_SIZE[0] - 5*OBJECT_MULTIPLYER_WIDTH, HEIGHT - FIGHT_BUTTON_SIZE[1] - 5*OBJECT_MULTIPLYER_HEIGHT)))
+		elif self.in_battle and flag:
+			self.additional_objects.remove(obj_)
+
+	async def update_settings_button(self):
+		flag = False
+		obj_ = None
+		for obj in self.additional_objects:
+			if obj.name == 'settings_button':
+				flag = True
+				obj_ = obj
+				break
+
+		if not self.in_battle and not flag:
+			self.additional_objects.insert(0, objects.Button('settings_button', images.get_settings_button(), (5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT)))
+		elif self.in_battle and flag:
+			self.additional_objects.remove(obj_)
 
 	async def open_settings_window(self):
 		window = objects.Window('settings_window', images.get_settings_window(), (WIDTH-SETTINGS_WINDOW_SIZE[0]-5*OBJECT_MULTIPLYER_WIDTH, 5*OBJECT_MULTIPLYER_HEIGHT))

@@ -9,11 +9,9 @@ pygame.font.init()
 
 class GrowWord:
 	def __init__(self, gf):
-		self.screen = pygame.display.set_mode(WINDOW_RESOLUTION)
+		self.screen = pygame.display.set_mode(WINDOW_RESOLUTION, vsync=1)
 
 		self.castle = scripts.castle.Castle()
-
-		self.wave = 1
 
 		self.road_image = images.get_road()
 		self.road_rect = self.road_image.get_rect()
@@ -93,7 +91,7 @@ class GrowWord:
 				i.image = i.stay_image
 
 		if gf.in_battle:
-			await self.update_townshooters()
+			self.update_townshooters()
 
 		if self.iteration == 60:
 			self.iteration = 0
@@ -140,7 +138,7 @@ class GrowWord:
 			for g in range(5):
 				self.town_shooters.append(scripts.Town_shooters.TownShooter(1, images.get_town_shooter(), g, i))
 
-	async def update_townshooters(self):
+	def update_townshooters(self):
 		for shooter in self.town_shooters:
 			action = shooter.update(gf.battle_heroes)
 			if action == 'attack':
@@ -180,7 +178,7 @@ class GrowWord:
 				elif event.key == pygame.K_2 and self.castle.mana - 100 >= 0:
 					self.castle.mana -= 100
 				elif event.key == pygame.K_3 and not gf.in_battle:
-					await gf.start_battle(self.wave)
+					await gf.start_battle()
 				elif event.key == pygame.K_5 and gf.in_battle:
 					gf.battle_heroes[random.randint(0, len(gf.battle_heroes)-1)].bite(5)
 			elif event.type == pygame.MOUSEBUTTONDOWN:

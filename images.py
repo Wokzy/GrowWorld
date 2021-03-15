@@ -3,7 +3,7 @@ import pygame
 from constants import *
 
 global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IAMGES, SETTINGS_BUTTON_IMAGE
-global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON
+global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON, FIGHT_BUTTON
 HPBAR_IMAGE = None
 MANABAR_IMAGE = None
 HPBAR_BACKGROUND_IMAGE = None
@@ -14,6 +14,7 @@ SETTINGS_BUTTON_IMAGE = None
 SETTINGS_WINDOW_IMAGE = None
 TEXT_INPUT_IMAGE = None
 APPLY_SETTINGS_BUTTON = None
+FIGHT_BUTTON = None
 
 
 def get_castle(skin='black'):
@@ -97,3 +98,10 @@ def get_apply_settings_button():
 	if APPLY_SETTINGS_BUTTON == None:
 		APPLY_SETTINGS_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/apply.png'), APPLY_SETTIGS_BUTTON_SIZE)
 	return APPLY_SETTINGS_BUTTON
+
+def get_fight_button():
+	global FIGHT_BUTTON
+
+	if FIGHT_BUTTON == None:
+		FIGHT_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/fight.png'), FIGHT_BUTTON_SIZE)
+	return FIGHT_BUTTON
