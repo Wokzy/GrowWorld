@@ -24,11 +24,28 @@ class TownShooter:
 
 		self.shoot_iterations = 0
 		self.animation_iterations = 0
+		self.stimpack_iterations = 0
+		self.stimpack_animation_iterations = 0
 
-		self.attack_speed = FPS * 0.4 # in Iterations
-		self.animation_speed = FPS * 0.1
+		self.default_attack_speed = FPS * 0.4
+		self.default_animation_speed = FPS * 0.1
+		self.attack_speed = self.default_attack_speed # in Iterations
+		self.animation_speed = self.default_animation_speed # in Iterations
+		self.stimpack_animation_speed = FPS
+		self.stimpack_speed = None # in Iterations
+
+		self.on_stimpack = False # stimpack - boost of shooting on STIMPACK_BUFF
+		self.stimpack_animation = False
+
+		self.upgrade_cost = int(600 + (600*0.15)*self.level)
 
 	def update(self, battle_units):
+		if self.on_stimpack:
+			if self.stimpack_iterations >= self.stimpack_speed:
+				self.stop_stimpack()
+				#print(f'stop stimpack! attack - {self.attack_speed}; animation - {self.animation_speed}')
+			else:
+				self.stimpack_iterations += 1
 		if self.target != None:
 			if self.target not in battle_units or self.target.alive == False:
 				self.target = None
@@ -78,3 +95,28 @@ class TownShooter:
 		if target != None:
 			battle_units[battle_units.index(target)].attacking_me_shooters += 1
 		self.target = target
+
+	def stimpack(self):
+		self.stimpack_speed = FPS * 4
+		self.on_stimpack = True
+		if self.default_attack_speed - self.default_attack_speed * STIMPACK_BUFF != self.attack_speed:
+			self.attack_speed -= self.attack_speed * STIMPACK_BUFF
+			self.animation_speed -= self.animation_speed * STIMPACK_BUFF
+		self.stimpack_iterations = 0
+		self.stimpack_animation = True
+		self.stimpack_animation_iterations = 0
+		#print(f'stimpacked! attack - {self.attack_speed}; animation - {self.animation_speed}')
+
+	def stop_stimpack(self):
+		self.attack_speed = self.default_attack_speed
+		self.animation_speed = self.default_animation_speed
+		self.stimpack_iterations = 0
+		self.on_stimpack = False
+		self.stimpack_animation = True
+		self.stimpack_animation_iterations = 0
+
+	def new_level(self):
+		self.level += 1
+		self.damage = self.level * 5
+		self.upgrade_cost = int(600 + (600*0.15)*self.level)
+		#print(f'new level is - {self.level}')

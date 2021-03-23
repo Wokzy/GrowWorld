@@ -4,68 +4,360 @@
 		"selected_items":
 		[
 			[
-				"as",
-				"async"
+				"upda",
+				"update_changing_unit"
 			],
 			[
-				"re",
-				"removing_list"
+				"changing",
+				"changing_unit_verb"
 			],
 			[
-				"remo",
-				"removing_list"
+				"cha",
+				"change_unit"
 			],
 			[
-				"te",
-				"text_input_height"
+				"O",
+				"OBJECT_MULTIPLYER_HEIGHT"
 			],
 			[
-				"tex",
-				"text_input_width"
+				"get",
+				"get_text_background"
+			],
+			[
+				"image",
+				"images"
+			],
+			[
+				"her",
+				"heroes"
+			],
+			[
+				"get_",
+				"get_gray_window"
+			],
+			[
+				"chan",
+				"changing_unit_noun"
+			],
+			[
+				"win",
+				"window"
+			],
+			[
+				"tow",
+				"tower_position"
+			],
+			[
+				"get_set",
+				"get_settings_button"
+			],
+			[
+				"get_fi",
+				"get_fight_button"
+			],
+			[
+				"hero",
+				"heroes"
+			],
+			[
+				"hp",
+				"hp_iteration"
+			],
+			[
+				"atta",
+				"attack_range"
+			],
+			[
+				"ima",
+				"image"
+			],
+			[
+				"imga",
+				"image"
+			],
+			[
+				"ali",
+				"allies_units"
+			],
+			[
+				"u",
+				"unit"
+			],
+			[
+				"up",
+				"update"
+			],
+			[
+				"def",
+				"defs\tMethod"
+			],
+			[
+				"att",
+				"attack"
+			],
+			[
+				"at",
+				"attack_iteration"
 			],
 			[
 				"OB",
 				"OBJECT_MULTIPLYER_HEIGHT"
 			],
 			[
+				"HE",
+				"HERO_BACKGROUND"
+			],
+			[
+				"upgrade_castle_tex",
+				"upgrade_castle_text_2"
+			],
+			[
+				"upgra",
+				"upgrade_castle_button"
+			],
+			[
+				"upgrade_",
+				"upgrade_castle_text"
+			],
+			[
+				"cas",
+				"castle"
+			],
+			[
+				"ca",
+				"castle"
+			],
+			[
+				"upg",
+				"upgrade_shooters_text_2"
+			],
+			[
+				"UP",
+				"UPGRADE_SHOOTER_BUTTON_IMAGE"
+			],
+			[
+				"set",
+				"settings_button_on"
+			],
+			[
+				"attt",
+				"attack_button_on"
+			],
+			[
+				"w",
+				"window_position"
+			],
+			[
+				"remo",
+				"remove_list"
+			],
+			[
+				"gra",
+				"get_gray_window"
+			],
+			[
+				"str",
+				"str_"
+			],
+			[
+				"ba",
+				"get_text_background"
+			],
+			[
+				"tex",
+				"TEXT_BACKGROUND"
+			],
+			[
+				"wa",
+				"wave_font"
+			],
+			[
+				"ob",
+				"objects"
+			],
+			[
+				"save",
+				"save_state"
+			],
+			[
+				"town",
+				"town_shooters"
+			],
+			[
+				"St",
+				"StimManager"
+			],
+			[
+				"__",
+				"__class__"
+			],
+			[
+				"le",
+				"level"
+			],
+			[
+				"load",
+				"load_state"
+			],
+			[
+				"wi",
+				"with"
+			],
+			[
+				"tota",
+				"total_mana"
+			],
+			[
+				"se",
+				"self"
+			],
+			[
+				"col",
+				"cooldown_background_bar_image"
+			],
+			[
+				"co",
+				"cooldown_background_bar_size"
+			],
+			[
+				"bli",
+				"blit_heroes"
+			],
+			[
+				"he",
+				"hero"
+			],
+			[
+				"cooldown_Bar",
+				"cooldown_bar_image"
+			],
+			[
+				"STIM",
+				"STIM_MANAGER"
+			],
+			[
+				"DEFAULT_HE",
+				"DEFAULT_HEROES_SIZE"
+			],
+			[
+				"cool",
+				"cooldown_bar_rect"
+			],
+			[
+				"ia",
+				"images"
+			],
+			[
+				"da",
+				"damage"
+			],
+			[
+				"sho",
+				"show_attack_button"
+			],
+			[
+				"DEFA",
+				"DEFAULT_FIGHT_BUTTON_SIZE"
+			],
+			[
+				"blit",
+				"blitting"
+			],
+			[
+				"ene",
+				"enemy_line_iteraion"
+			],
+			[
+				"ani",
+				"animation_iterations"
+			],
+			[
+				"tic",
+				"ticks"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"text",
+				"text_input_height"
+			],
+			[
+				"te",
+				"text"
+			],
+			[
+				"obj",
+				"objects"
+			],
+			[
+				"upa",
+				"update_settings_window"
+			],
+			[
 				"en",
 				"enter_in_text_input"
 			],
 			[
-				"def",
-				"def\tFunction"
+				"in",
+				"in_battle"
 			],
 			[
-				"se",
-				"settings_window"
+				"as",
+				"async"
 			],
 			[
-				"SE",
-				"SETTINGS_WINDOW_IMAGE"
+				"async",
+				"asyncio"
 			],
 			[
-				"DEFA",
-				"DEFAULT_SETTINGS_WINDOW_SIZE"
+				"thr",
+				"thr"
+			],
+			[
+				"thre",
+				"threading"
+			],
+			[
+				"mul",
+				"multiprocessing"
+			],
+			[
+				"ini",
+				"init_townshooters"
+			],
+			[
+				"stay",
+				"stay_image"
+			],
+			[
+				"Hp",
+				"hp_bar_background_image"
+			],
+			[
+				"HP",
+				"HPBAR_BACKGROUND_IMAGE"
+			],
+			[
+				"mana",
+				"mana_add_timer"
+			],
+			[
+				"DEFAULT",
+				"DEFAULT_WIDTH"
+			],
+			[
+				"toa",
+				"total_mana"
 			],
 			[
 				"DE",
-				"DEFAULT_SETTINGS_WINDOW_SIZE"
-			],
-			[
-				"get",
-				"get_settings_button"
+				"DEFAULT_MONSTER_SIZE"
 			],
 			[
 				"MON",
 				"MONSTER_IMAGE"
-			],
-			[
-				"w",
-				"wave"
-			],
-			[
-				"in",
-				"in_battle"
 			],
 			[
 				"ata",
@@ -74,10 +366,6 @@
 			[
 				"atat",
 				"attack_speed"
-			],
-			[
-				"atta",
-				"attack_timer"
 			],
 			[
 				"de",
@@ -100,28 +388,12 @@
 				"MANABAR_IMAGE"
 			],
 			[
-				"Hp",
-				"HPBAR_IMAGE"
-			],
-			[
 				"manabae",
 				"manabar_size"
 			],
 			[
-				"bli",
-				"blit_hitpoints"
-			],
-			[
-				"ini",
-				"init_mana"
-			],
-			[
 				"init",
 				"init_hitpoints"
-			],
-			[
-				"hp",
-				"hpbar_place"
 			],
 			[
 				"Ob",
@@ -132,20 +404,12 @@
 				"OBJECT_MULTIPLYER_WIDTH"
 			],
 			[
-				"mana",
-				"manabar_place"
-			],
-			[
 				"tot",
 				"total_mana"
 			],
 			[
 				"man",
 				"manabar_place"
-			],
-			[
-				"tota",
-				"total_mana"
 			],
 			[
 				"spl",
@@ -160,20 +424,8 @@
 				"road_rect"
 			],
 			[
-				"he",
-				"HEIGHT"
-			],
-			[
-				"wid",
-				"WIDTH"
-			],
-			[
 				"s",
 				"size"
-			],
-			[
-				"ca",
-				"castle_rect"
 			],
 			[
 				"sc",
@@ -240,10 +492,6 @@
 				"left_move_images"
 			],
 			[
-				"le",
-				"left_move_images"
-			],
-			[
 				"on",
 				"onGround"
 			],
@@ -264,256 +512,8 @@
 				"right_move_images"
 			],
 			[
-				"up",
-				"update_level_side"
-			],
-			[
 				"W",
 				"WIN_W"
-			],
-			[
-				"key",
-				"key_update"
-			],
-			[
-				"I",
-				"Img"
-			],
-			[
-				"move",
-				"move_timer"
-			],
-			[
-				"win",
-				"win_size"
-			],
-			[
-				"blo",
-				"block_coord"
-			],
-			[
-				"ap",
-				"apples"
-			],
-			[
-				"tie",
-				"timer"
-			],
-			[
-				"__",
-				"__init__"
-			],
-			[
-				"ene",
-				"enemyes"
-			],
-			[
-				"eme",
-				"enemyes"
-			],
-			[
-				"co",
-				"cost_2"
-			],
-			[
-				"a",
-				"alphabet"
-			],
-			[
-				"tra",
-				"training_output"
-			],
-			[
-				"sy",
-				"synaptic_weights"
-			],
-			[
-				"Mic",
-				"Microsoft_operating_system"
-			],
-			[
-				"pa",
-				"payload"
-			],
-			[
-				"bat",
-				"battle_3"
-			],
-			[
-				"ba",
-				"battle_3"
-			],
-			[
-				"go",
-				"go_to_forest_nvm"
-			],
-			[
-				"ol",
-				"old_weap"
-			],
-			[
-				"return_",
-				"return_weap"
-			],
-			[
-				"pr",
-				"price"
-			],
-			[
-				"_",
-				"__name__"
-			],
-			[
-				"lowe",
-				"lower"
-			],
-			[
-				"ch",
-				"ch_item"
-			],
-			[
-				"q",
-				"Quests"
-			],
-			[
-				"u",
-				"UPDATE_LOG"
-			],
-			[
-				"пира",
-				"пиратов"
-			],
-			[
-				"play",
-				"play_menu"
-			],
-			[
-				"fish",
-				"fish_1_2"
-			],
-			[
-				"ge",
-				"get_updates_json"
-			],
-			[
-				"resu",
-				"results"
-			],
-			[
-				"merge",
-				"merge"
-			],
-			[
-				"mer",
-				"merge_sort"
-			],
-			[
-				"d",
-				"def\tFunction"
-			],
-			[
-				"p",
-				"prefix"
-			],
-			[
-				"f",
-				"fractal_rectangle"
-			],
-			[
-				"c",
-				"c"
-			],
-			[
-				"k",
-				"k"
-			],
-			[
-				"A",
-				"A"
-			],
-			[
-				"tes",
-				"test_invert_array"
-			],
-			[
-				"ra",
-				"randoms"
-			],
-			[
-				"it",
-				"iterations"
-			],
-			[
-				"за",
-				"завеса"
-			],
-			[
-				"abi",
-				"ability_active"
-			],
-			[
-				"abil",
-				"ability"
-			],
-			[
-				"save",
-				"save_turn"
-			],
-			[
-				"use",
-				"use_ability"
-			],
-			[
-				"l",
-				"l_char"
-			],
-			[
-				"st",
-				"student_ord_2"
-			],
-			[
-				"bto",
-				"bot_cards"
-			],
-			[
-				"bot",
-				"bot_cards"
-			],
-			[
-				"low",
-				"lower_bot"
-			],
-			[
-				"lo",
-				"lower_player"
-			],
-			[
-				"player",
-				"player_ask_selection"
-			],
-			[
-				"tal",
-				"talk_with_kontr"
-			],
-			[
-				"под",
-				"подпола"
-			],
-			[
-				"home",
-				"home_enter"
-			],
-			[
-				"pri",
-				"price"
-			],
-			[
-				"pl",
-				"play_menu"
-			],
-			[
-				"ab",
-				"ability_active"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "main.py",
 			"settings":
 			{
-				"buffer_size": 6460,
+				"buffer_size": 9700,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -532,34 +532,7 @@
 			"file": "scripts/GameFunctions.py",
 			"settings":
 			{
-				"buffer_size": 4080,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "scripts/Unit.py",
-			"settings":
-			{
-				"buffer_size": 2531,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "scripts/castle.py",
-			"settings":
-			{
-				"buffer_size": 1024,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "images.py",
-			"settings":
-			{
-				"buffer_size": 3237,
+				"buffer_size": 16491,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -568,7 +541,71 @@
 			"file": "scripts/objects.py",
 			"settings":
 			{
-				"buffer_size": 966,
+				"buffer_size": 2389,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/castle.py",
+			"settings":
+			{
+				"buffer_size": 1276,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/Town_shooters.py",
+			"settings":
+			{
+				"buffer_size": 4017,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/Enemy.py",
+			"settings":
+			{
+				"buffer_size": 2855,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scripts/heroes.py",
+			"settings":
+			{
+				"buffer_size": 4413,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test.py",
+			"settings":
+			{
+				"buffer_size": 1207,
+				"encoding": "UTF-8",
+				"line_ending": "Windows",
+				"name": "import pygame"
+			}
+		},
+		{
+			"file": "scripts/Units.py",
+			"settings":
+			{
+				"buffer_size": 3374,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "images.py",
+			"settings":
+			{
+				"buffer_size": 6925,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -577,7 +614,7 @@
 			"file": "constants.py",
 			"settings":
 			{
-				"buffer_size": 2189,
+				"buffer_size": 3521,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -631,13 +668,20 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Programming/python/GrowWorld",
-		"/D/Programming/python/GrowWorld/scripts"
+		"/E/Programming/python/GrowWorld",
+		"/E/Programming/python/GrowWorld/scripts"
 	],
 	"file_history":
 	[
-		"/D/Programming/python/GrowWorld/scripts/objects.py",
+		"/F/Programming/python/GrowWorld/set_config.py",
+		"/F/Programming/python/GrowWorld/scripts/Unit.py",
+		"/F/Programming/python/Pygame_test_2/fourth.py",
+		"/F/Programming/git_commands.md",
 		"/F/Programming/python/Pygame_test/main.py",
+		"/F/Programming/python/GrowWorld/test.py",
+		"/C/Users/Yegorka/AppData/Local/Programs/Python/Python39/Lib/multiprocessing/reduction.py",
+		"/C/Users/Yegorka/AppData/Local/Programs/Python/Python39/Lib/multiprocessing/process.py",
+		"/C/Users/Yegorka/AppData/Local/Programs/Python/Python39/Lib/multiprocessing/context.py",
 		"/F/Programming/python/main.py",
 		"/E/Yansex_drive/Sinhron/YandexDisk/СДШ/info_10.03.py",
 		"/E/programms/python3-pjsip/setup.py",
@@ -743,7 +787,7 @@
 	],
 	"find":
 	{
-		"height": 39.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -757,59 +801,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"blit_settings",
-			"mana_text",
-			"text_input_height",
-			"text_input_width",
-			"75",
-			"50",
-			"append",
-			"window",
-			"50",
-			"WIDTH",
-			"settings_window",
-			"SETTINGS_WINDOW_SIZE",
-			"window",
-			"gear",
-			"check_end_battle",
-			"heroes_amount",
-			"wawe",
-			"Unit",
-			"dps",
-			"Mellee",
-			"type_surface",
-			"level",
-			"mana",
-			"hp",
-			"300",
-			"INFO_FONT_SIZE",
-			"mana",
-			"Mana",
-			"Счёт",
-			"hpbar_rect",
-			"total_hp",
-			"DEFAULT_HPBAR_HEIGHT",
-			"update_hp",
-			"new_level",
-			"castle_rect",
-			"800",
-			"circle",
-			"DEFAULT_HEIGHT",
-			"40",
-			"width",
-			"280",
+			"color",
+			"get_text_background",
+			"get_text_input",
+			"get_castle",
+			"self",
+			"125",
+			"target",
+			"castle",
+			"self",
+			"battle_units",
+			"MARADAUER_IMAGE",
+			"enemyes",
+			"battle_heroes",
+			"hp_bar_rect",
+			"animation_speed",
+			"action",
+			"alli",
+			"FIELD_MARADAUER_IMAGE",
+			"MARADAUER_IMAGE",
+			"TOWN_SHOOTER_IAMGES",
+			"attack_speed",
+			"type_damage",
+			"240",
+			"gold",
+			"update",
+			"gold",
+			"gold_window",
+			"self",
+			"blit_heroes",
+			"town_shooters[0]",
+			"250",
 			"100",
-			"width",
-			"WIDTH",
-			"OBJECT_MULTIPLYER",
-			"castle_rect",
-			"castle_image",
-			"castle_rect",
-			"size",
-			"500",
-			"1000",
-			"default",
-			"window_resolution"
+			"text_background",
+			"self",
+			"str",
+			"str(gf.gold+100000)",
+			"a",
+			"gf",
+			"wave_font",
+			"enemy_line_time",
+			"name",
+			"gf",
+			"castle",
+			"gf.castle",
+			"tower_position",
+			"gf.castle",
+			"castle",
+			"self.castle",
+			"cooldown_bar_rect",
+			"DEFAULT_HEROES_SIZE",
+			"50",
+			"35",
+			"25",
+			"50",
+			"OBJECT_MULTIPLYER_WIDHT",
+			"blit_heroes",
+			"town_shooters",
+			"Town_shooters",
+			"town_shooters",
+			"image",
+			"unit",
+			"Unit",
+			"show_",
+			"wave",
+			"APPLY_SETTIGS_BUTTON_SIZE",
+			"()\n",
+			"shooter",
+			"group",
+			"try_multiple_operations",
+			"queue",
+			"start",
+			"self",
+			"await ",
+			"async ",
+			"await ",
+			"async ",
+			"datetime",
+			"enemy_line_timer",
+			"datetime",
+			"mana_add_timer",
+			"mana_add_timer_slide",
+			"mana_add_iterations",
+			"datetime",
+			"current_iteration",
+			"animation_timer",
+			"datetime.now()",
+			"360",
+			"640",
+			"gf",
+			"HEIGTH",
+			"continue",
+			"text_input_obj",
+			"objects",
+			"text_input_width",
+			"text_input_obj",
+			"append",
+			"self",
+			"text_input_width",
+			"text_input_height",
+			"1920",
+			"additional_objects",
+			"async ",
+			"tmap",
+			"4",
+			"font",
+			"threadloop",
+			"pygame.threads.WorkerQueue()",
+			"stop",
+			"Thread",
+			"threading",
+			"wait",
+			"do",
+			"update",
+			")\n",
+			"async ",
+			"await ",
+			"async ",
+			"await ",
+			"async ",
+			"await ",
+			"async",
+			"Process",
+			"Thread",
+			"threading",
+			"SETTINGS_BUTTON_IMAGE",
+			"TOWN_SHOOTER_SIZE",
+			"marine_stay",
+			"SETTINGS_BUTTON"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -827,7 +946,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -836,15 +955,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6460,
+						"buffer_size": 9700,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1181,
-								1181
+								8454,
+								8454
 							]
 						],
 						"settings":
@@ -853,10 +972,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 540.0,
+						"translation.y": 4590.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -865,15 +984,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4080,
+						"buffer_size": 16491,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4080,
-								4080
+								4896,
+								4896
 							]
 						],
 						"settings":
@@ -882,27 +1001,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1692.0,
+						"translation.y": 2545.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "scripts/Unit.py",
+					"file": "scripts/objects.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2531,
+						"buffer_size": 2389,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								35,
-								35
+								2330,
+								2330
 							]
 						],
 						"settings":
@@ -911,10 +1030,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 108.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -923,15 +1042,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1024,
+						"buffer_size": 1276,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								27,
-								27
+								388,
+								388
 							]
 						],
 						"settings":
@@ -943,24 +1062,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "images.py",
+					"file": "scripts/Town_shooters.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3237,
+						"buffer_size": 4017,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								491,
-								491
+								1614,
+								1614
 							]
 						],
 						"settings":
@@ -969,7 +1088,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 918.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -977,19 +1096,19 @@
 				},
 				{
 					"buffer": 5,
-					"file": "scripts/objects.py",
+					"file": "scripts/Enemy.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 966,
+						"buffer_size": 2855,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								701,
-								701
+								1716,
+								1716
 							]
 						],
 						"settings":
@@ -998,27 +1117,87 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 378.0,
+						"translation.y": 556.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "constants.py",
+					"file": "scripts/heroes.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2189,
+						"buffer_size": 4413,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								221,
-								221
+								546,
+								546
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1207,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								712,
+								712
+							]
+						],
+						"settings":
+						{
+							"auto_name": "import pygame",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "scripts/Units.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1434,
+								1434
 							]
 						],
 						"settings":
@@ -1026,10 +1205,68 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 216.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "images.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6925,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6842,
+								6842
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3249.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "constants.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3385,
+								3385
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1042.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
 					"type": "text"
 				}
 			]
@@ -1037,11 +1274,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 27.0
+		"height": 28.0
 	},
 	"input":
 	{
-		"height": 41.0
+		"height": 47.0
 	},
 	"layout":
 	{
@@ -1068,7 +1305,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 31.0
+		"height": 39.0
 	},
 	"output.find_results":
 	{
@@ -1082,7 +1319,7 @@
 	"project": "subl_prj.sublime-project",
 	"replace":
 	{
-		"height": 50.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1120,7 +1357,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 197.0,
+	"side_bar_width": 162.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

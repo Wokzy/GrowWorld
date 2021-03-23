@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class Enemy:
-	def __init__(self, type_surface, type_damage, hp, speed, damage, attack_speed, image, size, row_position=1):
+	def __init__(self, type_surface, type_damage, hp, speed, damage, attack_speed, image, size, wave, row_position=1):
 		self.type_surface = type_surface # Ground / Air
 		self.type_damage = type_damage # Range / Melee
 		self.total_hp = hp
@@ -34,15 +34,22 @@ class Enemy:
 		self.attacking_me_shooters = 0
 		self.attack_iteration = 0
 
-	def update(self, castle):
+		self.cost = 10 + (wave // 4)
+
+		self.target = None
+
+	def update(self, castle, gf):
 		self.attack_iteration += 1
+		if self.target == None:
+			self.find_target(gf)
 		if self.hp <= 0:
 			self.alive = False
+			gf.gold += self.cost
 			return None
 		if self.type_damage == 'Melee':
-			if not self.rect.colliderect(castle.castle_rect):
+			if not self.rect.colliderect(self.target.rect):
 				self.rect.x -= self.speed
-			elif self.rect.colliderect(castle.castle_rect):
+			elif self.rect.colliderect(self.target.rect):
 				return self.attack()
 			else: return ['Stay']
 
@@ -66,7 +73,12 @@ class Enemy:
 	def bite(self, dmg):
 		self.hp -= dmg
 
+	def find_target(self, gf):
+		if len(gf.allies_units) > 0:
+			self.target = random.choice([gf.castle, random.choice(gf.allies_units)])
+		else: self.target = gf.castle
+
 
 
 def monster(wave, row_position):
-	return Enemy('Ground', 'Melee', wave*100, random.randint(2, 4)*AVERAGE_MULTIPLYER, 15, FPS*0.4, images.get_monster(), MONSTER_SIZE, row_position)
+	return Enemy('Ground', 'Melee', ((wave//3)+1)*250, random.randint(2, 4)*AVERAGE_MULTIPLYER, 15, FPS*0.4, images.get_monster(), MONSTER_SIZE, wave, row_position)
