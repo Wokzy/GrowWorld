@@ -150,10 +150,29 @@ def get_maradauer():
 		MARADAUER_IMAGE = pygame.transform.scale(pygame.image.load('sprites/marine/marine_stay.png'), FIELDMARADAUER_SIZE)
 	return MARADAUER_IMAGE
 
+def get_close_button():
+	global CLOSE_BUTTON
+	if CLOSE_BUTTON == None:
+		CLOSE_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/close_button.png'), CLOSE_BUTTON_SIZE)
+	return CLOSE_BUTTON
+
+def get_take_off_button():
+	global TAKE_OFF_BUTTON
+	if TAKE_OFF_BUTTON == None:
+		TAKE_OFF_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/take_off.png'), TAKE_OFF_BUTTON_SIZE)
+	return TAKE_OFF_BUTTON
+
+def get_equip_button():
+	global EQUIP_BUTTON
+	if EQUIP_BUTTON == None:
+		EQUIP_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/equip.png'), EQUIP_BUTTON_SIZE)
+	return EQUIP_BUTTON
+
 def init():
 	global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IMAGES, SETTINGS_BUTTON_IMAGE
 	global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON, FIGHT_BUTTON, STIM_ON, STIM_OFF
 	global STIM_MANAGER, UPGRADE_SHOOTER_BUTTON_IMAGE, HERO_BACKGROUND, MARADAUER_IMAGE, FIELD_MARADAUER_IMAGES
+	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -173,6 +192,9 @@ def init():
 	HERO_BACKGROUND = None
 	MARADAUER_IMAGE = None
 	FIELD_MARADAUER_IMAGES = None
+	CLOSE_BUTTON = None
+	TAKE_OFF_BUTTON = None
+	EQUIP_BUTTON = None
 
 	get_mana_bar()
 	get_field_maradauer()
@@ -193,5 +215,8 @@ def init():
 	get_settings_window()
 	get_settings_button()
 	get_apply_settings_button()
+	get_close_button()
+	get_take_off_button()
+	get_equip_button()
 
 init()

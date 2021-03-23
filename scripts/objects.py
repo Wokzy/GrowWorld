@@ -1,5 +1,6 @@
 import pygame, images
 from constants import *
+from scripts import heroes
 
 
 class Button:
@@ -18,6 +19,24 @@ class Button:
 			await gf.apply_settings()
 		elif self.name == 'attack_button':
 			await gf.start_battle()
+		elif self.name == 'close_button':
+			await gf.close_everything()
+		elif self.name == 'equip':
+			idx = 23123123123123
+			for i in range(len(gf.heroes)):
+				if gf.heroes[i].name == gf.upgrading_hero_obj.name:
+					idx = i
+					break
+			if idx != 23123123123123:
+				pos = gf.heroes[idx].tower_position
+				gf.heroes[idx] = heroes.Nothing(pos, gf)
+			gf.upgrading_hero_obj.tower_position = gf.heroes[gf.heroes.index(gf.changing_unit_noun)].tower_position
+			gf.upgrading_hero_obj.init(gf)
+			gf.heroes[gf.heroes.index(gf.changing_unit_noun)] = gf.upgrading_hero_obj
+			await gf.close_everything()
+		elif self.name == 'take_off':
+			gf.heroes[gf.heroes.index(gf.changing_unit_noun)] = heroes.Nothing(gf.heroes[gf.heroes.index(gf.changing_unit_noun)].tower_position, gf)
+			await gf.close_everything()
 
 
 class Window:
@@ -32,7 +51,9 @@ class Window:
 		self.mode = False # True or False (hide or show)
 
 	async def action(self, gf):
-		pass
+		#print('aboba')
+		if 'changing_hero' in self.name:
+			gf.upgrade_hero(int(self.name.split(' ')[1]))
 
 class TextInput:
 	def __init__(self, name, size, position, text='', type_='default'):

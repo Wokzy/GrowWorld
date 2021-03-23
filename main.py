@@ -12,6 +12,7 @@ pygame.font.init()
 class GrowWord:
 	def __init__(self, gf):
 		self.screen = pygame.display.set_mode(WINDOW_RESOLUTION, vsync=1)
+		pygame.display.set_caption('GrowWord')
 
 		self.road_image = images.get_road()
 		self.road_rect = self.road_image.get_rect()
@@ -129,11 +130,15 @@ class GrowWord:
 			#if obj.__class__.__name__ == 'Text':
 			#	self.screen.blit(obj.image, obj.rect)
 
+		for obj in gf.info_objects:
+			self.screen.blit(obj.image, obj.rect)
+
 	def update_heroes(self):
 		for hero in gf.heroes:
 			hero.update(gf)
-			if not gf.in_battle:
-				hero.cooldown_iteration = hero.cooldown
+			if hero.__class__.__name__ != 'Nothing':
+				if not gf.in_battle:
+					hero.cooldown_iteration = hero.cooldown
 
 	def init_hitpoints(self):
 		self.hpbar_image = images.get_hp_bar()
@@ -181,7 +186,7 @@ class GrowWord:
 			gf.allies_units.remove(unit)
 
 	async def update_textes(self):
-		for obj in gf.additional_objects:
+		for obj in gf.info_objects:
 			if obj.name == 'gold_text':
 				#a = []
 				#for i in range(len(str(gf.gold+100000))):
@@ -264,7 +269,7 @@ class GrowWord:
 				flag = False
 				for obj in gf.additional_objects[::-1]:
 					try:
-						if obj.rect.collidepoint(mos_pos):
+						if obj.rect.collidepoint(mos_pos) and event.button != 4 and event.button != 5:
 							await obj.action(gf)
 							if obj.__class__.__name__ == 'TextInput':
 								gf.text_input_obj = obj
@@ -273,7 +278,7 @@ class GrowWord:
 							flag = True
 							break
 					except Exception as e:
-						pass
+						pass #print(e)
 				if gf.enter_in_text_input and not gf.text_input_obj.rect.collidepoint(mos_pos):
 					gf.text_input_obj = None
 					gf.enter_in_text_input = False
@@ -284,9 +289,12 @@ class GrowWord:
 							break
 				if gf.changing_unit_verb:
 					if event.button == 4:
-						gf.changing_scroll_position += 1
+						if gf.changing_scroll_position > 0:
+							gf.changing_scroll_position -= 1
 					elif event.button == 5:
-						gf.changing_scroll_position -= 1
+						if gf.changing_scroll_position < len(gf.changing_heroes_list):
+							gf.changing_scroll_position += 1
+					gf.update_changing_unit()
 
 
 

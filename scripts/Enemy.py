@@ -40,6 +40,8 @@ class Enemy:
 
 	def update(self, castle, gf):
 		self.attack_iteration += 1
+		if self.target != None and self.target.hp <= 0:
+			self.target = None
 		if self.target == None:
 			self.find_target(gf)
 		if self.hp <= 0:

@@ -10,6 +10,7 @@ class GameFunctions:
 		self.in_battle = False
 		self.battle_heroes = []
 		self.allies_units = []
+		self.total_heroes = []
 		self.battle_duration_left = None
 		self.enemyes_amount = None
 		self.enemy_line_time = FPS * random.randint(50, 90) / 100
@@ -36,8 +37,10 @@ class GameFunctions:
 			for hero in self.data['heroes_info']:
 				if hero['name'] == 'StimManager':
 					self.heroes.append(heroes.StimManager(hero['level'], hero['tower_position'], self))
+					self.total_heroes.append(heroes.StimManager(hero['level'], hero['tower_position'], self))
 				elif hero['name'] == 'Maradauer':
 					self.heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
+					self.total_heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
 				else: print(hero['name'])
 			self.town_shooters = []
 			for i in range(4):
@@ -51,6 +54,7 @@ class GameFunctions:
 			self.crystal = 0
 
 		self.additional_objects = []
+		self.info_objects = []
 		self.prev_additional_objects = []
 
 		self.enter_in_text_input = False
@@ -64,6 +68,8 @@ class GameFunctions:
 		self.init_optimization()
 
 		self.changing_unit_verb = False
+		self.upgrading_hero = False
+		self.upgrading_hero_obj = None
 
 	async def start_battle(self):
 		print(f'wave - {self.wave}')
@@ -155,8 +161,8 @@ class GameFunctions:
 		await self.update_settings_window()
 		await self.update_upgrading()
 
-		if self.changing_unit_verb:
-			self.update_changing_unit()
+		if self.upgrading_hero:
+			await self.update_upgrading_hero()
 
 	def init_optimization(self):
 		self.attack_button_on = False
@@ -290,10 +296,10 @@ class GameFunctions:
 		return data
 
 	def init_objects(self):
-		self.additional_objects.append(objects.Window('gold_window', images.get_text_background((100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT)), (0, 0)))
-		self.additional_objects.append(objects.Window('crystal_window', images.get_text_background((100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT)), ((100+15)*OBJECT_MULTIPLYER_WIDTH, 0)))
-		self.additional_objects.append(objects.Text('gold_text', self.info_font.render(str(self.gold), False, (240, 236, 55)), (0, 0)))
-		self.additional_objects.append(objects.Text('crystal_text', self.info_font.render(str(self.crystal), False, (25, 210, 25)), ((115+2)*OBJECT_MULTIPLYER_WIDTH, 0)))
+		self.info_objects.append(objects.Window('gold_window', images.get_text_background((100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT)), (0, 0)))
+		self.info_objects.append(objects.Window('crystal_window', images.get_text_background((100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT)), ((100+15)*OBJECT_MULTIPLYER_WIDTH, 0)))
+		self.info_objects.append(objects.Text('gold_text', self.info_font.render(str(self.gold), False, (240, 236, 55)), (0, 0)))
+		self.info_objects.append(objects.Text('crystal_text', self.info_font.render(str(self.crystal), False, (25, 210, 25)), ((115+2)*OBJECT_MULTIPLYER_WIDTH, 0)))
 
 	async def update_upgrading(self):
 		if self.prev_additional_objects == []:
@@ -316,9 +322,9 @@ class GameFunctions:
 					self.additional_objects.append(objects.Text('upgrade_shooters_text', self.info_font.render(f'{self.town_shooters[0].upgrade_cost} - {self.town_shooters[0].level + 1}', False, (240, 236, 55)), (window_position[0]+18*OBJECT_MULTIPLYER_WIDTH, window_position[1]+25*OBJECT_MULTIPLYER_HEIGHT)))
 					self.additional_objects.append(objects.Text('upgrade_shooters_text_2', self.info_font_small.render('Upgrade town shooters', False, (255, 255, 255)), (window_position[0]+15*OBJECT_MULTIPLYER_WIDTH, window_position[1]+8*OBJECT_MULTIPLYER_HEIGHT)))
 					
-					self.additional_objects.append(objects.UpgradeCastleButton((window_position[0]+15*OBJECT_MULTIPLYER_WIDTH, window_position[1]+UPGRADE_SHOOTER_BUTTON_SIZE[1]*4*OBJECT_MULTIPLYER_HEIGHT)))
-					self.additional_objects.append(objects.Text('upgrade_castle_text', self.info_font.render(f'{self.castle.upgrade_cost} - {self.castle.level + 1}', False, (240, 236, 55)), (window_position[0]+18*OBJECT_MULTIPLYER_WIDTH, window_position[1]+UPGRADE_SHOOTER_BUTTON_SIZE[1]*4*OBJECT_MULTIPLYER_HEIGHT)))
-					self.additional_objects.append(objects.Text('upgrade_castle_text_2', self.info_font_small.render('Upgrade Castle', False, (255, 255, 255)), (window_position[0]+15*OBJECT_MULTIPLYER_WIDTH, window_position[1]+(UPGRADE_SHOOTER_BUTTON_SIZE[1]+8)*2*OBJECT_MULTIPLYER_HEIGHT)))
+					self.additional_objects.append(objects.UpgradeCastleButton((window_position[0]+15*OBJECT_MULTIPLYER_WIDTH, window_position[1]+UPGRADE_SHOOTER_BUTTON_SIZE[1]*4)))
+					self.additional_objects.append(objects.Text('upgrade_castle_text', self.info_font.render(f'{self.castle.upgrade_cost} - {self.castle.level + 1}', False, (240, 236, 55)), (window_position[0]+18*OBJECT_MULTIPLYER_WIDTH, window_position[1]+UPGRADE_SHOOTER_BUTTON_SIZE[1]*4)))
+					self.additional_objects.append(objects.Text('upgrade_castle_text_2', self.info_font_small.render('Upgrade Castle', False, (255, 255, 255)), (window_position[0]+15*OBJECT_MULTIPLYER_WIDTH, window_position[1]+(UPGRADE_SHOOTER_BUTTON_SIZE[1]+8)*2 + 20*OBJECT_MULTIPLYER_HEIGHT)))
 			if self.in_battle and self.upgrading_window_on:
 				remove_list = []
 				for obj in self.additional_objects:
@@ -328,27 +334,95 @@ class GameFunctions:
 					self.additional_objects.remove(obj)
 				self.upgrading_window_on = False
 
-	def change_unit(self, tower_position):
-		self.changing_unit_verb = True
-		self.changing_unit_noun = tower_position
+	def change_unit(self, unit):
+		if self.changing_unit_verb == False:
+			self.changing_unit_verb = True
+			self.changing_unit_noun = unit
 
-		self.prev_additional_objects = self.additional_objects
-		self.additional_objects = []
+			self.prev_additional_objects = self.additional_objects
+			self.additional_objects = []
 
-		self.changing_heroes_list = [[self.heroes[i], i] for i in range(len(self.heroes))]
-		self.changing_scroll_position = 0
-		self.current_changing_heroes_list = self.changing_heroes_list[self.changing_scroll_position:5+self.changing_scroll_position:]
+			self.changing_heroes_list = [[self.total_heroes[i], i] for i in range(len(self.total_heroes)) if self.total_heroes[i].__class__.__name__ != 'Nothing']
+			self.changing_scroll_position = 0
+			self.current_changing_heroes_list = self.changing_heroes_list[self.changing_scroll_position:5+self.changing_scroll_position:]
 
-		self.additional_objects.append(objects.Window('changing_unit_window', images.get_gray_window((140, 260)), (WIDTH-60*OBJECT_MULTIPLYER_WIDTH, HEIGHT-50*OBJECT_MULTIPLYER_HEIGHT)))
+			#self.additional_objects.append(objects.Window('changing_unit_window', images.get_gray_window((170*OBJECT_MULTIPLYER_WIDTH, 260*OBJECT_MULTIPLYER_HEIGHT)), (WIDTH-60*OBJECT_MULTIPLYER_WIDTH, HEIGHT-50*OBJECT_MULTIPLYER_HEIGHT)))
+
+			self.update_changing_unit()
+		elif self.changing_unit_verb == True:
+			self.stop_changing_unit()
 
 	def update_changing_unit(self):
 		self.current_changing_heroes_list = self.changing_heroes_list[self.changing_scroll_position:5+self.changing_scroll_position:]
-		self.additional_objects = [objects.Window('changing_unit_window', images.get_gray_window((140, 260)), (WIDTH-140*OBJECT_MULTIPLYER_WIDTH, 50*OBJECT_MULTIPLYER_HEIGHT))]
+		self.additional_objects = [objects.Window('changing_unit_window', images.get_gray_window((170*OBJECT_MULTIPLYER_WIDTH, 260*OBJECT_MULTIPLYER_HEIGHT)), (WIDTH-170*OBJECT_MULTIPLYER_WIDTH, 50*OBJECT_MULTIPLYER_HEIGHT))]
 
 		iteration = 0
 		for obj in self.current_changing_heroes_list:
-			self.additional_objects.append(objects.Window(f'changing_element_{iteration}_background', images.get_text_background((100, 35)), (self.additional_objects[0].rect.x+5*OBJECT_MULTIPLYER_WIDTH, self.additional_objects[0].rect.y+10*OBJECT_MULTIPLYER_HEIGHT+(35*iteration)*OBJECT_MULTIPLYER_HEIGHT)))
-			self.additional_objects.append(obj[0])
+			win_pos = (self.additional_objects[0].rect.x+5*OBJECT_MULTIPLYER_WIDTH, self.additional_objects[0].rect.y+10*OBJECT_MULTIPLYER_HEIGHT+(35*iteration)*OBJECT_MULTIPLYER_HEIGHT)
+			transformation = ()
+			self.additional_objects.append(objects.Window(f'changing_element_{iteration}_background', images.get_text_background((150*OBJECT_MULTIPLYER_WIDTH, 35*OBJECT_MULTIPLYER_HEIGHT)), win_pos))
+			if obj[0].__class__.__name__ == 'StimManager':
+				transformation = (30*OBJECT_MULTIPLYER_WIDTH, 30*OBJECT_MULTIPLYER_HEIGHT)
+			elif obj[0].__class__.__name__ == 'Maradauer':
+				transformation = (22*OBJECT_MULTIPLYER_WIDTH, 30*OBJECT_MULTIPLYER_HEIGHT)
+			self.additional_objects.append(objects.Window(f'changing_hero {obj[1]}', pygame.transform.scale(obj[0].image, transformation), (win_pos[0]+2*OBJECT_MULTIPLYER_WIDTH, win_pos[1]+2*OBJECT_MULTIPLYER_HEIGHT)))
+			self.additional_objects.append(objects.Text(f'changing_hero_text {obj[1]}', self.info_font.render(str(f'{obj[0].name}'), False, (255, 255, 255)), (win_pos[0]+7*OBJECT_MULTIPLYER_WIDTH+transformation[0], win_pos[1]+2*OBJECT_MULTIPLYER_HEIGHT)))
 			iteration += 1
 
-		self.init_objects()
+	def stop_changing_unit(self):
+		self.changing_unit_verb = False
+		#self.changing_unit_noun = None
+
+		self.additional_objects = list(self.prev_additional_objects)
+		self.prev_additional_objects = []
+
+	def upgrade_hero(self, hero_index):
+		self.stop_changing_unit()
+		self.prev_additional_objects = list(self.additional_objects)
+		self.additional_objects = []
+		self.upgrading_hero_obj = self.total_heroes[hero_index]
+
+		self.upgrading_hero = True
+
+		upgrade_hero_window_size = (400*OBJECT_MULTIPLYER_WIDTH, 280*OBJECT_MULTIPLYER_HEIGHT)
+		upgrade_hero_window_pos = (WIDTH // 2 - upgrade_hero_window_size[0], HEIGHT//2 - upgrade_hero_window_size[1])
+
+		self.additional_objects.append(objects.Window('upgrade_hero_window', images.get_gray_window(upgrade_hero_window_size), upgrade_hero_window_pos))
+		self.additional_objects.append(objects.Window('upgrade_hero_image', self.upgrading_hero_obj.image, (upgrade_hero_window_pos[0]+5*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_window_pos[1]+8*OBJECT_MULTIPLYER_HEIGHT)))
+
+		#print(self.additional_objects)
+
+	async def update_upgrading_hero(self):
+		self.additional_objects = []
+
+		upgrade_hero_window_size = (400*OBJECT_MULTIPLYER_WIDTH, 280*OBJECT_MULTIPLYER_HEIGHT)
+		upgrade_hero_window_pos = (WIDTH // 2 - upgrade_hero_window_size[0]//2, HEIGHT//2 - upgrade_hero_window_size[1]//2)
+		#upgrade_hero_window_pos = (0, 0)
+
+		self.additional_objects.append(objects.Window('upgrade_hero_window', images.get_gray_window(upgrade_hero_window_size), upgrade_hero_window_pos))
+		self.additional_objects.append(objects.Window('upgrade_hero_image', pygame.transform.scale(self.upgrading_hero_obj.image, (self.upgrading_hero_obj.size[0]*2, self.upgrading_hero_obj.size[1]*2)), (upgrade_hero_window_pos[0]+5*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_window_pos[1]+8*OBJECT_MULTIPLYER_HEIGHT)))
+		self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0], upgrade_hero_window_pos[1])))
+		self.additional_objects[-1].rect.center = (self.additional_objects[-1].rect.x, self.additional_objects[-1].rect.y)
+
+		if self.changing_unit_noun == self.upgrading_hero_obj:
+			self.additional_objects.append(objects.Button('take_off', images.get_take_off_button(), (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0]//4, upgrade_hero_window_pos[1]+upgrade_hero_window_size[1]-TAKE_OFF_BUTTON_SIZE[1] - 5*OBJECT_MULTIPLYER_HEIGHT)))
+		else:
+			self.additional_objects.append(objects.Button('equip', images.get_equip_button(), (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0]//4, upgrade_hero_window_pos[1]+upgrade_hero_window_size[1]-TAKE_OFF_BUTTON_SIZE[1] - 5*OBJECT_MULTIPLYER_HEIGHT)))
+
+		#self.init_objects()
+
+		#print(self.additional_objects)
+
+	async def close_everything(self):
+		if self.prev_additional_objects != []:
+			if self.upgrading_hero:
+				self.stop_upgrading_hero()
+			#self.additional_objects = list(self.prev_additional_objects)
+			#self.prev_additional_objects = []
+		else: pass
+
+	def stop_upgrading_hero(self):
+		self.upgrading_hero = False
+		self.upgrading_hero_obj = None
+		self.additional_objects = list(self.prev_additional_objects)
+		self.prev_additional_objects = []
