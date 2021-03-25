@@ -7,6 +7,7 @@ class FieldMaradauer:
 		self.type_surface = 'Ground' # Ground / Air
 		self.type_damage = 'Range' # Range / Melee
 		self.total_hp = level * 40
+		self.level = level
 		self.speed = 3 # Speed of unit in pixels
 		self.damage = level*20 # Damage in points
 		self.attack_speed = FPS * 0.85 # Attack speed in iterations
@@ -88,7 +89,7 @@ class FieldMaradauer:
 		self.hp_bar_image = pygame.transform.scale(self.hp_bar_image, self.hp_bar_size)
 
 		if self.hp_iteration >= self.hp_speed:
-			self.hp -= 1
+			self.hp -= 1*self.level
 			self.hp_iteration = 0
 
 		self.hp_iteration += 1

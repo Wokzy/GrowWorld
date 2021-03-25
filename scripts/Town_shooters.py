@@ -96,8 +96,8 @@ class TownShooter:
 			battle_units[battle_units.index(target)].attacking_me_shooters += 1
 		self.target = target
 
-	def stimpack(self):
-		self.stimpack_speed = FPS * 4
+	def stimpack(self, stimpack_speed):
+		self.stimpack_speed = stimpack_speed
 		self.on_stimpack = True
 		if self.default_attack_speed - self.default_attack_speed * STIMPACK_BUFF != self.attack_speed:
 			self.attack_speed -= self.attack_speed * STIMPACK_BUFF

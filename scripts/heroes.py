@@ -14,6 +14,9 @@ class StimManager:
 		self.cooldown_iteration = self.cooldown
 		self.tower_position = tower_position
 
+		self.upgrade_cost = 600 + (150*self.level)
+		self.stimpack_speed = FPS * 4 + (FPS*0.3*(self.level-1))
+
 		self.rect = self.image.get_rect()
 		self.init(gf)
 
@@ -45,7 +48,7 @@ class StimManager:
 
 	def ability(self, gf):
 		for shooter in gf.town_shooters:
-			shooter.stimpack()
+			shooter.stimpack(self.stimpack_speed)
 
 	def update(self, gf):
 		if self.cooldown_iteration >= self.cooldown:
@@ -53,6 +56,11 @@ class StimManager:
 		self.cooldown_bar_size = (math.ceil(HEROES_SIZE[0]*(self.cooldown_iteration/self.cooldown)), self.cooldown_bar_size[1])
 		self.cooldown_bar_image = pygame.transform.scale(images.get_mana_bar(), self.cooldown_bar_size)
 		self.cooldown_iteration += 1
+
+	def new_level(self):
+		self.level += 1
+		self.upgrade_cost = 600 + (150*self.level)
+		self.stimpack_speed = FPS * 4 + (FPS*0.3*(self.level-1))
 
 
 class Maradauer:
@@ -65,6 +73,9 @@ class Maradauer:
 		self.cooldown = FPS * 18
 		self.cooldown_iteration = self.cooldown
 		self.tower_position = tower_position
+
+		self.damage = level*20
+		self.upgrade_cost = 600 + (150*self.level)
 
 		self.rect = self.image.get_rect()
 		self.init(gf)
@@ -97,7 +108,7 @@ class Maradauer:
 
 	def ability(self, gf):
 		for i in range(6):
-			gf.allies_units.append(Units.FieldMaradauer(1, gf, row_position=i+1))
+			gf.allies_units.append(Units.FieldMaradauer(self.level, gf, row_position=i+1))
 
 	def update(self, gf):
 		if self.cooldown_iteration >= self.cooldown:
@@ -105,6 +116,11 @@ class Maradauer:
 		self.cooldown_bar_size = (math.ceil(HEROES_SIZE[0]*(self.cooldown_iteration/self.cooldown)), self.cooldown_bar_size[1])
 		self.cooldown_bar_image = pygame.transform.scale(images.get_mana_bar(), self.cooldown_bar_size)
 		self.cooldown_iteration += 1
+
+	def new_level(self):
+		self.level += 1
+		self.damage = self.level*20
+		self.upgrade_cost = 600 + (150*self.level)
 
 class Nothing:
 	def __init__(self, tower_position, gf):

@@ -269,7 +269,7 @@ class GrowWord:
 				flag = False
 				for obj in gf.additional_objects[::-1]:
 					try:
-						if obj.rect.collidepoint(mos_pos) and event.button != 4 and event.button != 5:
+						if obj.__class__.__name__ != 'Text' and obj.rect.collidepoint(mos_pos) and event.button != 4 and event.button != 5:
 							await obj.action(gf)
 							if obj.__class__.__name__ == 'TextInput':
 								gf.text_input_obj = obj
@@ -278,7 +278,7 @@ class GrowWord:
 							flag = True
 							break
 					except Exception as e:
-						pass #print(e)
+						print(e)
 				if gf.enter_in_text_input and not gf.text_input_obj.rect.collidepoint(mos_pos):
 					gf.text_input_obj = None
 					gf.enter_in_text_input = False

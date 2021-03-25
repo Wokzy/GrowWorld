@@ -33,10 +33,15 @@ class Button:
 			gf.upgrading_hero_obj.tower_position = gf.heroes[gf.heroes.index(gf.changing_unit_noun)].tower_position
 			gf.upgrading_hero_obj.init(gf)
 			gf.heroes[gf.heroes.index(gf.changing_unit_noun)] = gf.upgrading_hero_obj
+			await gf.save_state()
 			await gf.close_everything()
 		elif self.name == 'take_off':
 			gf.heroes[gf.heroes.index(gf.changing_unit_noun)] = heroes.Nothing(gf.heroes[gf.heroes.index(gf.changing_unit_noun)].tower_position, gf)
+			await gf.save_state()
 			await gf.close_everything()
+		elif self.name == 'Upgrade_hero':
+			gf.upgrade_hero_action()
+			await gf.save_state()
 
 
 class Window:

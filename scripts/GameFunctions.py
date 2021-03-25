@@ -1,4 +1,4 @@
-import pygame, images, random, sys, set_config, pickle
+import pygame, images, random, sys, set_config, pickle, math
 from constants import *
 from datetime import datetime
 from scripts import Enemy as enemy
@@ -33,22 +33,30 @@ class GameFunctions:
 				self.gold = 0
 				self.crystal = 0
 			self.heroes = []
+			self.total_heroes = []
 			#self.heroes = [heroes.StimManager(1, 1, self), heroes.Maradauer(1, 2, self)]
 			for hero in self.data['heroes_info']:
 				if hero['name'] == 'StimManager':
 					self.heroes.append(heroes.StimManager(hero['level'], hero['tower_position'], self))
-					self.total_heroes.append(heroes.StimManager(hero['level'], hero['tower_position'], self))
 				elif hero['name'] == 'Maradauer':
 					self.heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
-					self.total_heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
+				elif hero['name'] == 'Nothing':
+					self.heroes.append(heroes.Nothing(hero['tower_position'], self))
 				else: print(hero['name'])
 			self.town_shooters = []
 			for i in range(4):
 				for g in range(5):
 					self.town_shooters.append(Town_shooters.TownShooter(self.data['town_shooters_info'][i+g]['level'], images.get_town_shooter(), g, i))
+			for hero in self.data['total_heroes_info']:
+				if hero['name'] == 'StimManager':
+					self.total_heroes.append(heroes.StimManager(hero['level'], hero['tower_position'], self))
+				elif hero['name'] == 'Maradauer':
+					self.total_heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
+				else: print(hero['name'])
 		else:
 			self.castle = castle.Castle()
-			self.heroes = []
+			self.total_heroes = [heroes.StimManager(1, 1, self), heroes.Maradauer(1, 2, self)]
+			self.heroes = [heroes.Nothing(1, self), heroes.Nothing(2, self)]
 			self.town_shooters = []
 			self.gold = 0
 			self.crystal = 0
@@ -62,6 +70,7 @@ class GameFunctions:
 		self.text_input_index = None
 
 		self.info_font = pygame.font.SysFont('Comic Sans MS', 15*AVERAGE_MULTIPLYER)
+		self.info_font_big = pygame.font.SysFont('Comic Sans MS', 25*AVERAGE_MULTIPLYER)
 		self.info_font_small = pygame.font.SysFont('Comic Sans MS', 10*AVERAGE_MULTIPLYER)
 		self.wave_font = pygame.font.SysFont('AA Higherup', 20*AVERAGE_MULTIPLYER)
 
@@ -276,15 +285,21 @@ class GameFunctions:
 		castle_info = {'level': self.castle.level}
 		town_shooters_info = []
 		heroes_info = []
+		total_heroes_info = []
 
 		for town_shooter in self.town_shooters:
 			town_shooters_info.append({'level': town_shooter.level})
 
 		for hero in self.heroes:
-			heroes_info.append({'name':hero.__class__.__name__, 'level':hero.level, 'tower_position':hero.tower_position})
+			if hero.__class__.__name__ != 'Nothing':
+				heroes_info.append({'name':hero.__class__.__name__, 'level':hero.level, 'tower_position':hero.tower_position})
+			else:
+				heroes_info.append({'name':hero.__class__.__name__, 'tower_position':hero.tower_position})
+		for hero in self.total_heroes:
+			total_heroes_info.append({'name':hero.__class__.__name__, 'level':hero.level, 'tower_position':hero.tower_position})
 
 		with open('save.bin', 'wb') as f:
-			pickle.dump({'castle_info':castle_info, 'town_shooters_info':town_shooters_info, 'heroes_info':heroes_info, 'wave':self.wave, 'gold':self.gold, 'crystal':self.crystal}, f)
+			pickle.dump({'castle_info':castle_info, 'town_shooters_info':town_shooters_info, 'heroes_info':heroes_info, 'wave':self.wave, 'gold':self.gold, 'crystal':self.crystal, 'total_heroes_info':total_heroes_info}, f)
 			f.close()
 
 	def load_state(self):
@@ -397,21 +412,38 @@ class GameFunctions:
 
 		upgrade_hero_window_size = (400*OBJECT_MULTIPLYER_WIDTH, 280*OBJECT_MULTIPLYER_HEIGHT)
 		upgrade_hero_window_pos = (WIDTH // 2 - upgrade_hero_window_size[0]//2, HEIGHT//2 - upgrade_hero_window_size[1]//2)
+		upgrade_hero_image_pos = (upgrade_hero_window_pos[0]+5*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_window_pos[1]+8*OBJECT_MULTIPLYER_HEIGHT)
+		upgrade_hero_image_size = (self.upgrading_hero_obj.size[0]*2, self.upgrading_hero_obj.size[1]*2)
+		name_hero_text_pos = (upgrade_hero_image_pos[0]+upgrade_hero_image_size[0]+5*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_image_pos[1]+5*OBJECT_MULTIPLYER_HEIGHT)
 		#upgrade_hero_window_pos = (0, 0)
 
 		self.additional_objects.append(objects.Window('upgrade_hero_window', images.get_gray_window(upgrade_hero_window_size), upgrade_hero_window_pos))
-		self.additional_objects.append(objects.Window('upgrade_hero_image', pygame.transform.scale(self.upgrading_hero_obj.image, (self.upgrading_hero_obj.size[0]*2, self.upgrading_hero_obj.size[1]*2)), (upgrade_hero_window_pos[0]+5*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_window_pos[1]+8*OBJECT_MULTIPLYER_HEIGHT)))
+		self.additional_objects.append(objects.Window('upgrade_hero_image', pygame.transform.scale(self.upgrading_hero_obj.image, upgrade_hero_image_size), upgrade_hero_image_pos))
 		self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0], upgrade_hero_window_pos[1])))
 		self.additional_objects[-1].rect.center = (self.additional_objects[-1].rect.x, self.additional_objects[-1].rect.y)
 
 		if self.changing_unit_noun == self.upgrading_hero_obj:
-			self.additional_objects.append(objects.Button('take_off', images.get_take_off_button(), (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0]//4, upgrade_hero_window_pos[1]+upgrade_hero_window_size[1]-TAKE_OFF_BUTTON_SIZE[1] - 5*OBJECT_MULTIPLYER_HEIGHT)))
+			self.additional_objects.append(objects.Button('take_off', images.get_take_off_button(), (upgrade_hero_window_pos[0]+TAKE_OFF_BUTTON_SIZE[0]//4, upgrade_hero_window_pos[1]+upgrade_hero_window_size[1]-TAKE_OFF_BUTTON_SIZE[1] - 5*OBJECT_MULTIPLYER_HEIGHT)))
 		else:
-			self.additional_objects.append(objects.Button('equip', images.get_equip_button(), (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0]//4, upgrade_hero_window_pos[1]+upgrade_hero_window_size[1]-TAKE_OFF_BUTTON_SIZE[1] - 5*OBJECT_MULTIPLYER_HEIGHT)))
+			self.additional_objects.append(objects.Button('equip', images.get_equip_button(), (upgrade_hero_window_pos[0]+TAKE_OFF_BUTTON_SIZE[0]//4, upgrade_hero_window_pos[1]+upgrade_hero_window_size[1]-TAKE_OFF_BUTTON_SIZE[1] - 5*OBJECT_MULTIPLYER_HEIGHT)))
 
-		#self.init_objects()
+		self.additional_objects.append(objects.Text('Name_of_hero', self.info_font_big.render(self.upgrading_hero_obj.name, False, (255, 255, 255)), name_hero_text_pos))
 
-		#print(self.additional_objects)
+		if self.upgrading_hero_obj.name == 'Maradauer':
+			self.additional_objects.append(objects.Text('Description:', self.info_font.render('Description:', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+50*AVERAGE_MULTIPLYER)))
+			self.additional_objects.append(objects.Text('Create group of 6 range', self.info_font.render('Create group of 6 range', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
+			self.additional_objects.append(objects.Text('attack units for limited time', self.info_font.render('attack units for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
+			self.additional_objects.append(objects.Text('Damage', self.info_font_big.render(str(self.upgrading_hero_obj.damage), False, (255, 15, 15)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+		elif self.upgrading_hero_obj.name == 'StimManager':
+			self.additional_objects.append(objects.Text('Description:', self.info_font.render('Description:', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+50*AVERAGE_MULTIPLYER)))
+			self.additional_objects.append(objects.Text('Boost attack speed of town shooters', self.info_font.render('Boost attack speed of town shooters', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
+			self.additional_objects.append(objects.Text('on 60%, for limited time', self.info_font.render('on 60%, for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
+			self.additional_objects.append(objects.Text('Ability_duration', self.info_font_big.render('Ability duration - '+str(self.upgrading_hero_obj.stimpack_speed/FPS)+' sec', False, (150, 150, 255)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+
+		upgrade_hero_button_pos = (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0]-EQUIP_BUTTON_SIZE[0]-10*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_window_pos[1]-EQUIP_BUTTON_SIZE[1]-5*OBJECT_MULTIPLYER_HEIGHT+upgrade_hero_window_size[1])
+
+		self.additional_objects.append(objects.Button('Upgrade_hero', images.get_text_background(EQUIP_BUTTON_SIZE), upgrade_hero_button_pos))
+		self.additional_objects.append(objects.Text('Upgrade_cost', self.info_font_big.render(f'{self.upgrading_hero_obj.upgrade_cost} - {self.upgrading_hero_obj.level + 1}', False, GOLD_COLOUR), upgrade_hero_button_pos))
 
 	async def close_everything(self):
 		if self.prev_additional_objects != []:
@@ -426,3 +458,13 @@ class GameFunctions:
 		self.upgrading_hero_obj = None
 		self.additional_objects = list(self.prev_additional_objects)
 		self.prev_additional_objects = []
+
+	def upgrade_hero_action(self):
+		if self.gold - self.upgrading_hero_obj.upgrade_cost >= 0:
+			self.gold -= self.upgrading_hero_obj.upgrade_cost
+			self.upgrading_hero_obj.new_level()
+			self.total_heroes[self.total_heroes.index(self.upgrading_hero_obj)] = self.upgrading_hero_obj
+			try:
+				self.heroes[self.heroes.index(self.upgrading_hero_obj)] = self.upgrading_hero_obj
+			except Exception as e: print(e)
+		else: print('not enought gold')
