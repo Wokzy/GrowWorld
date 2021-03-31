@@ -180,7 +180,7 @@ def get_crystal(size=(5, 5)):
 def get_town_market():
 	global TOWN_MARKET
 	if TOWN_MARKET == None:
-		TOWN_MARKET = pygame.transform.scale(pygame.image.load('sprites/buttons/close_button.png'), TOWN_MARKET_SIZE) #'sprites/ground_objects/market.png'
+		TOWN_MARKET = pygame.transform.scale(pygame.image.load('sprites/ground_objects/market.png'), TOWN_MARKET_SIZE) #'sprites/ground_objects/market.png'
 	return TOWN_MARKET
 
 def get_goto_town_button():
