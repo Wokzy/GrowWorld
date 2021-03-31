@@ -121,3 +121,15 @@ class UpgradeCastleButton:
 			await gf.castle.new_level()
 			await gf.save_state()
 		else: print('not enought gold')
+
+class Image:
+	def __init__(self, image, position, name=''):
+		self.name = name
+		self.image = image
+
+		self.rect = self.image.get_rect()
+		self.rect.x = position[0]
+		self.rect.y = position[1]
+
+	async def action(self, gf):
+		pass

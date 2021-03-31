@@ -100,3 +100,54 @@ class FieldMaradauer:
 		if len(gf.battle_heroes) > 0:
 			self.target = random.choice(gf.battle_heroes)
 		else: self.target = None
+
+
+class RocketBoom:
+	def __init__(self, position, gf, level):
+		self.type_surface = 'Boom' # Ground / Air
+		self.type_damage = 'Boom' # Range / Melee
+		self.level = level
+		self.damage = level*50 # Damage in points
+
+		self.attack_radius = 50 * OBJECT_MULTIPLYER_WIDTH # range in pixels
+
+		self.images = images.get_rocket_boom()
+		self.image = self.images[0]
+
+		self.rect = self.image.get_rect()
+		self.size = ROCKETBOOM_SIZE
+
+		self.rect.x = position[0]
+		self.rect.y = position[1]
+		self.alive = True
+
+
+		self.animation_iterations = 0
+		self.animation_speed = FPS * 0.4
+
+		self.attacked = Fasle
+
+
+	def update(self, gf):
+		if self.animation_iterations >= self.animation_speed:
+			if self.images.index(self.image) +1 < len(self.images):
+				self.image = self.images[self.images.index(self.image) + 1]
+			else:
+				self.image = self.images[0]
+				self.alive = False
+				return 'stay'
+			self.animation_iterations = 0
+
+		if not self.attacked:
+			self.attack(gf)
+
+		self.animation_iterations += 1
+
+		return 'stay'
+
+	def attack(self, gf):
+		self.attacked = True
+
+		for i in range(len(gf.battle_heroes)):
+			if battle_heroes[i].rect.colliderect(self.rect):
+				battle_heroes[i].hp -= self.damage

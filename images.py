@@ -168,11 +168,26 @@ def get_equip_button():
 		EQUIP_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/equip.png'), EQUIP_BUTTON_SIZE)
 	return EQUIP_BUTTON
 
+def get_unit_healer():
+	global UNIT_HEALER
+	if UNIT_HEALER == None:
+		UNIT_HEALER = pygame.transform.scale(pygame.image.load('sprites/heroes/unit_healer.png'), HEROES_SIZE)
+	return UNIT_HEALER
+
+def get_crystal(size=(5, 5)):
+	return pygame.transform.scale(pygame.image.load('sprites/crystal.png'), size)
+
+def get_town_market():
+	global TOWN_MARKET
+	if TOWN_MARKET == None:
+		TOWN_MARKET = pygame.transform.scale(pygame.image.load('sprites/buttons/close_button.png'), TOWN_MARKET_SIZE) #'sprites/ground_objects/market.png'
+	return TOWN_MARKET
+
 def init():
 	global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IMAGES, SETTINGS_BUTTON_IMAGE
 	global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON, FIGHT_BUTTON, STIM_ON, STIM_OFF
 	global STIM_MANAGER, UPGRADE_SHOOTER_BUTTON_IMAGE, HERO_BACKGROUND, MARADAUER_IMAGE, FIELD_MARADAUER_IMAGES
-	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON
+	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -195,6 +210,8 @@ def init():
 	CLOSE_BUTTON = None
 	TAKE_OFF_BUTTON = None
 	EQUIP_BUTTON = None
+	UNIT_HEALER = None
+	TOWN_MARKET = None
 
 	get_mana_bar()
 	get_field_maradauer()
@@ -218,5 +235,7 @@ def init():
 	get_close_button()
 	get_take_off_button()
 	get_equip_button()
+	get_unit_healer()
+	get_town_market()
 
 init()

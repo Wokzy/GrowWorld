@@ -2,7 +2,7 @@ import pygame, images, random, sys, set_config, pickle, math
 from constants import *
 from datetime import datetime
 from scripts import Enemy as enemy
-from scripts import objects, heroes, castle, Town_shooters
+from scripts import objects, heroes, castle, Town_shooters, GroundObjects
 
 
 class GameFunctions:
@@ -11,6 +11,9 @@ class GameFunctions:
 		self.battle_heroes = []
 		self.allies_units = []
 		self.total_heroes = []
+
+		#self.special_buttons = {'goto_town':objects.Button('goto_town', images.get_goto_town_button(), (20*OBJECT_MULTIPLYER_WIDTH, 30*OBJECT_MULTIPLYER_HEIGHT)), 'goto_castle':objects.Button('goto_castle', images.get_goto_castle_button(), (WIDTH - 20*OBJECT_MULTIPLYER_WIDTH, HEIGHT - 30*OBJECT_MULTIPLYER_HEIGHT))}
+
 		self.battle_duration_left = None
 		self.enemyes_amount = None
 		self.enemy_line_time = FPS * random.randint(50, 90) / 100
@@ -42,6 +45,8 @@ class GameFunctions:
 					self.heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
 				elif hero['name'] == 'Nothing':
 					self.heroes.append(heroes.Nothing(hero['tower_position'], self))
+				elif hero['name'] == 'UnitHealer':
+					self.heroes.append(heroes.UnitHealer(hero['level'], hero['tower_position'], self))
 				else: print(hero['name'])
 			self.town_shooters = []
 			for i in range(4):
@@ -52,11 +57,13 @@ class GameFunctions:
 					self.total_heroes.append(heroes.StimManager(hero['level'], hero['tower_position'], self))
 				elif hero['name'] == 'Maradauer':
 					self.total_heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
+				elif hero['name'] == 'UnitHealer':
+					self.total_heroes.append(heroes.UnitHealer(hero['level'], hero['tower_position'], self))
 				else: print(hero['name'])
 		else:
 			self.castle = castle.Castle()
-			self.total_heroes = [heroes.StimManager(1, 1, self), heroes.Maradauer(1, 2, self)]
-			self.heroes = [heroes.Nothing(1, self), heroes.Nothing(2, self)]
+			self.total_heroes = [heroes.StimManager(1, 1, self), heroes.Maradauer(1, 2, self), heroes.UnitHealer(1, 3, self)]
+			self.heroes = [heroes.Nothing(1, self), heroes.Nothing(2, self), heroes.Nothing(3, self)]
 			self.town_shooters = []
 			self.gold = 0
 			self.crystal = 0
@@ -79,6 +86,14 @@ class GameFunctions:
 		self.changing_unit_verb = False
 		self.upgrading_hero = False
 		self.upgrading_hero_obj = None
+
+		self.hero_target_position = ()
+		self.targetting = False
+		self.targetting_hero = None
+
+		self.global_location = 'Castle' # Castle or Town
+		self.cost_of_crystal = (self.wave//10) * 100 + 15*self.wave + 50
+		self.trading = False
 
 	async def start_battle(self):
 		print(f'wave - {self.wave}')
@@ -164,7 +179,8 @@ class GameFunctions:
 			if obj.name == 'wave_text': self.additional_objects.remove(obj)
 
 	async def find_blitting_object(self):
-		await self.update_attack_button()
+		if self.global_location == 'Castle':
+			await self.update_attack_button()
 		await self.update_settings_button()
 
 		await self.update_settings_window()
@@ -172,6 +188,8 @@ class GameFunctions:
 
 		if self.upgrading_hero:
 			await self.update_upgrading_hero()
+
+		if self.trading: await self.update_trading()
 
 	def init_optimization(self):
 		self.attack_button_on = False
@@ -376,10 +394,10 @@ class GameFunctions:
 			win_pos = (self.additional_objects[0].rect.x+5*OBJECT_MULTIPLYER_WIDTH, self.additional_objects[0].rect.y+10*OBJECT_MULTIPLYER_HEIGHT+(35*iteration)*OBJECT_MULTIPLYER_HEIGHT)
 			transformation = ()
 			self.additional_objects.append(objects.Window(f'changing_element_{iteration}_background', images.get_text_background((150*OBJECT_MULTIPLYER_WIDTH, 35*OBJECT_MULTIPLYER_HEIGHT)), win_pos))
-			if obj[0].__class__.__name__ == 'StimManager':
-				transformation = (30*OBJECT_MULTIPLYER_WIDTH, 30*OBJECT_MULTIPLYER_HEIGHT)
-			elif obj[0].__class__.__name__ == 'Maradauer':
+			if obj[0].__class__.__name__ == 'Maradauer':
 				transformation = (22*OBJECT_MULTIPLYER_WIDTH, 30*OBJECT_MULTIPLYER_HEIGHT)
+			else:
+				transformation = (30*OBJECT_MULTIPLYER_WIDTH, 30*OBJECT_MULTIPLYER_HEIGHT)
 			self.additional_objects.append(objects.Window(f'changing_hero {obj[1]}', pygame.transform.scale(obj[0].image, transformation), (win_pos[0]+2*OBJECT_MULTIPLYER_WIDTH, win_pos[1]+2*OBJECT_MULTIPLYER_HEIGHT)))
 			self.additional_objects.append(objects.Text(f'changing_hero_text {obj[1]}', self.info_font.render(str(f'{obj[0].name}'), False, (255, 255, 255)), (win_pos[0]+7*OBJECT_MULTIPLYER_WIDTH+transformation[0], win_pos[1]+2*OBJECT_MULTIPLYER_HEIGHT)))
 			iteration += 1
@@ -429,16 +447,18 @@ class GameFunctions:
 
 		self.additional_objects.append(objects.Text('Name_of_hero', self.info_font_big.render(self.upgrading_hero_obj.name, False, (255, 255, 255)), name_hero_text_pos))
 
+		self.additional_objects.append(objects.Text('Description:', self.info_font.render('Description:', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+50*AVERAGE_MULTIPLYER)))
 		if self.upgrading_hero_obj.name == 'Maradauer':
-			self.additional_objects.append(objects.Text('Description:', self.info_font.render('Description:', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+50*AVERAGE_MULTIPLYER)))
 			self.additional_objects.append(objects.Text('Create group of 6 range', self.info_font.render('Create group of 6 range', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
 			self.additional_objects.append(objects.Text('attack units for limited time', self.info_font.render('attack units for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
 			self.additional_objects.append(objects.Text('Damage', self.info_font_big.render(str(self.upgrading_hero_obj.damage), False, (255, 15, 15)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
 		elif self.upgrading_hero_obj.name == 'StimManager':
-			self.additional_objects.append(objects.Text('Description:', self.info_font.render('Description:', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+50*AVERAGE_MULTIPLYER)))
 			self.additional_objects.append(objects.Text('Boost attack speed of town shooters', self.info_font.render('Boost attack speed of town shooters', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
 			self.additional_objects.append(objects.Text('on 60%, for limited time', self.info_font.render('on 60%, for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
 			self.additional_objects.append(objects.Text('Ability_duration', self.info_font_big.render('Ability duration - '+str(self.upgrading_hero_obj.stimpack_speed/FPS)+' sec', False, (150, 150, 255)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+		elif self.upgrading_hero_obj.name == 'UnitHealer':
+			self.additional_objects.append(objects.Text('Heal all allies units', self.info_font.render('Heal all allies units', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
+			self.additional_objects.append(objects.Text('Healing', self.info_font_big.render('Healing - '+str(self.upgrading_hero_obj.heal)+' hp', False, (150, 150, 255)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
 
 		upgrade_hero_button_pos = (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0]-EQUIP_BUTTON_SIZE[0]-10*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_window_pos[1]-EQUIP_BUTTON_SIZE[1]-5*OBJECT_MULTIPLYER_HEIGHT+upgrade_hero_window_size[1])
 
@@ -449,6 +469,7 @@ class GameFunctions:
 		if self.prev_additional_objects != []:
 			if self.upgrading_hero:
 				self.stop_upgrading_hero()
+			else: self.additional_objects = []
 			#self.additional_objects = list(self.prev_additional_objects)
 			#self.prev_additional_objects = []
 		else: pass
@@ -468,3 +489,52 @@ class GameFunctions:
 				self.heroes[self.heroes.index(self.upgrading_hero_obj)] = self.upgrading_hero_obj
 			except Exception as e: print(e)
 		else: print('not enought gold')
+
+	def update_targetting(self):
+		self.additional_objects = []
+		self.additional_objects.append(objects.Image(images.get_targetting(), (self.castle.rect.x, pygame.mouse.get_pos()[1])))
+		if self.hero_target_position != ():
+			self.hero_target_position = ()
+			self.targetting_hero.attack(self)
+			self.additional_objects = list(prev_additional_objects)
+
+	def start_targetting(self):
+		self.prev_additional_objects = list(self.additional_objects)
+		self.targetting = True
+
+	async def goto_town(self):
+		if self.global_location != 'Town':
+			self.prev_additional_objects = list(self.additional_objects)
+			self.additional_objects = []
+			self.global_location = 'Town'
+
+			await self.init_town()
+
+	async def goto_castle(self):
+		if self.global_location != "Castle":
+			self.additional_objects = list(self.prev_additional_objects)
+			self.prev_additional_objects = []
+			self.global_location = 'Castle'
+
+	async def init_town(self):
+		self.ground_objects = [GroundObjects.Market(3)]
+
+	def start_trading(self):
+		self.trading = True
+
+	async def update_trading(self):
+		window_size = (400, 200)
+		window_position = (WIDTH//2 - window_size[0]//2, HEIGHT//2 - window_size[1]//2)
+
+		self.additional_objects.append(objects.Window('trading_window', images.get_gray_window(window_size), window_position))
+		self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (window_position[0]+window_size[0]. window_position[1])))
+		self.additional_objects.append(objects.Image('crystal_img', images.get_crystal((50, 50)), (window_position[0]+10*OBJECT_MULTIPLYER_WIDTH, window_position[1]+10*OBJECT_MULTIPLYER_HEIGHT)))
+
+	async def update_cost_of_crystal(self):
+		self.cost_of_crystal = (self.wave//10) * 100 + 15*self.wave + 50
+
+		ch = random.randint(1, 2)
+		if ch == 1:
+			self.cost_of_crystal -= random.randint(0, 55*(self.wave//10))
+		else:
+			self.cost_of_crystal += random.randint(0, 55*(self.wave//10))

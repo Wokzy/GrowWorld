@@ -1,4 +1,6 @@
 from datetime import datetime
+print('GrowWord - made by Wokzy and Arter')
+print('Version - 0.00.1')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
@@ -39,7 +41,8 @@ class GrowWord:
 
 			await self.update_event()
 
-			await self.update()
+			if not gf.targetting:
+				await self.update()
 
 			self.mana_text = self.info_font.render('Mana: {}'.format(str(gf.castle.mana)), False, (0, 0, 0))
 			self.hp_text = self.info_font.render('HP: {}'.format(str(gf.castle.hp)), False, (0, 0, 0))
@@ -102,6 +105,7 @@ class GrowWord:
 		self.update_heroes()
 
 		await self.update_textes()
+		await gf.update_cost_of_crystal()
 
 		if self.iteration == 60:
 			self.iteration = 0
@@ -109,17 +113,23 @@ class GrowWord:
 
 	async def blit_objects(self):
 		self.screen.blit(self.road_image, self.road_rect)
-		self.screen.blit(gf.castle.castle_image, gf.castle.castle_rect)
 
-		await self.blit_hitpoints()
-		await self.blit_mana()
-		await self.blit_townshooters()
-		await self.blit_heroes()
+		if gf.global_location == 'Castle':
+			self.screen.blit(gf.castle.castle_image, gf.castle.castle_rect)
 
-		if gf.in_battle:
-			await gf.update_battle()
-			await self.blit_enemyes()
-			await self.blit_allies_heroes()
+			await self.blit_hitpoints()
+			await self.blit_mana()
+			await self.blit_townshooters()
+			await self.blit_heroes()
+
+			if gf.in_battle:
+				if not gf.targetting:
+					await gf.update_battle()
+				await self.blit_enemyes()
+				await self.blit_allies_heroes()
+		else:
+			for obj in gf.ground_objects:
+				self.screen.blit(obj.image, obj.rect)
 
 		await gf.find_blitting_object()
 
@@ -264,8 +274,16 @@ class GrowWord:
 						gf.heroes[2].action(gf)
 					except Exception as e:
 						print(e)
+				elif event.key == pygame.K_7:
+					await gf.goto_town()
+				elif event.key == pygame.K_8:
+					await gf.goto_castle()
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				mos_pos = pygame.mouse.get_pos()
+				if gf.targetting:
+					if not mos_pos[0] < gf.castle.rect.x + gf.castle.size[0]:
+						gf.hero_target_position = mos_pos
+					continue
 				flag = False
 				for obj in gf.additional_objects[::-1]:
 					try:
