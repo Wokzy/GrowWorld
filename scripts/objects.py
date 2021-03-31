@@ -42,6 +42,14 @@ class Button:
 		elif self.name == 'Upgrade_hero':
 			gf.upgrade_hero_action()
 			await gf.save_state()
+		elif self.name == 'goto_town':
+			await gf.goto_town()
+		elif self.name == 'goto_castle':
+			await gf.goto_castle()
+		elif self.name == 'buy_crystal':
+			gf.buy_crystal()
+		elif self.name == 'sell_crystal':
+			gf.sell_crystal()
 
 
 class Window:

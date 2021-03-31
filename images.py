@@ -183,11 +183,54 @@ def get_town_market():
 		TOWN_MARKET = pygame.transform.scale(pygame.image.load('sprites/buttons/close_button.png'), TOWN_MARKET_SIZE) #'sprites/ground_objects/market.png'
 	return TOWN_MARKET
 
+def get_goto_town_button():
+	global GOTO_TOWN
+	if GOTO_TOWN == None:
+		GOTO_TOWN = pygame.transform.scale(pygame.image.load('sprites/buttons/goto_town.png'), MOVE_GLOBAL_LOCATION_BUTTON_SIZE)
+	return GOTO_TOWN
+
+def get_goto_castle_button():
+	global GOTO_CASTLE
+	if GOTO_CASTLE == None:
+		GOTO_CASTLE = pygame.transform.scale(pygame.image.load('sprites/buttons/goto_castle.png'), MOVE_GLOBAL_LOCATION_BUTTON_SIZE)
+	return GOTO_CASTLE
+
+def get_buy_button():
+	global BUY_BUTTON
+	if BUY_BUTTON == None:
+		BUY_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Buy.png'), BUY_BUTTON_SIZE)
+	return BUY_BUTTON
+
+def get_sell_button():
+	global SELL_BUTTON
+	if SELL_BUTTON == None:
+		SELL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Sell.png'), SELL_BUTTON_SIZE)
+	return SELL_BUTTON
+
+def get_trading_raise():
+	global TRAIDING_RAISE
+	if TRAIDING_RAISE == None:
+		TRAIDING_RAISE = pygame.transform.scale(pygame.image.load('sprites/images/traiding_raise.png'), TRAIDING_RAISE_SIZE)
+	return TRAIDING_RAISE
+
+def get_trading_minus():
+	global TRAIDING_MINUS
+	if TRAIDING_MINUS == None:
+		TRAIDING_MINUS = pygame.transform.scale(pygame.image.load('sprites/images/traiding_minus.png'), TRAIDING_MINUS_SIZE)
+	return TRAIDING_MINUS
+
+def get_trading_fall():
+	global TRAIDING_FALL
+	if TRAIDING_FALL == None:
+		TRAIDING_FALL = pygame.transform.scale(pygame.image.load('sprites/images/traiding_fall.png'), TRAIDING_FALL_SIZE)
+	return TRAIDING_FALL
+
 def init():
 	global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IMAGES, SETTINGS_BUTTON_IMAGE
 	global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON, FIGHT_BUTTON, STIM_ON, STIM_OFF
 	global STIM_MANAGER, UPGRADE_SHOOTER_BUTTON_IMAGE, HERO_BACKGROUND, MARADAUER_IMAGE, FIELD_MARADAUER_IMAGES
-	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET
+	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
+	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -212,6 +255,13 @@ def init():
 	EQUIP_BUTTON = None
 	UNIT_HEALER = None
 	TOWN_MARKET = None
+	GOTO_TOWN = None
+	GOTO_CASTLE = None
+	BUY_BUTTON = None
+	SELL_BUTTON = None
+	TRAIDING_RAISE = None
+	TRAIDING_FALL = None
+	TRAIDING_MINUS = None
 
 	get_mana_bar()
 	get_field_maradauer()
@@ -237,5 +287,12 @@ def init():
 	get_equip_button()
 	get_unit_healer()
 	get_town_market()
+	get_goto_town_button()
+	get_goto_castle_button()
+	get_sell_button()
+	get_buy_button()
+	get_trading_minus()
+	get_trading_fall()
+	get_trading_raise()
 
 init()

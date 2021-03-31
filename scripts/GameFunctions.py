@@ -12,7 +12,8 @@ class GameFunctions:
 		self.allies_units = []
 		self.total_heroes = []
 
-		#self.special_buttons = {'goto_town':objects.Button('goto_town', images.get_goto_town_button(), (20*OBJECT_MULTIPLYER_WIDTH, 30*OBJECT_MULTIPLYER_HEIGHT)), 'goto_castle':objects.Button('goto_castle', images.get_goto_castle_button(), (WIDTH - 20*OBJECT_MULTIPLYER_WIDTH, HEIGHT - 30*OBJECT_MULTIPLYER_HEIGHT))}
+		self.special_buttons = {'goto_town':objects.Button('goto_town', images.get_goto_town_button(), (20*OBJECT_MULTIPLYER_WIDTH, 45*OBJECT_MULTIPLYER_HEIGHT)), 'goto_castle':objects.Button('goto_castle', images.get_goto_castle_button(), (WIDTH - 20*OBJECT_MULTIPLYER_WIDTH - MOVE_GLOBAL_LOCATION_BUTTON_SIZE[0], 45*OBJECT_MULTIPLYER_HEIGHT))}
+		self.special_buttons_avalible = True
 
 		self.battle_duration_left = None
 		self.enemyes_amount = None
@@ -92,8 +93,10 @@ class GameFunctions:
 		self.targetting_hero = None
 
 		self.global_location = 'Castle' # Castle or Town
-		self.cost_of_crystal = (self.wave//10) * 100 + 15*self.wave + 50
+		self.cost_of_crystal = ((self.wave//10)+1) * 100 + 15*self.wave + 500
 		self.trading = False
+
+		self.on_stats_traiding_obj = None
 
 	async def start_battle(self):
 		print(f'wave - {self.wave}')
@@ -469,6 +472,8 @@ class GameFunctions:
 		if self.prev_additional_objects != []:
 			if self.upgrading_hero:
 				self.stop_upgrading_hero()
+			elif self.trading:
+				self.stop_trading()
 			else: self.additional_objects = []
 			#self.additional_objects = list(self.prev_additional_objects)
 			#self.prev_additional_objects = []
@@ -521,20 +526,73 @@ class GameFunctions:
 
 	def start_trading(self):
 		self.trading = True
+		self.trade_opened = False
+		self.special_buttons_avalible = False
+
+	def stop_trading(self):
+		self.additional_objects = []
+		self.trading = False
+		self.special_buttons_avalible = True
 
 	async def update_trading(self):
-		window_size = (400, 200)
+		window_size = (400*OBJECT_MULTIPLYER_WIDTH, 200*OBJECT_MULTIPLYER_HEIGHT)
 		window_position = (WIDTH//2 - window_size[0]//2, HEIGHT//2 - window_size[1]//2)
+		if not self.trade_opened:
+			self.additional_objects = []
 
-		self.additional_objects.append(objects.Window('trading_window', images.get_gray_window(window_size), window_position))
-		self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (window_position[0]+window_size[0]. window_position[1])))
-		self.additional_objects.append(objects.Image('crystal_img', images.get_crystal((50, 50)), (window_position[0]+10*OBJECT_MULTIPLYER_WIDTH, window_position[1]+10*OBJECT_MULTIPLYER_HEIGHT)))
+			self.additional_objects.append(objects.Window('trading_window', images.get_gray_window(window_size), window_position))
+			self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (window_position[0]+window_size[0], window_position[1])))
+			self.additional_objects.append(objects.Image(images.get_crystal((50*AVERAGE_MULTIPLYER, 50*AVERAGE_MULTIPLYER)), (window_position[0]+10*OBJECT_MULTIPLYER_WIDTH, window_position[1]+10*OBJECT_MULTIPLYER_HEIGHT)))
+			self.additional_objects.append(objects.Button('buy_crystal', images.get_buy_button(), (window_position[0]+30*OBJECT_MULTIPLYER_WIDTH, window_position[1]+window_size[1]-BUY_BUTTON_SIZE[1]-5*OBJECT_MULTIPLYER_HEIGHT)))
+			self.additional_objects.append(objects.Button('sell_crystal', images.get_sell_button(), (window_position[0]+window_size[0]-30*OBJECT_MULTIPLYER_WIDTH-SELL_BUTTON_SIZE[0], window_position[1]+window_size[1]-SELL_BUTTON_SIZE[1]-5*OBJECT_MULTIPLYER_HEIGHT)))
+			self.additional_objects.append(self.on_stats_traiding_obj)
+			self.additional_objects.append(objects.Text('cost_of_crystal', self.info_font_big.render(str(self.cost_of_crystal), False, GOLD_COLOUR), (window_position[0]+(50+50)*OBJECT_MULTIPLYER_WIDTH, window_position[1]+20*OBJECT_MULTIPLYER_HEIGHT)))
+			self.trade_opened = True
+		self.additional_objects[-1] = objects.Text('cost_of_crystal', self.info_font_big.render(str(self.cost_of_crystal), False, GOLD_COLOUR), (window_position[0]+(50+50)*OBJECT_MULTIPLYER_WIDTH, window_position[1]+20*OBJECT_MULTIPLYER_HEIGHT))
+		self.additional_objects[-2] = self.on_stats_traiding_obj
 
 	async def update_cost_of_crystal(self):
-		self.cost_of_crystal = (self.wave//10) * 100 + 15*self.wave + 50
+		local_cost = 0
 
-		ch = random.randint(1, 2)
-		if ch == 1:
-			self.cost_of_crystal -= random.randint(0, 55*(self.wave//10))
+		ch = random.randint(1, 3)
+		if ch == 2 or ch == 3 or ch == 4:
+			if self.cost_of_crystal - self.cost_of_crystal//3 > 0:
+				local_cost -= random.randint(0, self.cost_of_crystal-random.randrange(0, (self.cost_of_crystal//2+1)))
+			else: local_cost = 10
 		else:
-			self.cost_of_crystal += random.randint(0, 55*(self.wave//10))
+			if self.cost_of_crystal//3+1 >= 0 and self.cost_of_crystal > 0:
+				local_cost += random.randint(0, self.cost_of_crystal+random.randrange(0, self.cost_of_crystal//3+1))
+			else: local_cost = 10
+
+		ch_2 = random.randint(1, 3)
+		if ch_2 == 1:
+			local_cost += self.cost_of_crystal // 2 + 50
+		#elif ch == 2:
+		#	self.cost_of_crystal -= self.cost_of_crystal // 4 + 50
+
+		if self.cost_of_crystal + local_cost <= 0:
+			local_cost = 10
+
+		window_size = (400*OBJECT_MULTIPLYER_WIDTH, 200*OBJECT_MULTIPLYER_HEIGHT)
+		window_position = (WIDTH//2 - window_size[0]//2, HEIGHT//2 - window_size[1]//2)
+		if local_cost == 0:
+			self.on_stats_traiding_obj = objects.Image(images.get_trading_minus(), (window_position[0]+90*OBJECT_MULTIPLYER_WIDTH, window_position[1]+70*OBJECT_MULTIPLYER_HEIGHT))
+		elif local_cost < 0:
+			self.on_stats_traiding_obj = objects.Image(images.get_trading_fall(), (window_position[0]+90*OBJECT_MULTIPLYER_WIDTH, window_position[1]+70*OBJECT_MULTIPLYER_HEIGHT))
+		elif local_cost > 0:
+			self.on_stats_traiding_obj = objects.Image(images.get_trading_raise(), (window_position[0]+90*OBJECT_MULTIPLYER_WIDTH, window_position[1]+70*OBJECT_MULTIPLYER_HEIGHT))
+		self.cost_of_crystal += local_cost
+
+	def sell_crystal(self):
+		if self.crystal > 0:
+			self.crystal -= 1
+			self.gold += self.cost_of_crystal
+			self.cost_of_crystal -= math.ceil(self.cost_of_crystal * 0.03)
+		else: print('not enought crystals')
+
+	def buy_crystal(self):
+		if self.gold - self.cost_of_crystal >= 0:
+			self.gold -= self.cost_of_crystal
+			self.crystal += 1
+			self.cost_of_crystal += math.ceil(self.cost_of_crystal * 0.01)
+		else: print('not enought gold')
