@@ -1,6 +1,6 @@
 from datetime import datetime
 print('GrowWord - made by Wokzy and Arter')
-print('Version - 0.00.1')
+print('Version - 0.00.3')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
@@ -105,9 +105,14 @@ class GrowWord:
 		self.update_heroes()
 
 		await self.update_textes()
-		await gf.update_cost_of_crystal()
+		if self.iteration%(FPS*5) == 0:
+			await gf.update_cost_of_crystal()
+		await self.update_special_buttons()
 
-		if self.iteration == 60:
+		if self.iteration%(FPS*60) == 0:
+			await gf.save_state()
+
+		if self.iteration == 3628800:
 			self.iteration = 0
 			gf.gold = int(gf.gold)
 
@@ -116,6 +121,8 @@ class GrowWord:
 
 		if gf.global_location == 'Castle':
 			self.screen.blit(gf.castle.castle_image, gf.castle.castle_rect)
+			if gf.special_buttons_avalible:
+				self.screen.blit(gf.special_buttons['goto_town'].image, gf.special_buttons['goto_town'].rect)
 
 			await self.blit_hitpoints()
 			await self.blit_mana()
@@ -130,6 +137,8 @@ class GrowWord:
 		else:
 			for obj in gf.ground_objects:
 				self.screen.blit(obj.image, obj.rect)
+			if gf.special_buttons_avalible:
+				self.screen.blit(gf.special_buttons['goto_castle'].image, gf.special_buttons['goto_castle'].rect)
 
 		await gf.find_blitting_object()
 
@@ -208,6 +217,16 @@ class GrowWord:
 			elif obj.name == 'crystal_text':
 				obj.image = self.info_font.render(str(gf.crystal), False, (25, 210 , 25))
 
+	async def update_special_buttons(self):
+		if not gf.special_buttons_avalible:
+			if not gf.in_battle and gf.prev_additional_objects == [] and gf.global_location == 'Castle':
+				gf.special_buttons_avalible = True
+		elif gf.special_buttons_avalible:
+			if gf.in_battle or gf.prev_additional_objects != [] and gf.global_location == 'Castle':
+				gf.special_buttons_avalible = False
+			if gf.global_location == 'Town' and gf.additional_objects != []:
+				gf.special_buttons_avalible = False
+
 	async def blit_heroes(self):
 		for hero in gf.heroes:
 			self.screen.blit(hero.image, hero.rect)
@@ -259,27 +278,30 @@ class GrowWord:
 			elif event.type == pygame.KEYDOWN:
 				if gf.enter_in_text_input:
 					await gf.entering_in_text_input(event)
-				elif event.key == pygame.K_1:
+					continue
+				if gf.global_location == 'Castle':
 					try:
-						gf.heroes[0].action(gf)
+						if event.key == pygame.K_1:
+								gf.heroes[0].action(gf)
+						elif event.key == pygame.K_2:
+								gf.heroes[1].action(gf)
+						elif event.key == pygame.K_3:
+								gf.heroes[2].action(gf)
 					except Exception as e:
 						print(e)
-				elif event.key == pygame.K_2:
-					try:
-						gf.heroes[1].action(gf)
-					except Exception as e:
-						print(e)
-				elif event.key == pygame.K_3:
-					try:
-						gf.heroes[2].action(gf)
-					except Exception as e:
-						print(e)
-				elif event.key == pygame.K_7:
-					await gf.goto_town()
-				elif event.key == pygame.K_8:
-					await gf.goto_castle()
+				#elif event.key == pygame.K_7:
+				#	await gf.goto_town()
+				#elif event.key == pygame.K_8:
+				#	await gf.goto_castle()
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				mos_pos = pygame.mouse.get_pos()
+				if gf.special_buttons_avalible:
+					if gf.special_buttons['goto_castle'].rect.collidepoint(mos_pos):
+						await gf.special_buttons['goto_castle'].action(gf)
+						continue
+					elif gf.special_buttons['goto_town'].rect.collidepoint(mos_pos):
+						await gf.special_buttons['goto_town'].action(gf)
+						continue
 				if gf.targetting:
 					if not mos_pos[0] < gf.castle.rect.x + gf.castle.size[0]:
 						gf.hero_target_position = mos_pos
@@ -297,6 +319,10 @@ class GrowWord:
 							break
 					except Exception as e:
 						print(e)
+				if gf.global_location == 'Town':
+					for obj in gf.ground_objects:
+						if obj.rect.collidepoint(mos_pos):
+							await obj.action(gf)
 				if gf.enter_in_text_input and not gf.text_input_obj.rect.collidepoint(mos_pos):
 					gf.text_input_obj = None
 					gf.enter_in_text_input = False
