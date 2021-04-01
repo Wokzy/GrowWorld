@@ -335,7 +335,8 @@ class GameFunctions:
 		self.info_objects.append(objects.Window('gold_window', images.get_text_background((100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT)), (0, 0)))
 		self.info_objects.append(objects.Window('crystal_window', images.get_text_background((100*OBJECT_MULTIPLYER_WIDTH, 25*OBJECT_MULTIPLYER_HEIGHT)), ((100+15)*OBJECT_MULTIPLYER_WIDTH, 0)))
 		self.info_objects.append(objects.Text('gold_text', self.info_font.render(str(self.gold), False, (240, 236, 55)), (0, 0)))
-		self.info_objects.append(objects.Text('crystal_text', self.info_font.render(str(self.crystal), False, (25, 210, 25)), ((115+2)*OBJECT_MULTIPLYER_WIDTH, 0)))
+		self.info_objects.append(objects.Image(images.get_crystal((15*OBJECT_MULTIPLYER_WIDTH, 15*OBJECT_MULTIPLYER_HEIGHT)), ((115+2)*OBJECT_MULTIPLYER_WIDTH, 0)))
+		self.info_objects.append(objects.Text('crystal_text', self.info_font.render(str(self.crystal), False, (25, 210, 25)), ((115+20)*OBJECT_MULTIPLYER_WIDTH, 0)))
 
 	async def update_upgrading(self):
 		if self.prev_additional_objects == []:

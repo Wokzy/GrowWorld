@@ -289,8 +289,13 @@ class GrowWord:
 								gf.heroes[2].action(gf)
 						if not gf.in_battle and event.key == pygame.K_SPACE:
 							await gf.start_battle()
+						elif event.key == pygame.K_t and not gf.in_battle and gf.special_buttons_avalible:
+							await gf.goto_town()
 					except Exception as e:
 						print(e)
+				elif gf.global_location == 'Town':
+					if event.key == pygame.K_c and not gf.in_battle and gf.special_buttons_avalible:
+						await gf.goto_castle()
 				#elif event.key == pygame.K_7:
 				#	await gf.goto_town()
 				#elif event.key == pygame.K_8:
@@ -329,10 +334,11 @@ class GrowWord:
 					gf.text_input_obj = None
 					gf.enter_in_text_input = False
 				if not flag:
-					for hero in gf.heroes:
-						if hero.rect.collidepoint(mos_pos):
-							hero.action(gf)
-							break
+					if gf.global_location == 'Castle':
+						for hero in gf.heroes:
+							if hero.rect.collidepoint(mos_pos):
+								hero.action(gf)
+								break
 				if gf.changing_unit_verb:
 					if event.button == 4:
 						if gf.changing_scroll_position > 0:
