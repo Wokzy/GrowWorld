@@ -115,7 +115,7 @@ class GameFunctions:
 			self.enemy_line_iteraion = 0
 			self.enemyes_amount -= 6
 
-		self.additional_objects.append(objects.Text('wave_text', self.wave_font.render(str(f'Wawe - {self.wave}'), False, (0, 0, 0)), (WIDTH-DEFAULT_MANABAR_SIZE[0], DEFAULT_MANABAR_SIZE[1]+5*OBJECT_MULTIPLYER_HEIGHT), str(f'Wawe - {self.wave}')))
+		self.additional_objects.append(objects.Text('wave_text', self.wave_font.render(str(f'Wave - {self.wave}'), False, (0, 0, 0)), (WIDTH-DEFAULT_MANABAR_SIZE[0], DEFAULT_MANABAR_SIZE[1]+5*OBJECT_MULTIPLYER_HEIGHT), str(f'Wave - {self.wave}')))
 
 	async def update_battle(self):
 		if len(self.battle_heroes) == 0 and self.enemyes_amount == 0:
@@ -345,12 +345,13 @@ class GameFunctions:
 				self.upgrading_window_on = True
 				flag = False
 				for obj in self.additional_objects:
-					if obj.name == 'upgrade_window' or obj.name == 'upgrade_tower_button' or obj.name == 'upgrade_shooters_button' or obj.name == 'upgrade_shooters_text' or obj.name == 'upgrade_shooters_text_2':
+					if obj.name == 'upgrade_window' or obj.name == 'upgrade_tower_button' or obj.name == 'upgrade_shooters_button' or obj.name == 'upgrade_shooters_text' or obj.name == 'upgrade_shooters_text_2' or obj.name == 'settings_window':
 						flag = True
 					if obj.name == 'upgrade_shooters_text':
 						obj.image = self.info_font.render(f'{self.town_shooters[0].upgrade_cost} - {self.town_shooters[0].level + 1}', False, (240, 236, 55))
 					if obj.name == 'upgrade_castle_text':
 						obj.image = self.info_font.render(f'{int(self.castle.upgrade_cost)} - {self.castle.level + 1}', False, (240, 236, 55))
+
 
 				if not flag:
 					self.additional_objects.append(objects.Window('upgrade_window', images.get_gray_window(window_size), window_position))

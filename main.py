@@ -287,6 +287,8 @@ class GrowWord:
 								gf.heroes[1].action(gf)
 						elif event.key == pygame.K_3:
 								gf.heroes[2].action(gf)
+						if not gf.in_battle and event.key == pygame.K_SPACE:
+							await gf.start_battle()
 					except Exception as e:
 						print(e)
 				#elif event.key == pygame.K_7:
