@@ -225,12 +225,30 @@ def get_trading_fall():
 		TRAIDING_FALL = pygame.transform.scale(pygame.image.load('sprites/images/traiding_fall.png'), TRAIDING_FALL_SIZE)
 	return TRAIDING_FALL
 
+def get_remove_data():
+	global REMOVE_DATA
+	if REMOVE_DATA == None:
+		REMOVE_DATA = pygame.transform.scale(pygame.image.load('sprites/buttons/Remove_data.png'), REMOVE_DATA_SIZE)
+	return REMOVE_DATA
+
+def get_yes_button():
+	global YES_BUTTON
+	if YES_BUTTON == None:
+		YES_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Yes_red.png'), YES_BUTTON_SIZE)
+	return YES_BUTTON
+
+def get_no_button():
+	global NO_BUTTON
+	if NO_BUTTON == None:
+		NO_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/No_green.png'), NO_BUTTON_SIZE)
+	return NO_BUTTON
+
 def init():
 	global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IMAGES, SETTINGS_BUTTON_IMAGE
 	global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON, FIGHT_BUTTON, STIM_ON, STIM_OFF
 	global STIM_MANAGER, UPGRADE_SHOOTER_BUTTON_IMAGE, HERO_BACKGROUND, MARADAUER_IMAGE, FIELD_MARADAUER_IMAGES
 	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
-	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE
+	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE, REMOVE_DATA, NO_BUTTON, YES_BUTTON
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -262,6 +280,9 @@ def init():
 	TRAIDING_RAISE = None
 	TRAIDING_FALL = None
 	TRAIDING_MINUS = None
+	REMOVE_DATA = None
+	NO_BUTTON = None
+	YES_BUTTON = None
 
 	get_mana_bar()
 	get_field_maradauer()
@@ -294,5 +315,8 @@ def init():
 	get_trading_minus()
 	get_trading_fall()
 	get_trading_raise()
+	get_remove_data()
+	get_yes_button()
+	get_no_button()
 
 init()

@@ -1,4 +1,4 @@
-import pygame, images, random, sys, set_config, pickle, math
+import pygame, images, random, sys, set_config, pickle, math, os, time
 from constants import *
 from datetime import datetime
 from scripts import Enemy as enemy
@@ -256,11 +256,15 @@ class GameFunctions:
 			self.additional_objects.append(text_input_width)
 			self.additional_objects.append(text_input_height)
 			self.additional_objects.append(apply_settings_button)
+			self.additional_objects.append(objects.Button('remove_data', images.get_remove_data(), (WIDTH-SETTINGS_WINDOW_SIZE[0]+10*OBJECT_MULTIPLYER_WIDTH, apply_settings_button.rect.y + 50*OBJECT_MULTIPLYER_HEIGHT)))
 			self.settings_window_on = True
 		else:
-			self.additional_objects = list(self.prev_additional_objects)
-			self.prev_additional_objects = []
-			self.settings_window_on = False
+			self.close_settings_window()
+
+	def close_settings_window(self):
+		self.additional_objects = list(self.prev_additional_objects)
+		self.prev_additional_objects = []
+		self.settings_window_on = False
 
 	async def update_settings_window(self):
 		if self.in_battle and self.settings_window_on:
@@ -286,6 +290,31 @@ class GameFunctions:
 				self.text_input_obj.text.text += event.unicode
 		self.text_input_obj.text.image = self.info_font.render(self.text_input_obj.text.text, False, (0, 0, 0))
 		self.additional_objects[await self.text_input_obj.find_index(self)].text = self.text_input_obj.text
+
+	async def afford_removing_data(self):
+		window_size = (500, 250)
+		window_position = (WIDTH//2 - window_size[0]//2, HEIGHT//2 - window_size[1]//2)
+		self.additional_objects = [objects.Window('afford_removing_data_window', images.get_gray_window(window_size), window_position)]
+
+		warning_text = 'WARNING!!!'
+		description_text = 'This function removes all your saved data'
+		description_text_2 = 'Progress, gold, crystals, upgrades, waves etc.'
+		sure_text = 'ARE YOU SURE IN REMOVING DATA?'
+
+		self.additional_objects.append(objects.Text('warning_text', self.info_font_big.render(warning_text, False, (255, 0, 0)), (window_position[0]-50*OBJECT_MULTIPLYER_WIDTH + window_size[0]//2, window_position[1] + 10*OBJECT_MULTIPLYER_HEIGHT)))
+		self.additional_objects.append(objects.Text('description_text', self.info_font.render(description_text, False, (255, 255, 255)), (window_position[0]+70*OBJECT_MULTIPLYER_WIDTH, window_position[1] + 40*OBJECT_MULTIPLYER_HEIGHT)))
+		self.additional_objects.append(objects.Text('description_text_2', self.info_font.render(description_text_2, False, (255, 255, 255)), (window_position[0]+70*OBJECT_MULTIPLYER_WIDTH, window_position[1] + 70*OBJECT_MULTIPLYER_HEIGHT)))
+		self.additional_objects.append(objects.Text('sure_text', self.info_font.render(sure_text, False, (255, 255, 255)), (window_position[0]+70*OBJECT_MULTIPLYER_WIDTH, window_position[1] + 100*OBJECT_MULTIPLYER_HEIGHT)))
+		self.additional_objects.append(objects.Button('afford_removing_data_button', images.get_yes_button(), (window_position[0] + 40*OBJECT_MULTIPLYER_WIDTH, window_position[1] + window_size[1] - 5*OBJECT_MULTIPLYER_HEIGHT - YES_BUTTON_SIZE[1])))
+		self.additional_objects.append(objects.Button('not_afford_removing_data_button', images.get_no_button(), (window_position[0] + window_size[0] - NO_BUTTON_SIZE[0] - 40*OBJECT_MULTIPLYER_WIDTH, window_position[1] + window_size[1] - 5*OBJECT_MULTIPLYER_HEIGHT - NO_BUTTON_SIZE[1])))
+
+	def remove_data(self):
+		os.remove('save.bin')
+		print('REMOVED ALL USER DATA!')
+		#time.sleep(5)
+		pygame.quit()
+		sys.exit()
+
 
 	async def apply_settings(self):
 		width = None

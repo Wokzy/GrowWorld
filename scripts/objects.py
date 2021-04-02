@@ -50,6 +50,12 @@ class Button:
 			gf.buy_crystal()
 		elif self.name == 'sell_crystal':
 			gf.sell_crystal()
+		elif self.name == 'remove_data':
+			await gf.afford_removing_data()
+		elif self.name == 'afford_removing_data_button':
+			gf.remove_data()
+		elif self.name == 'not_afford_removing_data_button':
+			gf.close_settings_window()
 
 
 class Window:
