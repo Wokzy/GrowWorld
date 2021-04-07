@@ -1,6 +1,6 @@
 from datetime import datetime
 print('GrowWord - made by Wokzy and Arter')
-print('Version - 0.00.3')
+print('Version - 0.00.5')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
@@ -237,8 +237,10 @@ class GrowWord:
 	async def blit_allies_heroes(self):
 		for unit in gf.allies_units:
 			self.screen.blit(unit.image, unit.rect)
-			self.screen.blit(unit.hp_bar_background_image, unit.hp_bar_background_rect)
-			self.screen.blit(unit.hp_bar_image, unit.hp_bar_rect)
+			try:
+				self.screen.blit(unit.hp_bar_background_image, unit.hp_bar_background_rect)
+				self.screen.blit(unit.hp_bar_image, unit.hp_bar_rect)
+			except: pass
 
 	async def blit_hitpoints(self):
 		self.screen.blit(self.hpbar_background_image, self.hpbar_background_rect)
@@ -287,6 +289,8 @@ class GrowWord:
 								gf.heroes[1].action(gf)
 						elif event.key == pygame.K_3:
 								gf.heroes[2].action(gf)
+						elif event.key == pygame.K_4:
+								gf.heroes[3].action(gf)
 						if not gf.in_battle and event.key == pygame.K_SPACE:
 							await gf.start_battle()
 						elif event.key == pygame.K_t and not gf.in_battle and gf.special_buttons_avalible:

@@ -1,6 +1,11 @@
 # Update log
 ---
 
+## Version 0.00.5
+- New hero - Rocket man, makes 5 rocket choots (blew up enemyes)
+- Market balance fix
+
+
 ## Version 0.00.4
 - New image for town market
 - Added images in trade market, shows statistics of cost

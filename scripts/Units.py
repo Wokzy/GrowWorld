@@ -125,11 +125,11 @@ class RocketBoom:
 		self.animation_iterations = 0
 		self.animation_speed = FPS * 0.4
 
-		self.attacked = Fasle
+		self.attacked = False
 
 
 	def update(self, gf):
-		if self.animation_iterations >= self.animation_speed:
+		if self.animation_iterations >= self.animation_speed and self.alive:
 			if self.images.index(self.image) +1 < len(self.images):
 				self.image = self.images[self.images.index(self.image) + 1]
 			else:
@@ -149,5 +149,5 @@ class RocketBoom:
 		self.attacked = True
 
 		for i in range(len(gf.battle_heroes)):
-			if battle_heroes[i].rect.colliderect(self.rect):
-				battle_heroes[i].hp -= self.damage
+			if gf.battle_heroes[i].rect.colliderect(self.rect):
+				gf.battle_heroes[i].hp -= self.damage

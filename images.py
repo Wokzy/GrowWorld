@@ -36,6 +36,18 @@ def get_hp_bar_background():
 def get_mana_bar_background():
 	return pygame.transform.scale(pygame.image.load('sprites/bars/background_bar.png'), MANABAR_BACKGROUND_SIZE)
 
+def get_rocket_man():
+	global ROCKET_MAN
+	if ROCKET_MAN == None:
+		ROCKET_MAN = pygame.transform.scale(pygame.image.load('sprites/heroes/rocket_man.png'), HEROES_SIZE)
+	return ROCKET_MAN
+
+def get_rocket_boom():
+	global BLEW_IMAGES
+	if BLEW_IMAGES == None:
+		BLEW_IMAGES = [pygame.transform.scale(pygame.image.load('sprites/images/blew_animation/Sprite-0001.png'), BLEW_SIZE), pygame.transform.scale(pygame.image.load('sprites/images/blew_animation/Sprite-0002.png'), BLEW_SIZE), pygame.transform.scale(pygame.image.load('sprites/images/blew_animation/Sprite-0003.png'), BLEW_SIZE), pygame.transform.scale(pygame.image.load('sprites/images/blew_animation/Sprite-0004.png'), BLEW_SIZE)]
+	return BLEW_IMAGES
+
 def get_monster():
 	global MONSTER_IMAGE
 
@@ -249,6 +261,7 @@ def init():
 	global STIM_MANAGER, UPGRADE_SHOOTER_BUTTON_IMAGE, HERO_BACKGROUND, MARADAUER_IMAGE, FIELD_MARADAUER_IMAGES
 	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
 	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE, REMOVE_DATA, NO_BUTTON, YES_BUTTON
+	global BLEW_IMAGES, ROCKET_MAN
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -283,6 +296,8 @@ def init():
 	REMOVE_DATA = None
 	NO_BUTTON = None
 	YES_BUTTON = None
+	BLEW_IMAGES = None
+	ROCKET_MAN = None
 
 	get_mana_bar()
 	get_field_maradauer()
@@ -318,5 +333,7 @@ def init():
 	get_remove_data()
 	get_yes_button()
 	get_no_button()
+	get_rocket_boom()
+	get_rocket_man()
 
 init()

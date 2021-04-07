@@ -1,4 +1,4 @@
-import pygame, images, math
+import pygame, images, math, random
 from constants import *
 from scripts import Units
 
@@ -246,7 +246,7 @@ class RocketMan:
 		self.total_shots = 5
 		self.current_shot = 0
 
-		self.shoot_speed = FPS * 0.5
+		self.shoot_speed = FPS
 		self.shoot_iteration = 0
 
 	def init(self, gf):
@@ -288,8 +288,13 @@ class RocketMan:
 		self.cooldown_iteration += 1
 		if self.attacking:
 			if self.shoot_iteration >= self.shoot_speed:
+				ch = random.randint(1, 2)
+				if ch == 1:
+					self.target = (self.target[0]+random.randint(0, 80), self.target[1])
+				elif ch == 2 and not gf.castle.rect.collidepoint((self.target[0]-80, self.target[1])):
+					self.target = (self.target[0]-random.randint(0, 80), self.target[1])
 				self.shoot_iteration = 0
-				gf.allies_units.append(Units.RocketBoom(self.target, gf, self.level))
+				gf.allies_units.append(Units.RocketBoom((self.target[0], gf.castle.rect.y+CASTLE_SIZE[1]-BLEW_SIZE[1]), gf, self.level))
 				self.current_shot += 1
 			if self.current_shot == self.total_shots:
 				self.target = None
@@ -304,6 +309,6 @@ class RocketMan:
 		self.damage = self.level*50
 		self.upgrade_cost = 500 + (200*self.level)
 
-	def attack(self):
+	def attack(self, gf):
 		self.attacking = True
-		self.target = gf.hero_target_position
+		self.target = (gf.hero_target_position[0], gf.hero_target_position[1])

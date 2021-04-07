@@ -48,6 +48,8 @@ class GameFunctions:
 					self.heroes.append(heroes.Nothing(hero['tower_position'], self))
 				elif hero['name'] == 'UnitHealer':
 					self.heroes.append(heroes.UnitHealer(hero['level'], hero['tower_position'], self))
+				elif hero['name'] == 'RocketMan':
+					self.heroes.append(heroes.RocketMan(hero['level'], hero['tower_position'], self))
 				else: print(hero['name'])
 			self.town_shooters = []
 			for i in range(4):
@@ -60,11 +62,13 @@ class GameFunctions:
 					self.total_heroes.append(heroes.Maradauer(hero['level'], hero['tower_position'], self))
 				elif hero['name'] == 'UnitHealer':
 					self.total_heroes.append(heroes.UnitHealer(hero['level'], hero['tower_position'], self))
+				elif hero['name'] == 'RocketMan':
+					self.total_heroes.append(heroes.RocketMan(hero['level'], hero['tower_position'], self))
 				else: print(hero['name'])
 		else:
 			self.castle = castle.Castle()
-			self.total_heroes = [heroes.StimManager(1, 1, self), heroes.Maradauer(1, 2, self), heroes.UnitHealer(1, 3, self)]
-			self.heroes = [heroes.Nothing(1, self), heroes.Nothing(2, self), heroes.Nothing(3, self)]
+			self.total_heroes = [heroes.StimManager(1, 1, self), heroes.Maradauer(1, 2, self), heroes.UnitHealer(1, 3, self), heroes.RocketMan(1, 4, self)]
+			self.heroes = [heroes.Nothing(1, self), heroes.Nothing(2, self), heroes.Nothing(3, self), heroes.Nothing(4, self)]
 			self.town_shooters = []
 			self.gold = 0
 			self.crystal = 0
@@ -72,6 +76,7 @@ class GameFunctions:
 		self.additional_objects = []
 		self.info_objects = []
 		self.prev_additional_objects = []
+		self.targetting_prev_additional_objects = []
 
 		self.enter_in_text_input = False
 		self.text_input_obj = None
@@ -193,6 +198,7 @@ class GameFunctions:
 			await self.update_upgrading_hero()
 
 		if self.trading: await self.update_trading()
+		if self.targetting: self.update_targetting()
 
 	def init_optimization(self):
 		self.attack_button_on = False
@@ -528,14 +534,15 @@ class GameFunctions:
 
 	def update_targetting(self):
 		self.additional_objects = []
-		self.additional_objects.append(objects.Image(images.get_targetting(), (self.castle.rect.x, pygame.mouse.get_pos()[1])))
+		self.additional_objects.append(objects.Image(images.get_close_button(), (pygame.mouse.get_pos()[0], self.castle.rect.y+self.castle.size[1]-20*OBJECT_MULTIPLYER_HEIGHT)))
 		if self.hero_target_position != ():
-			self.hero_target_position = ()
 			self.targetting_hero.attack(self)
-			self.additional_objects = list(prev_additional_objects)
+			self.additional_objects = list(self.targetting_prev_additional_objects)
+			self.hero_target_position = ()
+			self.targetting = False
 
 	def start_targetting(self):
-		self.prev_additional_objects = list(self.additional_objects)
+		self.targetting_prev_additional_objects = list(self.additional_objects)
 		self.targetting = True
 
 	async def goto_town(self):

@@ -12,6 +12,7 @@ class Castle:
 		self.castle_rect.y = HEIGHT - CASTLE_SIZE[1] - 80 * AVERAGE_MULTIPLYER
 
 		self.rect = self.castle_rect
+		self.size = CASTLE_SIZE
 
 		self.level = level
 		self.total_hp = 1500 + (self.level * 300)

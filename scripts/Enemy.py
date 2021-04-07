@@ -77,7 +77,8 @@ class Enemy:
 
 	def find_target(self, gf):
 		if len(gf.allies_units) > 0:
-			self.target = random.choice([gf.castle, random.choice(gf.allies_units)])
+			while self.target == None or self.target != gf.castle and self.target.type_surface == 'Boom':
+				self.target = random.choice([gf.castle, random.choice(gf.allies_units)])
 		else: self.target = gf.castle
 
 
