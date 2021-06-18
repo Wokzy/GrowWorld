@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class Enemy:
-	def __init__(self, type_surface, type_damage, hp, speed, damage, attack_speed, image, size, wave, row_position=1):
+	def __init__(self, type_surface, type_damage, hp, speed, damage, attack_speed, image, size, wave, row_position=1, attack_range=60):
 		self.type_surface = type_surface # Ground / Air
 		self.type_damage = type_damage # Range / Melee
 		self.total_hp = hp
@@ -15,6 +15,7 @@ class Enemy:
 		self.rect = self.image.get_rect()
 		self.size = size
 		self.row_position = row_position # 1 - 6 position
+		self.attack_range = attack_range # Espessially for 'Range' units
 
 		self.hp_bar_image = images.get_hp_bar()
 		self.hp_bar_size = (self.size[0], 5*OBJECT_MULTIPLYER_HEIGHT)
@@ -46,12 +47,19 @@ class Enemy:
 			self.find_target(gf)
 		if self.hp <= 0:
 			self.alive = False
-			gf.gold += self.cost
+			gf.gold += self.cost + ((self.cost // 100) * gf.bonus_gold)
+			print(self.cost + ((self.cost // 100) * gf.bonus_gold))
 			return None
 		if self.type_damage == 'Melee':
 			if not self.rect.colliderect(self.target.rect):
 				self.rect.x -= self.speed
 			elif self.rect.colliderect(self.target.rect):
+				return self.attack()
+			else: return ['Stay']
+		elif self.type_damage == 'Range':
+			if not self.rect.collidepoint(self.target.rect.x + self.attack_range):
+				self.rect.x -= self.speed
+			elif self.rect.collidepoint(self.target.rect.x + self.attack_range):
 				return self.attack()
 			else: return ['Stay']
 
@@ -84,4 +92,7 @@ class Enemy:
 
 
 def monster(wave, row_position):
-	return Enemy('Ground', 'Melee', ((wave//3)+1)*250, random.randint(2, 4)*AVERAGE_MULTIPLYER, 15, FPS*0.4, images.get_monster(), MONSTER_SIZE, wave, row_position)
+	return Enemy('Ground', 'Melee', ((wave//3)+1)*250, random.randint(2, 4)*AVERAGE_MULTIPLYER, 15, FPS*0.4, images.get_monster(), MONSTER_SIZE, wave, row_position=row_position)
+
+def range_monster(wave, row_position):
+	return Enemy('Ground', 'Range', ((wave//3)+1)*200, random.randint(1, 3)*AVERAGE_MULTIPLYER, 10, FPS*0.25, images.get_range_monster(), RANGE_MONSTER_SIZE, wave, row_position=row_position, attack_range=90)

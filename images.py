@@ -50,9 +50,6 @@ def get_rocket_boom():
 
 def get_monster():
 	global MONSTER_IMAGE
-
-	if MONSTER_IMAGE == None:
-		MONSTER_IMAGE = pygame.transform.scale(pygame.image.load('sprites/enemyes/monster.png'), MONSTER_SIZE)
 	return MONSTER_IMAGE
 
 def get_town_shooter():
@@ -70,58 +67,35 @@ def get_town_shooter():
 
 def get_settings_button():
 	global SETTINGS_BUTTON_IMAGE
-
-	if SETTINGS_BUTTON_IMAGE == None:
-		SETTINGS_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('sprites/buttons/gear.png'), SETTINGS_BUTTON_SIZE)
 	return SETTINGS_BUTTON_IMAGE
 
 def get_settings_window():
 	global SETTINGS_WINDOW_IMAGE
-
-	if SETTINGS_WINDOW_IMAGE == None:
-		SETTINGS_WINDOW_IMAGE = pygame.transform.scale(pygame.image.load('sprites/windows/settings_window.png'), SETTINGS_WINDOW_SIZE)
 	return SETTINGS_WINDOW_IMAGE
 
 def get_text_input(size):
 	global TEXT_INPUT_IMAGE
-
-	if TEXT_INPUT_IMAGE == None:
-		TEXT_INPUT_IMAGE = pygame.transform.scale(pygame.image.load('sprites/text_input.png'), size)
+	TEXT_INPUT_IMAGE = pygame.transform.scale(pygame.image.load('sprites/text_input.png'), size)
 	return TEXT_INPUT_IMAGE
 
 def get_apply_settings_button():
 	global APPLY_SETTINGS_BUTTON
-
-	if APPLY_SETTINGS_BUTTON == None:
-		APPLY_SETTINGS_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/apply.png'), APPLY_SETTIGS_BUTTON_SIZE)
 	return APPLY_SETTINGS_BUTTON
 
 def get_fight_button():
 	global FIGHT_BUTTON
-
-	if FIGHT_BUTTON == None:
-		FIGHT_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/fight.png'), FIGHT_BUTTON_SIZE)
 	return FIGHT_BUTTON
 
 def get_stim_on():
 	global STIM_ON
-
-	if STIM_ON == None:
-		STIM_ON = pygame.transform.scale(pygame.image.load('sprites/flags/stim_on.png'), STIM_ON_SIZE)
 	return STIM_ON
 
 def get_stim_off():
 	global STIM_OFF
-
-	if STIM_OFF == None:
-		STIM_OFF = pygame.transform.scale(pygame.image.load('sprites/flags/stim_off.png'), STIM_OFF_SIZE)
 	return STIM_OFF
 
 def get_stim_manager():
 	global STIM_MANAGER
-
-	if STIM_MANAGER == None:
-		STIM_MANAGER = pygame.transform.scale(pygame.image.load('sprites/heroes/stim_manager.png'), HEROES_SIZE)
 	return STIM_MANAGER
 
 def get_text_background(size=(100*OBJECT_MULTIPLYER_WIDTH, 50*OBJECT_MULTIPLYER_HEIGHT)):
@@ -134,14 +108,10 @@ def get_gray_window(size=SETTINGS_WINDOW_SIZE):
 
 def get_upgrade_shooter_button_image():
 	global UPGRADE_SHOOTER_BUTTON_IMAGE
-	if UPGRADE_SHOOTER_BUTTON_IMAGE == None:
-		UPGRADE_SHOOTER_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('sprites/text_background.png'), UPGRADE_SHOOTER_BUTTON_SIZE)
 	return UPGRADE_SHOOTER_BUTTON_IMAGE
 
 def get_hero_background():
 	global HERO_BACKGROUND
-	if HERO_BACKGROUND == None:
-		HERO_BACKGROUND = pygame.transform.scale(pygame.image.load('sprites/buttons/hero_button.png'), HEROES_SIZE)
 	return HERO_BACKGROUND
 
 def get_field_maradauer():
@@ -158,32 +128,22 @@ def get_field_maradauer():
 
 def get_maradauer():
 	global MARADAUER_IMAGE
-	if MARADAUER_IMAGE == None:
-		MARADAUER_IMAGE = pygame.transform.scale(pygame.image.load('sprites/marine/marine_stay.png'), FIELDMARADAUER_SIZE)
 	return MARADAUER_IMAGE
 
 def get_close_button():
 	global CLOSE_BUTTON
-	if CLOSE_BUTTON == None:
-		CLOSE_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/close_button.png'), CLOSE_BUTTON_SIZE)
 	return CLOSE_BUTTON
 
 def get_take_off_button():
 	global TAKE_OFF_BUTTON
-	if TAKE_OFF_BUTTON == None:
-		TAKE_OFF_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/take_off.png'), TAKE_OFF_BUTTON_SIZE)
 	return TAKE_OFF_BUTTON
 
 def get_equip_button():
 	global EQUIP_BUTTON
-	if EQUIP_BUTTON == None:
-		EQUIP_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/equip.png'), EQUIP_BUTTON_SIZE)
 	return EQUIP_BUTTON
 
 def get_unit_healer():
 	global UNIT_HEALER
-	if UNIT_HEALER == None:
-		UNIT_HEALER = pygame.transform.scale(pygame.image.load('sprites/heroes/unit_healer.png'), HEROES_SIZE)
 	return UNIT_HEALER
 
 def get_crystal(size=(5, 5)):
@@ -191,69 +151,55 @@ def get_crystal(size=(5, 5)):
 
 def get_town_market():
 	global TOWN_MARKET
-	if TOWN_MARKET == None:
-		TOWN_MARKET = pygame.transform.scale(pygame.image.load('sprites/ground_objects/market.png'), TOWN_MARKET_SIZE) #'sprites/ground_objects/market.png'
 	return TOWN_MARKET
 
 def get_goto_town_button():
 	global GOTO_TOWN
-	if GOTO_TOWN == None:
-		GOTO_TOWN = pygame.transform.scale(pygame.image.load('sprites/buttons/goto_town.png'), MOVE_GLOBAL_LOCATION_BUTTON_SIZE)
 	return GOTO_TOWN
 
 def get_goto_castle_button():
 	global GOTO_CASTLE
-	if GOTO_CASTLE == None:
-		GOTO_CASTLE = pygame.transform.scale(pygame.image.load('sprites/buttons/goto_castle.png'), MOVE_GLOBAL_LOCATION_BUTTON_SIZE)
 	return GOTO_CASTLE
 
 def get_buy_button():
 	global BUY_BUTTON
-	if BUY_BUTTON == None:
-		BUY_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Buy.png'), BUY_BUTTON_SIZE)
 	return BUY_BUTTON
 
 def get_sell_button():
 	global SELL_BUTTON
-	if SELL_BUTTON == None:
-		SELL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Sell.png'), SELL_BUTTON_SIZE)
 	return SELL_BUTTON
 
 def get_trading_raise():
 	global TRAIDING_RAISE
-	if TRAIDING_RAISE == None:
-		TRAIDING_RAISE = pygame.transform.scale(pygame.image.load('sprites/images/traiding_raise.png'), TRAIDING_RAISE_SIZE)
 	return TRAIDING_RAISE
 
 def get_trading_minus():
 	global TRAIDING_MINUS
-	if TRAIDING_MINUS == None:
-		TRAIDING_MINUS = pygame.transform.scale(pygame.image.load('sprites/images/traiding_minus.png'), TRAIDING_MINUS_SIZE)
 	return TRAIDING_MINUS
 
 def get_trading_fall():
 	global TRAIDING_FALL
-	if TRAIDING_FALL == None:
-		TRAIDING_FALL = pygame.transform.scale(pygame.image.load('sprites/images/traiding_fall.png'), TRAIDING_FALL_SIZE)
 	return TRAIDING_FALL
 
 def get_remove_data():
 	global REMOVE_DATA
-	if REMOVE_DATA == None:
-		REMOVE_DATA = pygame.transform.scale(pygame.image.load('sprites/buttons/Remove_data.png'), REMOVE_DATA_SIZE)
 	return REMOVE_DATA
 
 def get_yes_button():
 	global YES_BUTTON
-	if YES_BUTTON == None:
-		YES_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Yes_red.png'), YES_BUTTON_SIZE)
 	return YES_BUTTON
 
 def get_no_button():
 	global NO_BUTTON
-	if NO_BUTTON == None:
-		NO_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/No_green.png'), NO_BUTTON_SIZE)
 	return NO_BUTTON
+
+def get_skills_button():
+	global SKILLS_BUTTON
+	return SKILLS_BUTTON
+
+def get_bonus_gold_skill_button():
+	global BONUS_GOLD_SKILL_BUTTON
+	return BONUS_GOLD_SKILL_BUTTON
 
 def init():
 	global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IMAGES, SETTINGS_BUTTON_IMAGE
@@ -261,43 +207,45 @@ def init():
 	global STIM_MANAGER, UPGRADE_SHOOTER_BUTTON_IMAGE, HERO_BACKGROUND, MARADAUER_IMAGE, FIELD_MARADAUER_IMAGES
 	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
 	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE, REMOVE_DATA, NO_BUTTON, YES_BUTTON
-	global BLEW_IMAGES, ROCKET_MAN
+	global BLEW_IMAGES, ROCKET_MAN, SKILLS_BUTTON, BONUS_GOLD_SKILL_BUTTON
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
 	HPBAR_BACKGROUND_IMAGE = None
 
-	MONSTER_IMAGE = None
+	MONSTER_IMAGE = pygame.transform.scale(pygame.image.load('sprites/enemyes/monster.png'), MONSTER_SIZE)
 	TOWN_SHOOTER_IMAGES = None
-	SETTINGS_BUTTON_IMAGE = None
-	SETTINGS_WINDOW_IMAGE = None
+	SETTINGS_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('sprites/buttons/gear.png'), SETTINGS_BUTTON_SIZE)
+	SETTINGS_WINDOW_IMAGE = pygame.transform.scale(pygame.image.load('sprites/windows/settings_window.png'), SETTINGS_WINDOW_SIZE)
 	TEXT_INPUT_IMAGE = None
-	APPLY_SETTINGS_BUTTON = None
-	FIGHT_BUTTON = None
-	STIM_ON = None
-	STIM_OFF = None
-	STIM_MANAGER = None
-	UPGRADE_SHOOTER_BUTTON_IMAGE = None
-	HERO_BACKGROUND = None
-	MARADAUER_IMAGE = None
+	APPLY_SETTINGS_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/apply.png'), APPLY_SETTIGS_BUTTON_SIZE)
+	FIGHT_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/fight.png'), FIGHT_BUTTON_SIZE)
+	STIM_ON = pygame.transform.scale(pygame.image.load('sprites/flags/stim_on.png'), STIM_ON_SIZE)
+	STIM_OFF = pygame.transform.scale(pygame.image.load('sprites/flags/stim_off.png'), STIM_OFF_SIZE)
+	STIM_MANAGER = pygame.transform.scale(pygame.image.load('sprites/heroes/stim_manager.png'), HEROES_SIZE)
+	UPGRADE_SHOOTER_BUTTON_IMAGE = pygame.transform.scale(pygame.image.load('sprites/text_background.png'), UPGRADE_SHOOTER_BUTTON_SIZE)
+	HERO_BACKGROUND = pygame.transform.scale(pygame.image.load('sprites/buttons/hero_button.png'), HEROES_SIZE)
+	MARADAUER_IMAGE = pygame.transform.scale(pygame.image.load('sprites/marine/marine_stay.png'), FIELDMARADAUER_SIZE)
 	FIELD_MARADAUER_IMAGES = None
-	CLOSE_BUTTON = None
-	TAKE_OFF_BUTTON = None
-	EQUIP_BUTTON = None
-	UNIT_HEALER = None
-	TOWN_MARKET = None
-	GOTO_TOWN = None
-	GOTO_CASTLE = None
-	BUY_BUTTON = None
-	SELL_BUTTON = None
-	TRAIDING_RAISE = None
-	TRAIDING_FALL = None
-	TRAIDING_MINUS = None
-	REMOVE_DATA = None
-	NO_BUTTON = None
-	YES_BUTTON = None
+	CLOSE_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/close_button.png'), CLOSE_BUTTON_SIZE)
+	TAKE_OFF_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/take_off.png'), TAKE_OFF_BUTTON_SIZE)
+	EQUIP_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/equip.png'), EQUIP_BUTTON_SIZE)
+	UNIT_HEALER = pygame.transform.scale(pygame.image.load('sprites/heroes/unit_healer.png'), HEROES_SIZE)
+	TOWN_MARKET = pygame.transform.scale(pygame.image.load('sprites/ground_objects/market.png'), TOWN_MARKET_SIZE) #'sprites/ground_objects/market.png'
+	GOTO_TOWN = pygame.transform.scale(pygame.image.load('sprites/buttons/goto_town.png'), MOVE_GLOBAL_LOCATION_BUTTON_SIZE)
+	GOTO_CASTLE = pygame.transform.scale(pygame.image.load('sprites/buttons/goto_castle.png'), MOVE_GLOBAL_LOCATION_BUTTON_SIZE)
+	BUY_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Buy.png'), BUY_BUTTON_SIZE)
+	SELL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Sell.png'), SELL_BUTTON_SIZE)
+	TRAIDING_RAISE = pygame.transform.scale(pygame.image.load('sprites/images/traiding_raise.png'), TRAIDING_RAISE_SIZE)
+	TRAIDING_FALL = pygame.transform.scale(pygame.image.load('sprites/images/traiding_fall.png'), TRAIDING_FALL_SIZE)
+	TRAIDING_MINUS = pygame.transform.scale(pygame.image.load('sprites/images/traiding_minus.png'), TRAIDING_MINUS_SIZE)
+	REMOVE_DATA = pygame.transform.scale(pygame.image.load('sprites/buttons/Remove_data.png'), REMOVE_DATA_SIZE)
+	NO_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/No_green.png'), NO_BUTTON_SIZE)
+	YES_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/Yes_red.png'), YES_BUTTON_SIZE)
 	BLEW_IMAGES = None
 	ROCKET_MAN = None
+	SKILLS_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/skills_button.png'), SKILLS_BUTTON_SIZE)#pygame.transform.scale(pygame.image.load('sprites/buttons/skills_button.png'), SKILLS_BUTTON_SIZE)
+	BONUS_GOLD_SKILL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/bonus_gold_skill.png'), BONUS_GOLD_SKILL_BUTTON_SIZE)#pygame.transform.scale(pygame.image.load('sprites/buttons/bonus_gold_skill_button.png'), BONUS_GOLD_SKILL_BUTTON_SIZE)
 
 	get_mana_bar()
 	get_field_maradauer()

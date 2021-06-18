@@ -2,7 +2,7 @@ import pygame, images, random, sys, set_config, pickle, math, os, time
 from constants import *
 from datetime import datetime
 from scripts import Enemy as enemy
-from scripts import objects, heroes, castle, Town_shooters, GroundObjects
+from scripts import objects, heroes, castle, Town_shooters, GroundObjects, skills
 
 
 class GameFunctions:
@@ -11,6 +11,7 @@ class GameFunctions:
 		self.battle_heroes = []
 		self.allies_units = []
 		self.total_heroes = []
+		self.skills = []
 
 		self.special_buttons = {'goto_town':objects.Button('goto_town', images.get_goto_town_button(), (20*OBJECT_MULTIPLYER_WIDTH, 45*OBJECT_MULTIPLYER_HEIGHT)), 'goto_castle':objects.Button('goto_castle', images.get_goto_castle_button(), (WIDTH - 20*OBJECT_MULTIPLYER_WIDTH - MOVE_GLOBAL_LOCATION_BUTTON_SIZE[0], 45*OBJECT_MULTIPLYER_HEIGHT))}
 		self.special_buttons_avalible = True
@@ -27,6 +28,9 @@ class GameFunctions:
 		except Exception as e: print(e)
 
 		if self.data:
+			for skill in self.data['skills']:
+				if skill['name'] == 'BonusGold':
+					self.skills.append(skills.BonusGold(skill['level']))
 			self.castle = castle.Castle(self.data['castle_info']['level'])
 			self.wave = self.data['wave']
 			try: 
@@ -72,6 +76,7 @@ class GameFunctions:
 			self.town_shooters = []
 			self.gold = 0
 			self.crystal = 0
+			self.skills = []
 
 		self.additional_objects = []
 		self.info_objects = []
@@ -102,6 +107,11 @@ class GameFunctions:
 		self.trading = False
 
 		self.on_stats_traiding_obj = None
+
+		self.bonus_gold = 0 # In percent
+		self.active_bonuses = []
+
+		self.update_bonus_gold()
 
 	async def start_battle(self):
 		print(f'wave - {self.wave}')
@@ -193,6 +203,7 @@ class GameFunctions:
 
 		await self.update_settings_window()
 		await self.update_upgrading()
+		await self.update_skills_button()
 
 		if self.upgrading_hero:
 			await self.update_upgrading_hero()
@@ -205,6 +216,9 @@ class GameFunctions:
 		self.settings_window_on = False
 		self.settings_button_on = False
 		self.upgrading_window_on = False
+		self.skills_button_on = False
+		self.skills_window_on = False
+		self.upgrading_skill_flag = False
 
 	async def update_attack_button(self):
 		if self.in_battle and self.attack_button_on and self.prev_additional_objects == []:
@@ -355,7 +369,14 @@ class GameFunctions:
 			total_heroes_info.append({'name':hero.__class__.__name__, 'level':hero.level, 'tower_position':hero.tower_position})
 
 		with open('save.bin', 'wb') as f:
-			pickle.dump({'castle_info':castle_info, 'town_shooters_info':town_shooters_info, 'heroes_info':heroes_info, 'wave':self.wave, 'gold':self.gold, 'crystal':self.crystal, 'total_heroes_info':total_heroes_info}, f)
+			pickle.dump({'castle_info':castle_info,
+						'town_shooters_info':town_shooters_info,
+						'heroes_info':heroes_info,
+						'wave':self.wave,
+						'gold':self.gold,
+						'crystal':self.crystal,
+						'total_heroes_info':total_heroes_info,
+						'skills':[{'name':skill.name, 'level':skill.level} for skill in self.skills]}, f)
 			f.close()
 
 	def load_state(self):
@@ -406,6 +427,73 @@ class GameFunctions:
 				for obj in remove_list:
 					self.additional_objects.remove(obj)
 				self.upgrading_window_on = False
+
+	async def update_skills_button(self):
+		if self.prev_additional_objects == []:
+			if not self.in_battle and not self.skills_button_on:
+				self.skills_button_on = True
+
+				window_size = (70*OBJECT_MULTIPLYER_WIDTH, 150*OBJECT_MULTIPLYER_HEIGHT)
+				button_position = (WIDTH-window_size[0]-100*OBJECT_MULTIPLYER_WIDTH-SKILLS_BUTTON_SIZE[0], 125*OBJECT_MULTIPLYER_HEIGHT)
+
+				self.additional_objects.append(objects.Button('skills_button', images.get_skills_button(), button_position))
+			elif self.in_battle:
+				self.skills_button_on = False
+				for i in self.additional_objects:
+					if i.name == 'skills_button':
+						self.additional_objects.remove(i)
+						break
+
+	async def open_skills_window(self):
+		if self.prev_additional_objects == []:
+			self.prev_additional_objects = list(self.additional_objects)
+			self.additional_objects = []
+			self.skills_window_on = True
+
+			window_size = (300*OBJECT_MULTIPLYER_WIDTH, 280*OBJECT_MULTIPLYER_HEIGHT)
+			window_position = (WIDTH - 5 - window_size[0], HEIGHT - 5 - window_size[1])
+			bonus_gold_skill_button_pos = (window_position[0] + 15*OBJECT_MULTIPLYER_WIDTH, window_position[1]+15*OBJECT_MULTIPLYER_HEIGHT)
+
+			self.additional_objects.append(objects.Image(images.get_gray_window(), window_position, name='skills_window'))
+			self.additional_objects.append(objects.Button('bonus_gold_skill_button', images.get_bonus_gold_skill_button(), bonus_gold_skill_button_pos))
+			self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (window_position[0]+window_size[0]-80*OBJECT_MULTIPLYER_WIDTH, window_position[1])))
+
+	def close_skills_window(self):
+		self.additional_objects = list(self.prev_additional_objects)
+		self.prev_additional_objects = []
+		self.skills_window_on = False
+
+	async def upgrade_skill(self, skill):
+		names = [skl.name for skl in self.skills]
+		self.upgrading_skill_flag = True
+
+		self.additional_objects = []
+
+		if skill.name in names:
+			self.upgrading_skill = self.skills[names.index(skill.name)]
+		else:
+			self.upgrading_skill = skill
+
+		win_size = (250*OBJECT_MULTIPLYER_WIDTH, 260*OBJECT_MULTIPLYER_HEIGHT)
+		win_pos = (WIDTH-win_size[0], 50*OBJECT_MULTIPLYER_HEIGHT)
+		self.additional_objects.append(objects.Window('changing_unit_window', images.get_gray_window(win_size), win_pos))
+		self.additional_objects.append(objects.Image(pygame.transform.scale(self.upgrading_skill.image, (50*OBJECT_MULTIPLYER_WIDTH, 50*OBJECT_MULTIPLYER_HEIGHT)), (win_pos[0]+15*OBJECT_MULTIPLYER_WIDTH, win_pos[1]+15*OBJECT_MULTIPLYER_HEIGHT), name=f'upgrading_skill {self.upgrading_skill.name}'))
+		self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (win_pos[0]-CLOSE_BUTTON_SIZE[0], win_pos[1]-CLOSE_BUTTON_SIZE[1])))
+
+		last_iter = None
+		for i in range(len(self.upgrading_skill.description.split('\n'))):
+			self.additional_objects.append(objects.Text('upgrading_skill_descripton', self.info_font.render(self.upgrading_skill.description.split('\n')[i], False, (255, 255, 255)), (win_pos[0]+100*OBJECT_MULTIPLYER_WIDTH, win_pos[1]+15*OBJECT_MULTIPLYER_HEIGHT + 15*OBJECT_MULTIPLYER_HEIGHT*i)))
+			last_iter = i
+
+		self.additional_objects.append(objects.Text('level', self.info_font_big.render(f'level: {self.upgrading_skill.level}', False, (255, 10, 30)), (win_pos[0] + 85*OBJECT_MULTIPLYER_WIDTH, win_pos[1] + 25*OBJECT_MULTIPLYER_HEIGHT + 15*OBJECT_MULTIPLYER_HEIGHT*last_iter)))
+
+		upgrade_button_pos = (win_pos[0] + 20*OBJECT_MULTIPLYER_WIDTH, win_pos[1]+win_size[1] - 15*OBJECT_MULTIPLYER_HEIGHT - EQUIP_BUTTON_SIZE[1])
+
+		self.additional_objects.append(objects.Button('Upgrade_skill', images.get_text_background((EQUIP_BUTTON_SIZE[0] + 80*OBJECT_MULTIPLYER_WIDTH, EQUIP_BUTTON_SIZE[1])), upgrade_button_pos))
+		self.additional_objects.append(objects.Text('Upgrade_skill_text', self.info_font.render(f'{self.upgrading_skill.upgrade_gold_cost} gold and {self.upgrading_skill.upgrade_crystals_cost} crystals - {self.upgrading_skill.level + 1} lvl', False, GOLD_COLOUR), upgrade_button_pos))
+
+
+
 
 	def change_unit(self, unit):
 		if self.changing_unit_verb == False:
@@ -465,6 +553,13 @@ class GameFunctions:
 
 		#print(self.additional_objects)
 
+	def update_bonus_gold(self):
+		self.bonus_gold = 0
+		for skill in self.skills:
+			if skill.name == 'BonusGold':
+				self.bonus_gold += skill.bonus_percent
+				break
+
 	async def update_upgrading_hero(self):
 		self.additional_objects = []
 
@@ -489,16 +584,13 @@ class GameFunctions:
 
 		self.additional_objects.append(objects.Text('Description:', self.info_font.render('Description:', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+50*AVERAGE_MULTIPLYER)))
 		if self.upgrading_hero_obj.name == 'Maradauer':
-			self.additional_objects.append(objects.Text('Create group of 6 range', self.info_font.render('Create group of 6 range', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
-			self.additional_objects.append(objects.Text('attack units for limited time', self.info_font.render('attack units for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
-			self.additional_objects.append(objects.Text('Damage', self.info_font_big.render(str(self.upgrading_hero_obj.damage), False, (255, 15, 15)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+			self.show_maradauer_discription(upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos)
 		elif self.upgrading_hero_obj.name == 'StimManager':
-			self.additional_objects.append(objects.Text('Boost attack speed of town shooters', self.info_font.render('Boost attack speed of town shooters', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
-			self.additional_objects.append(objects.Text('on 60%, for limited time', self.info_font.render('on 60%, for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
-			self.additional_objects.append(objects.Text('Ability_duration', self.info_font_big.render('Ability duration - '+str(self.upgrading_hero_obj.stimpack_speed/FPS)+' sec', False, (150, 150, 255)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+			self.show_stim_manager_discription(upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos)
 		elif self.upgrading_hero_obj.name == 'UnitHealer':
-			self.additional_objects.append(objects.Text('Heal all allies units', self.info_font.render('Heal all allies units', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
-			self.additional_objects.append(objects.Text('Healing', self.info_font_big.render('Healing - '+str(self.upgrading_hero_obj.heal)+' hp', False, (150, 150, 255)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+			self.show_unit_healer_discription(upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos)
+		elif self.upgrading_hero_obj.name == 'RocketMan':
+			self.show_rocket_man_discription(upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos)
 
 		upgrade_hero_button_pos = (upgrade_hero_window_pos[0]+upgrade_hero_window_size[0]-EQUIP_BUTTON_SIZE[0]-10*OBJECT_MULTIPLYER_WIDTH, upgrade_hero_window_pos[1]-EQUIP_BUTTON_SIZE[1]-5*OBJECT_MULTIPLYER_HEIGHT+upgrade_hero_window_size[1])
 
@@ -511,10 +603,30 @@ class GameFunctions:
 				self.stop_upgrading_hero()
 			elif self.trading:
 				self.stop_trading()
+			elif self.skills_window_on:
+				self.close_skills_window()
 			else: self.additional_objects = []
 			#self.additional_objects = list(self.prev_additional_objects)
 			#self.prev_additional_objects = []
 		else: pass
+
+	def show_maradauer_discription(self, upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos):
+		self.additional_objects.append(objects.Text('Create group of 6 range', self.info_font.render('Create group of 6 range', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
+		self.additional_objects.append(objects.Text('attack units for limited time', self.info_font.render('attack units for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
+		self.additional_objects.append(objects.Text('Damage', self.info_font_big.render(str(self.upgrading_hero_obj.damage), False, (255, 15, 15)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+
+	def show_stim_manager_discription(self, upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos):
+		self.additional_objects.append(objects.Text('Boost attack speed of town shooters', self.info_font.render('Boost attack speed of town shooters', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
+		self.additional_objects.append(objects.Text('on 60%, for limited time', self.info_font.render('on 60%, for limited time', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+80*AVERAGE_MULTIPLYER)))
+		self.additional_objects.append(objects.Text('Ability_duration', self.info_font_big.render('Ability duration - '+str(self.upgrading_hero_obj.stimpack_speed/FPS)+' sec', False, (150, 150, 255)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+
+	def show_unit_healer_discription(self, upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos):
+		self.additional_objects.append(objects.Text('Heal all allies units', self.info_font.render('Heal all allies units', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
+		self.additional_objects.append(objects.Text('Healing', self.info_font_big.render('Healing - '+str(self.upgrading_hero_obj.heal)+' hp', False, (150, 150, 255)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
+
+	def show_rocket_man_discription(self, upgrade_hero_window_size, upgrade_hero_window_pos, upgrade_hero_image_pos, upgrade_hero_image_size, name_hero_text_pos):
+		self.additional_objects.append(objects.Text('Makes five rocket shoots', self.info_font.render('Makes five rocket shoots', False, (255, 255, 255)), (name_hero_text_pos[0], name_hero_text_pos[1]+65*AVERAGE_MULTIPLYER)))
+		self.additional_objects.append(objects.Text('Damage', self.info_font_big.render(str(self.upgrading_hero_obj.damage), False, (255, 15, 15)), (upgrade_hero_image_pos[0]+20*AVERAGE_MULTIPLYER, upgrade_hero_image_pos[1]+upgrade_hero_image_size[1]+40*AVERAGE_MULTIPLYER)))
 
 	def stop_upgrading_hero(self):
 		self.upgrading_hero = False

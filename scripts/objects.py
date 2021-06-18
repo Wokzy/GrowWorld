@@ -1,6 +1,6 @@
 import pygame, images
 from constants import *
-from scripts import heroes
+from scripts import heroes, skills
 
 
 class Button:
@@ -56,6 +56,15 @@ class Button:
 			gf.remove_data()
 		elif self.name == 'not_afford_removing_data_button':
 			gf.close_settings_window()
+		elif self.name == 'skills_button':
+			await gf.open_skills_window()
+		elif self.name == 'bonus_gold_skill_button':
+			await gf.upgrade_skill(skills.BonusGold(0))
+		elif self.name == 'Upgrade_skill':
+			gf.upgrading_skill.upgrade(gf)
+			if gf.upgrading_skill.name not in [i.name for i in gf.skills]:
+				gf.skills.append(gf.upgrading_skill)
+			await gf.save_state()
 
 
 class Window:

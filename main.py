@@ -1,6 +1,6 @@
 from datetime import datetime
 print('GrowWord - made by Wokzy and Arter')
-print('Version - 0.00.5')
+print('Version - 0.01.0')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
@@ -108,6 +108,7 @@ class GrowWord:
 		if self.iteration%(FPS*5) == 0:
 			await gf.update_cost_of_crystal()
 		await self.update_special_buttons()
+
 
 		if self.iteration%(FPS*60) == 0:
 			await gf.save_state()
@@ -319,17 +320,17 @@ class GrowWord:
 					continue
 				flag = False
 				for obj in gf.additional_objects[::-1]:
-					try:
-						if obj.__class__.__name__ != 'Text' and obj.rect.collidepoint(mos_pos) and event.button != 4 and event.button != 5:
-							await obj.action(gf)
-							if obj.__class__.__name__ == 'TextInput':
-								gf.text_input_obj = obj
-								gf.text_input_index = gf.additional_objects.index(obj)
-								gf.enter_in_text_input = True
-							flag = True
-							break
-					except Exception as e:
-						print(e)
+					#try:
+					if obj.__class__.__name__ != 'Text' and obj.rect.collidepoint(mos_pos) and event.button != 4 and event.button != 5:
+						await obj.action(gf)
+						if obj.__class__.__name__ == 'TextInput':
+							gf.text_input_obj = obj
+							gf.text_input_index = gf.additional_objects.index(obj)
+							gf.enter_in_text_input = True
+						flag = True
+						break
+					#except Exception as e:
+					#	print(e)
 				if gf.global_location == 'Town':
 					for obj in gf.ground_objects:
 						if obj.rect.collidepoint(mos_pos):

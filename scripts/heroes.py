@@ -3,6 +3,17 @@ from constants import *
 from scripts import Units
 
 
+
+def init_tower_position(gf, tower_position, size):
+	rect = 0
+	if tower_position >= 1 and tower_position < 5:
+		rect = gf.castle.castle_rect.y - 5*OBJECT_MULTIPLYER_HEIGHT - ((size[1]+5*OBJECT_MULTIPLYER_HEIGHT)) + CASTLE_SIZE[1]
+	if tower_position >= 5 and tower_position < 9:
+		rect = gf.castle.castle_rect.y - 5*OBJECT_MULTIPLYER_HEIGHT - ((size[1]+5*OBJECT_MULTIPLYER_HEIGHT)*2) + CASTLE_SIZE[1]
+	return rect
+
+
+
 class StimManager:
 	def __init__(self, level, tower_position, gf):
 		self.name = self.__class__.__name__
@@ -22,7 +33,7 @@ class StimManager:
 
 	def init(self, gf):
 		self.rect.x = gf.castle.castle_rect.x + 5*OBJECT_MULTIPLYER_WIDTH + ((self.size[0]+5*OBJECT_MULTIPLYER_WIDTH)*(self.tower_position-1))
-		self.rect.y = gf.castle.castle_rect.y - 5*OBJECT_MULTIPLYER_HEIGHT - ((self.size[1]+5*OBJECT_MULTIPLYER_HEIGHT)*((self.tower_position//4)+1)) + CASTLE_SIZE[1]
+		self.rect.y = init_tower_position(gf, self.tower_position, self.size)
 
 		self.cooldown_bar_size = (HEROES_SIZE[0], 2*OBJECT_MULTIPLYER_HEIGHT)
 		self.cooldown_bar_image = pygame.transform.scale(images.get_mana_bar(), self.cooldown_bar_size)
@@ -82,8 +93,7 @@ class Maradauer:
 
 	def init(self, gf):
 		self.rect.x = gf.castle.castle_rect.x + 5*OBJECT_MULTIPLYER_WIDTH + ((self.size[0]+5*OBJECT_MULTIPLYER_WIDTH)*(self.tower_position-1))
-		#print(self.rect.x, self.tower_position)
-		self.rect.y = gf.castle.castle_rect.y - 5*OBJECT_MULTIPLYER_HEIGHT - ((self.size[1]+5*OBJECT_MULTIPLYER_HEIGHT)*((self.tower_position//4)+1)) + CASTLE_SIZE[1]
+		self.rect.y = init_tower_position(gf, self.tower_position, self.size)
 
 		self.cooldown_bar_size = (HEROES_SIZE[0], 2*OBJECT_MULTIPLYER_HEIGHT)
 		self.cooldown_bar_image = pygame.transform.scale(images.get_mana_bar(), self.cooldown_bar_size)
@@ -134,7 +144,7 @@ class Nothing:
 
 	def init(self, gf):
 		self.rect.x = gf.castle.castle_rect.x + 5*OBJECT_MULTIPLYER_WIDTH + ((self.size[0]+5*OBJECT_MULTIPLYER_WIDTH)*(self.tower_position-1))
-		self.rect.y = gf.castle.castle_rect.y - 5*OBJECT_MULTIPLYER_HEIGHT - ((self.size[1]+5*OBJECT_MULTIPLYER_HEIGHT)*((self.tower_position//4)+1)) + CASTLE_SIZE[1]
+		self.rect.y = init_tower_position(gf, self.tower_position, self.size)
 
 		self.cooldown_bar_size = (HEROES_SIZE[0], 2*OBJECT_MULTIPLYER_HEIGHT)
 		self.cooldown_bar_image = pygame.transform.scale(images.get_mana_bar(), self.cooldown_bar_size)
@@ -178,8 +188,7 @@ class UnitHealer:
 
 	def init(self, gf):
 		self.rect.x = gf.castle.castle_rect.x + 5*OBJECT_MULTIPLYER_WIDTH + ((self.size[0]+5*OBJECT_MULTIPLYER_WIDTH)*(self.tower_position-1))
-		#print(self.rect.x, self.tower_position)
-		self.rect.y = gf.castle.castle_rect.y - 5*OBJECT_MULTIPLYER_HEIGHT - ((self.size[1]+5*OBJECT_MULTIPLYER_HEIGHT)*((self.tower_position//4)+1)) + CASTLE_SIZE[1]
+		self.rect.y = init_tower_position(gf, self.tower_position, self.size)
 
 		self.cooldown_bar_size = (HEROES_SIZE[0], 2*OBJECT_MULTIPLYER_HEIGHT)
 		self.cooldown_bar_image = pygame.transform.scale(images.get_mana_bar(), self.cooldown_bar_size)
@@ -251,8 +260,7 @@ class RocketMan:
 
 	def init(self, gf):
 		self.rect.x = gf.castle.castle_rect.x + 5*OBJECT_MULTIPLYER_WIDTH + ((self.size[0]+5*OBJECT_MULTIPLYER_WIDTH)*(self.tower_position-1))
-		#print(self.rect.x, self.tower_position)
-		self.rect.y = gf.castle.castle_rect.y - 5*OBJECT_MULTIPLYER_HEIGHT - ((self.size[1]+5*OBJECT_MULTIPLYER_HEIGHT)*((self.tower_position//4)+1)) + CASTLE_SIZE[1]
+		self.rect.y = init_tower_position(gf, self.tower_position, self.size)
 
 		self.cooldown_bar_size = (HEROES_SIZE[0], 2*OBJECT_MULTIPLYER_HEIGHT)
 		self.cooldown_bar_image = pygame.transform.scale(images.get_mana_bar(), self.cooldown_bar_size)
