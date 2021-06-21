@@ -64,6 +64,10 @@ class Button:
 			gf.upgrading_skill.upgrade(gf)
 			if gf.upgrading_skill.name not in [i.name for i in gf.skills]:
 				gf.skills.append(gf.upgrading_skill)
+			skill = gf.upgrading_skill
+			await gf.close_everything()
+			await gf.open_skills_window()
+			await gf.upgrade_skill(skill)
 			await gf.save_state()
 
 

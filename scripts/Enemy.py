@@ -48,7 +48,7 @@ class Enemy:
 		if self.hp <= 0:
 			self.alive = False
 			gf.gold += self.cost + ((self.cost // 100) * gf.bonus_gold)
-			print(self.cost + ((self.cost // 100) * gf.bonus_gold))
+			#print(self.cost + ((self.cost // 100) * gf.bonus_gold))
 			return None
 		if self.type_damage == 'Melee':
 			if not self.rect.colliderect(self.target.rect):
