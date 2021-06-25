@@ -6,3 +6,7 @@ subl_prj.sublime-workspace
 test.py
 *.txt
 save.bin
+sprites/enemyes/samples.png
+*.psd
+*/*.psd
+*/*/*.psd

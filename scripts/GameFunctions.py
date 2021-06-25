@@ -2,6 +2,7 @@ import pygame, images, random, sys, set_config, pickle, math, os, time
 from constants import *
 from datetime import datetime
 from scripts import Enemy as enemy
+from scripts import Enemy as ENEMY
 from scripts import objects, heroes, castle, Town_shooters, GroundObjects, skills
 
 
@@ -79,6 +80,7 @@ class GameFunctions:
 			self.skills = []
 
 		self.additional_objects = []
+		self.battle_objects = []
 		self.info_objects = []
 		self.prev_additional_objects = []
 		self.targetting_prev_additional_objects = []
@@ -114,6 +116,7 @@ class GameFunctions:
 		self.update_bonus_gold()
 
 	async def start_battle(self):
+		self.battle_objects = []
 		print(f'wave - {self.wave}')
 		self.enemyes_amount = (self.wave // 3 + 1) * 40
 		wave_speed = 30 + (self.wave // 100)
@@ -146,8 +149,28 @@ class GameFunctions:
 						enemy.target.hp -= update[1]
 					else:
 						enemy.target.hp = 0
+				elif update[0] == 'ToxicBullet':
+					self.battle_objects.append(ENEMY.ToxicBullet(update[1], update[2], update[3]))
 			if not enemy.alive:
 				self.battle_heroes.remove(enemy)
+
+		for obj in self.battle_objects:
+			obj.update()
+			if obj.__class__.__name__ == 'ToxicBullet':
+				if obj.rect.colliderect(obj.target):
+					if obj.target.hp - obj.damage >= 0:
+						obj.target.hp -= obj.damage
+					else:
+						obj.target.hp = 0
+					self.battle_objects.remove(obj)
+					continue
+				elif obj.rect.colliderect(self.castle):
+					if self.castle.hp - obj.damage >= 0:
+						self.castle.hp -= obj.damage
+					else:
+						self.castle.hp = 0
+					self.battle_objects.remove(obj)
+					continue
 
 		await self.add_line_with_enemyes()
 		self.enemy_line_iteraion += 1
@@ -155,8 +178,10 @@ class GameFunctions:
 	async def add_line_with_enemyes(self):
 		row = 1
 		if self.enemyes_amount >= 6 and self.enemy_line_iteraion >= self.enemy_line_time:
-			for i in range(6):
+			for i in range(2):
 				self.battle_heroes.append(enemy.monster(self.wave, row))
+				self.battle_heroes.append(enemy.monster(self.wave, row))
+				self.battle_heroes.append(enemy.range_monster(self.wave, row))
 				if row != 6:
 					row += 1
 				elif row == 6:

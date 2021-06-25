@@ -52,6 +52,26 @@ def get_monster():
 	global MONSTER_IMAGE
 	return MONSTER_IMAGE
 
+def get_range_monster():
+	global RANGE_MONSTER_IMAGES
+
+	if RANGE_MONSTER_IMAGES == None:
+		size = RANGE_MONSTER_SIZE
+		RANGE_MONSTER_IMAGES = {'stay_image':pygame.transform.scale(pygame.image.load('sprites/enemyes/range_monster_stay_image.png'), size),
+								'attack_image':pygame.transform.scale(pygame.image.load('sprites/enemyes/range_monster_attack_image.png'), RANGE_MONSTER_ATTACK_SIZE),
+								'move_images':[pygame.transform.scale(pygame.image.load('sprites/enemyes/range_monster_move_image_1.png'), size), pygame.transform.scale(pygame.image.load('sprites/enemyes/range_monster_move_image_2.png'), size)]
+								}
+
+	return RANGE_MONSTER_IMAGES
+
+def get_toxic_bullet():
+	global TOXIC_BULLET
+
+	if TOXIC_BULLET == None:
+		TOXIC_BULLET = [pygame.transform.scale(pygame.image.load('sprites/bullets/toxic_bullet_1.png'), TOXIC_BULLET_SIZE), pygame.transform.scale(pygame.image.load('sprites/bullets/toxic_bullet_2.png'), TOXIC_BULLET_SIZE)]
+
+	return TOXIC_BULLET
+
 def get_town_shooter():
 	global TOWN_SHOOTER_IMAGES
 
@@ -207,7 +227,7 @@ def init():
 	global STIM_MANAGER, UPGRADE_SHOOTER_BUTTON_IMAGE, HERO_BACKGROUND, MARADAUER_IMAGE, FIELD_MARADAUER_IMAGES
 	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
 	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE, REMOVE_DATA, NO_BUTTON, YES_BUTTON
-	global BLEW_IMAGES, ROCKET_MAN, SKILLS_BUTTON, BONUS_GOLD_SKILL_BUTTON
+	global BLEW_IMAGES, ROCKET_MAN, SKILLS_BUTTON, BONUS_GOLD_SKILL_BUTTON, RANGE_MONSTER_IMAGES, TOXIC_BULLET
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -246,6 +266,8 @@ def init():
 	ROCKET_MAN = None
 	SKILLS_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/skills_button.png'), SKILLS_BUTTON_SIZE)#pygame.transform.scale(pygame.image.load('sprites/buttons/skills_button.png'), SKILLS_BUTTON_SIZE)
 	BONUS_GOLD_SKILL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/bonus_gold_skill.png'), BONUS_GOLD_SKILL_BUTTON_SIZE)#pygame.transform.scale(pygame.image.load('sprites/buttons/bonus_gold_skill_button.png'), BONUS_GOLD_SKILL_BUTTON_SIZE)
+	RANGE_MONSTER_IMAGES = None
+	TOXIC_BULLET = None
 
 	get_mana_bar()
 	get_field_maradauer()
@@ -283,5 +305,7 @@ def init():
 	get_no_button()
 	get_rocket_boom()
 	get_rocket_man()
+	get_range_monster()
+	get_toxic_bullet()
 
 init()
