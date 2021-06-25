@@ -137,8 +137,10 @@ class GameFunctions:
 
 	async def update_battle(self):
 		if len(self.battle_heroes) == 0 and self.enemyes_amount == 0:
+			self.battle_objects = []
 			await self.victory()
 		elif self.castle.hp == 0:
+			self.battle_objects = []
 			await self.defeat()
 
 		for enemy in self.battle_heroes:

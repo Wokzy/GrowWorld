@@ -153,8 +153,9 @@ class GrowWord:
 		for obj in gf.info_objects:
 			self.screen.blit(obj.image, obj.rect)
 
-		for obj in gf.battle_objects:
-			self.screen.blit(obj.image, obj.rect)
+		if gf.in_battle:
+			for obj in gf.battle_objects:
+				self.screen.blit(obj.image, obj.rect)
 
 	def update_heroes(self):
 		for hero in gf.heroes:
