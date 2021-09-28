@@ -29,9 +29,12 @@ class GameFunctions:
 		except Exception as e: print(e)
 
 		if self.data:
+			print(self.data['skills'])
 			for skill in self.data['skills']:
 				if skill['name'] == 'BonusGold':
 					self.skills.append(skills.BonusGold(skill['level']))
+				elif skill['name'] == 'CriticalShot':
+					self.skills.append(skills.CriticalShot(skill['level']))
 			self.castle = castle.Castle(self.data['castle_info']['level'])
 			self.wave = self.data['wave']
 			try: 
@@ -480,9 +483,11 @@ class GameFunctions:
 			window_size = (300*OBJECT_MULTIPLYER_WIDTH, 280*OBJECT_MULTIPLYER_HEIGHT)
 			window_position = (WIDTH - 5 - window_size[0], HEIGHT - 5 - window_size[1])
 			bonus_gold_skill_button_pos = (window_position[0] + 15*OBJECT_MULTIPLYER_WIDTH, window_position[1]+15*OBJECT_MULTIPLYER_HEIGHT)
+			critical_shot_skill_button_pos = (bonus_gold_skill_button_pos[0] + BONUS_GOLD_SKILL_BUTTON_SIZE[0] + 15*OBJECT_MULTIPLYER_WIDTH, bonus_gold_skill_button_pos[1])
 
 			self.additional_objects.append(objects.Image(images.get_gray_window(), window_position, name='skills_window'))
 			self.additional_objects.append(objects.Button('bonus_gold_skill_button', images.get_bonus_gold_skill_button(), bonus_gold_skill_button_pos))
+			self.additional_objects.append(objects.Button('critical_shot_skill_button', images.get_critical_shot_skill_button(), critical_shot_skill_button_pos))
 			self.additional_objects.append(objects.Button('close_button', images.get_close_button(), (window_position[0]+window_size[0]-80*OBJECT_MULTIPLYER_WIDTH, window_position[1])))
 
 	def close_skills_window(self):

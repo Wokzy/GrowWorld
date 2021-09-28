@@ -60,6 +60,8 @@ class Button:
 			await gf.open_skills_window()
 		elif self.name == 'bonus_gold_skill_button':
 			await gf.upgrade_skill(skills.BonusGold(0))
+		elif self.name == 'critical_shot_skill_button':
+			await gf.upgrade_skill(skills.CriticalShot(0))
 		elif self.name == 'Upgrade_skill':
 			gf.upgrading_skill.upgrade(gf)
 			if gf.upgrading_skill.name not in [i.name for i in gf.skills]:

@@ -221,6 +221,10 @@ def get_bonus_gold_skill_button():
 	global BONUS_GOLD_SKILL_BUTTON
 	return BONUS_GOLD_SKILL_BUTTON
 
+def get_critical_shot_skill_button():
+	global CRITICAL_SHOT_SKILL_BUTTON
+	return CRITICAL_SHOT_SKILL_BUTTON
+
 def init():
 	global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IMAGES, SETTINGS_BUTTON_IMAGE
 	global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON, FIGHT_BUTTON, STIM_ON, STIM_OFF
@@ -228,6 +232,7 @@ def init():
 	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
 	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE, REMOVE_DATA, NO_BUTTON, YES_BUTTON
 	global BLEW_IMAGES, ROCKET_MAN, SKILLS_BUTTON, BONUS_GOLD_SKILL_BUTTON, RANGE_MONSTER_IMAGES, TOXIC_BULLET
+	global CRITICAL_SHOT_SKILL_BUTTON
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -266,6 +271,7 @@ def init():
 	ROCKET_MAN = None
 	SKILLS_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/skills_button.png'), SKILLS_BUTTON_SIZE)#pygame.transform.scale(pygame.image.load('sprites/buttons/skills_button.png'), SKILLS_BUTTON_SIZE)
 	BONUS_GOLD_SKILL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/bonus_gold_skill.png'), BONUS_GOLD_SKILL_BUTTON_SIZE)#pygame.transform.scale(pygame.image.load('sprites/buttons/bonus_gold_skill_button.png'), BONUS_GOLD_SKILL_BUTTON_SIZE)
+	CRITICAL_SHOT_SKILL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/critical_shot.png'), CRITICAL_SHOT_SKILL_BUTTON_SIZE)
 	RANGE_MONSTER_IMAGES = None
 	TOXIC_BULLET = None
 

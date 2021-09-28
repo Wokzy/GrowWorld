@@ -1,6 +1,6 @@
 from datetime import datetime
 print('GrowWord - made by Wokzy and Arter')
-print('Version - 0.02.0')
+print('Version - 0.02.1')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
@@ -13,7 +13,7 @@ pygame.font.init()
 
 class GrowWord:
 	def __init__(self, gf):
-		self.screen = pygame.display.set_mode(WINDOW_RESOLUTION, vsync=1)
+		self.screen = pygame.display.set_mode(WINDOW_RESOLUTION)#, vsync=1)
 		pygame.display.set_caption('GrowWord')
 
 		self.road_image = images.get_road()
@@ -42,7 +42,7 @@ class GrowWord:
 			await self.update_event()
 
 			if not gf.targetting:
-				await self.update()
+				await self.update(gf)
 
 			self.mana_text = self.info_font.render('Mana: {}'.format(str(gf.castle.mana)), False, (0, 0, 0))
 			self.hp_text = self.info_font.render('HP: {}'.format(str(gf.castle.hp)), False, (0, 0, 0))
@@ -56,7 +56,7 @@ class GrowWord:
 
 
 
-	async def update(self):
+	async def update(self, gf):
 		# Updating HP
 
 		self.hpbar_size = await gf.castle.update_hpbar_size(self.hpbar_size)
@@ -95,7 +95,7 @@ class GrowWord:
 				i.image = i.stay_image
 
 		if gf.in_battle:
-			self.update_townshooters()
+			self.update_townshooters(gf)
 			self.update_allies_units()
 		elif not gf.in_battle:
 			if gf.town_shooters[0].on_stimpack:
@@ -188,11 +188,19 @@ class GrowWord:
 				for g in range(5):
 					gf.town_shooters.append(scripts.Town_shooters.TownShooter(1, images.get_town_shooter(), g, i))
 
-	def update_townshooters(self):
+	def update_townshooters(self, gf):
 		for shooter in gf.town_shooters:
 			action = shooter.update(gf.battle_heroes)
 			if action == 'attack':
-				gf.battle_heroes[gf.battle_heroes.index(shooter.target)].hp -= shooter.damage
+				dmg = shooter.damage
+				for i in gf.skills:
+					if i.name == 'CriticalShot':
+						if random.randint(0, 100) <= i.chance:
+							#print(f'CRIT! - {dmg} dmg ', end='')
+							dmg *= 2.25
+							#print(f'- {dmg}')
+						break
+				gf.battle_heroes[gf.battle_heroes.index(shooter.target)].hp -= int(dmg)
 				#gf.battle_heroes[gf.battle_heroes.index(shooter.target)].attacking_me_shooters += 1
 
 	def update_allies_units(self):

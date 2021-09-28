@@ -138,7 +138,7 @@ class RangeEnemy:
 		self.rect = self.image.get_rect()
 		self.size = size
 		self.row_position = row_position # 1 - 6 position
-		self.attack_range = attack_range # Espessially for 'Range' units
+		self.attack_range = attack_range*OBJECT_MULTIPLYER_WIDTH # Espessially for 'Range' units
 
 		self.hp_bar_image = images.get_hp_bar()
 		self.hp_bar_size = (self.size[0], 5*OBJECT_MULTIPLYER_HEIGHT)
