@@ -29,7 +29,6 @@ class GameFunctions:
 		except Exception as e: print(e)
 
 		if self.data:
-			print(self.data['skills'])
 			for skill in self.data['skills']:
 				if skill['name'] == 'BonusGold':
 					self.skills.append(skills.BonusGold(skill['level']))
@@ -334,7 +333,7 @@ class GameFunctions:
 			self.text_input_obj.text.text = self.text_input_obj.text.text + ' '
 		elif event.key != pygame.K_BACKSPACE:
 			if self.text_input_obj.type_ == 'only_numbers':
-				if event.key in NUMBERS_KEYS:
+				if event.unicode in NUMBERS_KEYS:
 					self.text_input_obj.text.text += event.unicode
 			else:
 				self.text_input_obj.text.text += event.unicode

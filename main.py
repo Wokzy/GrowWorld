@@ -1,6 +1,6 @@
 from datetime import datetime
 print('GrowWord - made by Wokzy and Arter')
-print('Version - 0.02.1')
+print('Version - 0.02.2')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
