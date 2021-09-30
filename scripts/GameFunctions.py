@@ -87,6 +87,10 @@ class GameFunctions:
 		self.prev_additional_objects = []
 		self.targetting_prev_additional_objects = []
 
+		self.wave_bar_position = (WIDTH-WAVE_BAR_BACKGROUND_SIZE[0], DEFAULT_MANABAR_SIZE[1]+WAVE_BAR_BACKGROUND_SIZE[1])
+		self.wave_bar = objects.Window('wave_bar', images.get_white_window(WAVE_BAR_BACKGROUND_SIZE), self.wave_bar_position)
+		self.wave_bar_background = objects.Window('wave_bar_background', images.get_gray_window(WAVE_BAR_BACKGROUND_SIZE), self.wave_bar_position)
+
 		self.enter_in_text_input = False
 		self.text_input_obj = None
 		self.text_input_index = None
@@ -94,7 +98,7 @@ class GameFunctions:
 		self.info_font = pygame.font.SysFont('Comic Sans MS', 15*AVERAGE_MULTIPLYER)
 		self.info_font_big = pygame.font.SysFont('Comic Sans MS', 25*AVERAGE_MULTIPLYER)
 		self.info_font_small = pygame.font.SysFont('Comic Sans MS', 10*AVERAGE_MULTIPLYER)
-		self.wave_font = pygame.font.SysFont('AA Higherup', 20*AVERAGE_MULTIPLYER)
+		self.wave_font = pygame.font.SysFont('AA Higherup', WAVE_BAR_BACKGROUND_SIZE[1])
 
 		self.init_optimization()
 
@@ -121,6 +125,7 @@ class GameFunctions:
 		self.battle_objects = []
 		print(f'wave - {self.wave}')
 		self.enemyes_amount = (self.wave // 3 + 1) * 40
+		self.max_enemyes = self.enemyes_amount
 		wave_speed = 30 + (self.wave // 100)
 		self.in_battle = True
 		row = 1
@@ -135,14 +140,24 @@ class GameFunctions:
 			self.enemy_line_iteraion = 0
 			self.enemyes_amount -= 6
 
-		self.additional_objects.append(objects.Text('wave_text', self.wave_font.render(str(f'Wave - {self.wave}'), False, (0, 0, 0)), (WIDTH-DEFAULT_MANABAR_SIZE[0], DEFAULT_MANABAR_SIZE[1]+5*OBJECT_MULTIPLYER_HEIGHT), str(f'Wave - {self.wave}')))
+		self.wave_text = (objects.Text('wave_text', self.wave_font.render(str(f'Wave - {self.wave}'), False, (0, 0, 0)), (self.wave_bar_position[0]+3*AVERAGE_MULTIPLYER, self.wave_bar_position[1]+2*AVERAGE_MULTIPLYER), str(f'Wave - {self.wave}')))
+
+
+	def end_battle(self):
+		self.battle_objects = []
+		self.allies_units = []
+
+		for hero in self.heroes:
+			hero.attacking = False
+
+		self.wave_bar = objects.Window('wave_bar', images.get_white_window(WAVE_BAR_BACKGROUND_SIZE), self.wave_bar_position)
 
 	async def update_battle(self):
 		if len(self.battle_heroes) == 0 and self.enemyes_amount == 0:
-			self.battle_objects = []
+			self.end_battle()
 			await self.victory()
 		elif self.castle.hp == 0:
-			self.battle_objects = []
+			self.end_battle()
 			await self.defeat()
 
 		for enemy in self.battle_heroes:
@@ -157,6 +172,11 @@ class GameFunctions:
 					self.battle_objects.append(ENEMY.ToxicBullet(update[1], update[2], update[3]))
 			if not enemy.alive:
 				self.battle_heroes.remove(enemy)
+
+
+		self.wave_bar.image = pygame.transform.scale(self.wave_bar.image, (int(WAVE_BAR_BACKGROUND_SIZE[0]*(self.enemyes_amount / self.max_enemyes)), WAVE_BAR_BACKGROUND_SIZE[1]))
+
+
 
 		for obj in self.battle_objects:
 			obj.update()

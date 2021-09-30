@@ -1,6 +1,6 @@
 from datetime import datetime
 print('GrowWord - made by Wokzy and Arter')
-print('Version - 0.02.2')
+print('Version - 0.02.3')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
@@ -156,6 +156,10 @@ class GrowWord:
 		if gf.in_battle:
 			for obj in gf.battle_objects:
 				self.screen.blit(obj.image, obj.rect)
+			self.screen.blit(gf.wave_bar_background.image, gf.wave_bar_background.rect)
+			self.screen.blit(gf.wave_bar.image, gf.wave_bar.rect)
+			self.screen.blit(gf.wave_text.image, gf.wave_text.rect)
+			#print(gf.wave_bar)
 
 	def update_heroes(self):
 		for hero in gf.heroes:

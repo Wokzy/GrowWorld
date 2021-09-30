@@ -238,7 +238,15 @@ class RangeEnemy:
 		if len(gf.allies_units) > 0:
 			while self.target == None or self.target != gf.castle and self.target.type_surface == 'Boom':
 				self.target = random.choice([gf.castle, random.choice(gf.allies_units)])
+				while self.target.__class__.__name__ == 'RocketBoom':
+					self.target = random.choice([gf.castle, random.choice(gf.allies_units)])
 		else: self.target = gf.castle
+
+"""
+class Boss:
+	def __init__(self, name, hp, speed, damage, attack_speed, imgs, size):
+		pass
+"""
 
 
 def monster(wave, row_position):

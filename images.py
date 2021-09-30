@@ -126,6 +126,10 @@ def get_gray_window(size=SETTINGS_WINDOW_SIZE):
 	GRAY_WINDOW = pygame.transform.scale(pygame.image.load('sprites/windows/gray_window.png'), size)
 	return GRAY_WINDOW
 
+def get_white_window(size=SETTINGS_WINDOW_SIZE):
+	global WHITEWINDOW
+	return pygame.transform.scale(WHITEWINDOW, size)
+
 def get_upgrade_shooter_button_image():
 	global UPGRADE_SHOOTER_BUTTON_IMAGE
 	return UPGRADE_SHOOTER_BUTTON_IMAGE
@@ -232,7 +236,7 @@ def init():
 	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
 	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE, REMOVE_DATA, NO_BUTTON, YES_BUTTON
 	global BLEW_IMAGES, ROCKET_MAN, SKILLS_BUTTON, BONUS_GOLD_SKILL_BUTTON, RANGE_MONSTER_IMAGES, TOXIC_BULLET
-	global CRITICAL_SHOT_SKILL_BUTTON
+	global CRITICAL_SHOT_SKILL_BUTTON, WHITEWINDOW
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -274,6 +278,7 @@ def init():
 	CRITICAL_SHOT_SKILL_BUTTON = pygame.transform.scale(pygame.image.load('sprites/buttons/critical_shot.png'), CRITICAL_SHOT_SKILL_BUTTON_SIZE)
 	RANGE_MONSTER_IMAGES = None
 	TOXIC_BULLET = None
+	WHITEWINDOW = pygame.transform.scale(pygame.image.load('sprites/windows/white_window.png'), SETTINGS_WINDOW_SIZE)
 
 	get_mana_bar()
 	get_field_maradauer()
@@ -313,5 +318,6 @@ def init():
 	get_rocket_man()
 	get_range_monster()
 	get_toxic_bullet()
+	get_white_window()
 
 init()
