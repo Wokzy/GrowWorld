@@ -1,6 +1,6 @@
 from datetime import datetime
 print('GrowWord - made by Wokzy and Arter')
-print('Version - 0.02.3')
+print('Version - 0.03.0')
 print('Loading...')
 load_time = datetime.now()
 import pygame, sys, random, images, scripts.castle, scripts.GameFunctions, asyncio, scripts.Town_shooters
@@ -96,7 +96,9 @@ class GrowWord:
 
 		if gf.in_battle:
 			self.update_townshooters(gf)
-			self.update_allies_units()
+			self.update_allies_units(gf)
+			if gf.boss != None:
+				gf.boss.update(gf)
 		elif not gf.in_battle:
 			if gf.town_shooters[0].on_stimpack:
 				for town_shooter in gf.town_shooters:
@@ -159,6 +161,8 @@ class GrowWord:
 			self.screen.blit(gf.wave_bar_background.image, gf.wave_bar_background.rect)
 			self.screen.blit(gf.wave_bar.image, gf.wave_bar.rect)
 			self.screen.blit(gf.wave_text.image, gf.wave_text.rect)
+			if gf.boss != None:
+				self.screen.blit(gf.boss.image, gf.boss.rect)
 			#print(gf.wave_bar)
 
 	def update_heroes(self):
@@ -194,7 +198,7 @@ class GrowWord:
 
 	def update_townshooters(self, gf):
 		for shooter in gf.town_shooters:
-			action = shooter.update(gf.battle_heroes)
+			action = shooter.update(gf.battle_heroes, gf)
 			if action == 'attack':
 				dmg = shooter.damage
 				for i in gf.skills:
@@ -204,10 +208,14 @@ class GrowWord:
 							dmg *= 2.25
 							#print(f'- {dmg}')
 						break
-				gf.battle_heroes[gf.battle_heroes.index(shooter.target)].hp -= int(dmg)
-				#gf.battle_heroes[gf.battle_heroes.index(shooter.target)].attacking_me_shooters += 1
+				if not shooter.target_is_boss:
+					gf.battle_heroes[gf.battle_heroes.index(shooter.target)].attacking_me_shooters += 1
+					gf.battle_heroes[gf.battle_heroes.index(shooter.target)].hp -= int(dmg)
+				else:
+					if gf.boss != None:
+						gf.boss.hp -= int(dmg * gf.boss.armor_multiplyer)
 
-	def update_allies_units(self):
+	def update_allies_units(self, gf):
 		rm_units = []
 
 		for unit in gf.allies_units:
@@ -216,7 +224,11 @@ class GrowWord:
 				rm_units.append(unit)
 				continue
 			if action == 'attack':
-				gf.battle_heroes[gf.battle_heroes.index(unit.target)].hp -= unit.damage
+				if unit.target == gf.boss:
+					if gf.boss != None:
+						gf.boss.hp -= int(unit.damage * gf.boss.armor_multiplyer)
+				else:
+					gf.battle_heroes[gf.battle_heroes.index(unit.target)].hp -= unit.damage
 
 		for unit in rm_units:
 			gf.allies_units.remove(unit)

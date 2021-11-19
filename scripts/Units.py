@@ -52,7 +52,7 @@ class FieldMaradauer:
 		if self.hp <= 0:
 			self.alive = False
 			return 'stay'
-		if self.target not in gf.battle_heroes or self.target.alive == False:
+		if self.target != None and (self.target not in gf.battle_heroes and self.target != gf.boss or self.target.alive == False):
 			self.target = None
 		if self.target == None:
 			self.action = 'stay'
@@ -97,7 +97,9 @@ class FieldMaradauer:
 		return self.action
 
 	def find_target(self, gf):
-		if len(gf.battle_heroes) > 0:
+		if gf.boss != None:
+			self.target = gf.boss
+		elif len(gf.battle_heroes) > 0:
 			self.target = random.choice(gf.battle_heroes)
 		else: self.target = None
 

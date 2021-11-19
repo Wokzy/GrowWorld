@@ -1,4 +1,4 @@
-import pygame, images
+import pygame, images, random
 from constants import *
 from datetime import datetime
 
@@ -21,6 +21,7 @@ class TownShooter:
 
 		self.action = 'stay' # stay or attack
 		self.target = None
+		self.target_is_boss = False
 
 		self.shoot_iterations = 0
 		self.animation_iterations = 0
@@ -39,7 +40,7 @@ class TownShooter:
 
 		self.upgrade_cost = int(600 + (600*0.15)*self.level)
 
-	def update(self, battle_units):
+	def update(self, battle_units, gf):
 		if self.on_stimpack:
 			if self.stimpack_iterations >= self.stimpack_speed:
 				self.stop_stimpack()
@@ -47,7 +48,7 @@ class TownShooter:
 			else:
 				self.stimpack_iterations += 1
 		if self.target != None:
-			if self.target not in battle_units or self.target.alive == False:
+			if self.target not in battle_units and self.target_is_boss == False or self.target.alive == False:
 				self.target = None
 			else:
 				if self.action != 'attack':
@@ -55,7 +56,7 @@ class TownShooter:
 		if self.target == None:
 			if self.action != 'stay':
 				self.action = 'stay'
-			self.find_target(battle_units)
+			self.find_target(battle_units, gf)
 		if self.action == 'stay' and self.image != self.stay_image:
 			self.image = self.stay_image
 		elif self.action == 'attack':
@@ -78,7 +79,7 @@ class TownShooter:
 		self.shoot_iterations += 1
 		return self.action
 
-	def find_target(self, battle_units):
+	def find_target_in_units(self, battle_units):
 		target = None
 		distance = WIDTH
 
@@ -92,7 +93,27 @@ class TownShooter:
 					target = enemy
 					distance = cur_distance
 
-		if target != None:
+		return {'distance':distance, 'target':target}
+
+	def find_target(self, battle_units, gf):
+		target = None
+		distance = WIDTH
+		self.target_is_boss = False
+
+		if gf.boss != None:
+			if len(battle_units) > 0 and random.randint(1, 3) == 1:
+				res = self.find_target_in_units(battle_units)
+				target = res['target']
+				distance = res['distance']
+			else:
+				target = gf.boss
+				self.target_is_boss = True
+		else:
+			res = self.find_target_in_units(battle_units)
+			target = res['target']
+			distance = res['distance']
+
+		if target != None and not self.target_is_boss:
 			battle_units[battle_units.index(target)].attacking_me_shooters += 1
 		self.target = target
 

@@ -229,6 +229,14 @@ def get_critical_shot_skill_button():
 	global CRITICAL_SHOT_SKILL_BUTTON
 	return CRITICAL_SHOT_SKILL_BUTTON
 
+def get_red_giant():
+	global RED_GIANT
+	return RED_GIANT
+
+def get_red_bar():
+	global RED_BAR
+	return RED_BAR
+
 def init():
 	global HPBAR_IMAGE, MANABAR_IMAGE, MONSTER_IMAGE, HPBAR_BACKGROUND_IMAGE, TOWN_SHOOTER_IMAGES, SETTINGS_BUTTON_IMAGE
 	global SETTINGS_WINDOW_IMAGE, TEXT_INPUT_IMAGE, APPLY_SETTINGS_BUTTON, FIGHT_BUTTON, STIM_ON, STIM_OFF
@@ -236,7 +244,7 @@ def init():
 	global CLOSE_BUTTON, TAKE_OFF_BUTTON, EQUIP_BUTTON, UNIT_HEALER, TOWN_MARKET, GOTO_TOWN, GOTO_CASTLE, SELL_BUTTON
 	global BUY_BUTTON, TRAIDING_FALL, TRAIDING_MINUS, TRAIDING_RAISE, REMOVE_DATA, NO_BUTTON, YES_BUTTON
 	global BLEW_IMAGES, ROCKET_MAN, SKILLS_BUTTON, BONUS_GOLD_SKILL_BUTTON, RANGE_MONSTER_IMAGES, TOXIC_BULLET
-	global CRITICAL_SHOT_SKILL_BUTTON, WHITEWINDOW
+	global CRITICAL_SHOT_SKILL_BUTTON, WHITEWINDOW, RED_GIANT, RED_BAR
 
 	HPBAR_IMAGE = None
 	MANABAR_IMAGE = None
@@ -280,6 +288,11 @@ def init():
 	TOXIC_BULLET = None
 	WHITEWINDOW = pygame.transform.scale(pygame.image.load('sprites/windows/white_window.png'), SETTINGS_WINDOW_SIZE)
 
+	red_giant_dir = 'sprites/boss/red_giant'
+	RED_GIANT = {'move':[pygame.transform.scale(pygame.image.load(f'{red_giant_dir}/move_1.png'), RED_GIANT_SIZE), pygame.transform.scale(pygame.image.load(f'{red_giant_dir}/move_2.png'), RED_GIANT_SIZE)], 'attack':[pygame.transform.scale(pygame.image.load(f'{red_giant_dir}/attack_{i}.png'), RED_GIANT_ATTACK_SIZE) for i in range(1, 5)]}
+
+	RED_BAR = pygame.transform.scale(pygame.image.load('sprites/bars/hp_bar.png'), HPBAR_BACKGROUND_SIZE)
+
 	get_mana_bar()
 	get_field_maradauer()
 	get_hp_bar()
@@ -319,5 +332,7 @@ def init():
 	get_range_monster()
 	get_toxic_bullet()
 	get_white_window()
+	get_red_giant()
+	get_red_bar()
 
 init()

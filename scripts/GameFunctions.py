@@ -4,6 +4,7 @@ from datetime import datetime
 from scripts import Enemy as enemy
 from scripts import Enemy as ENEMY
 from scripts import objects, heroes, castle, Town_shooters, GroundObjects, skills
+from scripts import Boss as boss
 
 
 class GameFunctions:
@@ -89,6 +90,7 @@ class GameFunctions:
 
 		self.wave_bar_position = (WIDTH-WAVE_BAR_BACKGROUND_SIZE[0], DEFAULT_MANABAR_SIZE[1]+WAVE_BAR_BACKGROUND_SIZE[1])
 		self.wave_bar = objects.Window('wave_bar', images.get_white_window(WAVE_BAR_BACKGROUND_SIZE), self.wave_bar_position)
+		self.default_wave_bar = self.wave_bar
 		self.wave_bar_background = objects.Window('wave_bar_background', images.get_gray_window(WAVE_BAR_BACKGROUND_SIZE), self.wave_bar_position)
 
 		self.enter_in_text_input = False
@@ -121,6 +123,9 @@ class GameFunctions:
 
 		self.update_bonus_gold()
 
+		self.boss = None
+		self.boss_already_went = False
+
 	async def start_battle(self):
 		self.battle_objects = []
 		print(f'wave - {self.wave}')
@@ -141,6 +146,10 @@ class GameFunctions:
 			self.enemyes_amount -= 6
 
 		self.wave_text = (objects.Text('wave_text', self.wave_font.render(str(f'Wave - {self.wave}'), False, (0, 0, 0)), (self.wave_bar_position[0]+3*AVERAGE_MULTIPLYER, self.wave_bar_position[1]+2*AVERAGE_MULTIPLYER), str(f'Wave - {self.wave}')))
+		self.boss = None
+		self.boss_already_went = False
+
+		self.wave_bar = objects.Window('wave_bar', images.get_white_window(WAVE_BAR_BACKGROUND_SIZE), self.wave_bar_position)
 
 
 	def end_battle(self):
@@ -149,16 +158,28 @@ class GameFunctions:
 
 		for hero in self.heroes:
 			hero.attacking = False
+		for shooter in self.town_shooters:
+			shooter.target = None
 
-		self.wave_bar = objects.Window('wave_bar', images.get_white_window(WAVE_BAR_BACKGROUND_SIZE), self.wave_bar_position)
+		self.wave_bar = self.default_wave_bar
+		self.boss = None
+		self.boss_already_went = False
 
 	async def update_battle(self):
-		if len(self.battle_heroes) == 0 and self.enemyes_amount == 0:
+		if len(self.battle_heroes) == 0 and self.enemyes_amount == 0 and self.boss == None:
 			self.end_battle()
 			await self.victory()
-		elif self.castle.hp == 0:
+		elif self.castle.hp <= 0:
 			self.end_battle()
 			await self.defeat()
+
+		if self.enemyes_amount <= 5 and self.boss == None and self.boss_already_went == False and self.wave % 5 == 0:
+			self.boss = random.choice([boss.RedGiant(self.wave//15)])
+			self.boss_already_went = True
+
+		if self.boss != None:
+			if self.boss.hp <= 0:
+				self.boss = None
 
 		for enemy in self.battle_heroes:
 			update = enemy.update(self.castle, self)
@@ -173,8 +194,11 @@ class GameFunctions:
 			if not enemy.alive:
 				self.battle_heroes.remove(enemy)
 
-
-		self.wave_bar.image = pygame.transform.scale(self.wave_bar.image, (int(WAVE_BAR_BACKGROUND_SIZE[0]*(self.enemyes_amount / self.max_enemyes)), WAVE_BAR_BACKGROUND_SIZE[1]))
+		if self.boss == None:
+			self.wave_bar.image = pygame.transform.scale(self.wave_bar.image, (int(WAVE_BAR_BACKGROUND_SIZE[0]*(self.enemyes_amount / self.max_enemyes)), WAVE_BAR_BACKGROUND_SIZE[1]))
+		else:
+			self.wave_bar.image = pygame.transform.scale(images.get_red_bar(), (int(WAVE_BAR_BACKGROUND_SIZE[0]*(self.boss.hp / self.boss.max_hp)), WAVE_BAR_BACKGROUND_SIZE[1]))
+			self.wave_text = (objects.Text('wave_text', self.wave_font.render(str(f'{self.boss.hp}'), False, (0, 0, 0)), (self.wave_bar_position[0]+3*AVERAGE_MULTIPLYER, self.wave_bar_position[1]+2*AVERAGE_MULTIPLYER), str(f'{self.boss.hp}')))
 
 
 
